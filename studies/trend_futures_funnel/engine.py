@@ -44,6 +44,9 @@ class Params:
     long_only: bool = False
     trend_filter: bool = True
     integer_contracts: bool = False  # True -> round to integer micro contracts ($100k lumpiness)
+    long_only_syms: tuple = ()       # per-symbol short disable (H1b conditional shorts)
+    short_risk_mult: float = 1.0     # risk multiplier on the short leg (H1d)
+    short_only: bool = False         # crypto bear-convexity ablation
 
 
 # ---------------------------------------------------------------- cost model
@@ -135,7 +138,7 @@ def simulate(data: dict[str, pd.DataFrame], p: Params, initial_equity: float,
     pos = {s: 0.0 for s in frames}
     last_close = {s: np.nan for s in frames}
     state = {s: AssetState() for s in frames}
-    equity_curve, trades, gross_exposure = [], [], []
+    equity_curve, trades, gross_exposure, position_rows = [], [], [], []
     total_roll_cost = 0.0
     equity = initial_equity
 
@@ -225,18 +228,21 @@ def simulate(data: dict[str, pd.DataFrame], p: Params, initial_equity: float,
                     trig = (st.direction > 0 and c >= st.last_fill_px + p.pyramid_step_atr * atr) or \
                            (st.direction < 0 and c <= st.last_fill_px - p.pyramid_step_atr * atr)
                     if trig:
-                        risk_d = p.risk_frac * equity
+                        rm = p.short_risk_mult if st.direction < 0 else 1.0
+                        risk_d = p.risk_frac * equity * rm
                         size = to_contracts(risk_d / (p.atr_stop_mult * atr), sym)
                         if size > 0:
                             cur_gross = sum(abs(pos[s]) * last_close[s] for s in frames if np.isfinite(last_close[s])) / equity
                             if cur_gross + size * c / equity <= p.max_gross:
                                 st.pending = dict(kind="add", dir=st.direction, size=size, equity=equity, risk_dollar=risk_d)
             else:
-                long_sig = (c > ema or not p.trend_filter) and c > hh
-                short_sig = (not p.long_only) and (c < ema or not p.trend_filter) and c < ll
+                long_sig = (not p.short_only) and (c > ema or not p.trend_filter) and c > hh
+                short_sig = ((not p.long_only) and (sym not in p.long_only_syms)
+                             and (c < ema or not p.trend_filter) and c < ll)
                 if long_sig or short_sig:
                     d = 1 if long_sig else -1
-                    risk_d = p.risk_frac * equity
+                    rm = p.short_risk_mult if d < 0 else 1.0
+                    risk_d = p.risk_frac * equity * rm
                     size = to_contracts(risk_d / (p.atr_stop_mult * atr), sym)
                     if size > 0:
                         cur_gross = sum(abs(pos[s]) * last_close[s] for s in frames if np.isfinite(last_close[s])) / equity
@@ -245,6 +251,7 @@ def simulate(data: dict[str, pd.DataFrame], p: Params, initial_equity: float,
 
         gross_exposure.append(sum(abs(pos[s]) * last_close[s] for s in frames if np.isfinite(last_close[s])) / equity)
         equity_curve.append((ts, equity, cash))
+        position_rows.append({s: (pos[s] * last_close[s] if np.isfinite(last_close[s]) else 0.0) for s in frames})
 
     # liquidate residual positions at final close
     final_ts = calendar[-1]
@@ -265,10 +272,11 @@ def simulate(data: dict[str, pd.DataFrame], p: Params, initial_equity: float,
 
     ec = pd.DataFrame(equity_curve, columns=["date", "equity", "cash"]).set_index("date")
     ec["gross_exposure"] = gross_exposure
+    positions = pd.DataFrame(position_rows, index=ec.index)
     tr = pd.DataFrame(trades)
     if not tr.empty:
         tr = tr.sort_values("exit_date").reset_index(drop=True)
-    return {"equity": ec, "trades": tr, "params": p, "total_roll_cost": total_roll_cost}
+    return {"equity": ec, "trades": tr, "params": p, "total_roll_cost": total_roll_cost, "positions": positions}
 
 
 def load_universe(symbols: list[str]) -> dict[str, pd.DataFrame]:
