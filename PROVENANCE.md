@@ -12,11 +12,11 @@ address, account identifiers and local paths were replaced.
 | study | pre-registration frozen | results added |
 |---|---|---|
 | `studies/crypto_flows_placebo` | `5887fe4` — 2026-06-10 12:23 (+0200), "Phase 0 audit + pre-registration FROZEN before data contact" (original `97bf99e2`) | `2dfbc28` — 2026-06-10 12:55 (+0200), "0 survivors, 2 clean kills" (original `6d720e07`) |
-| `studies/trend_futures_funnel` | `9c51b10` — 2026-06-14 14:27 (+0200), "LOCK pre-registration (non-crypto futures trend sleeve)", on branch `claude/trend-futures-sleeve` (original `6163805`) | `e2b52dd` — 2026-08-24 16:39 (+0200), funnel P1–P4 and report merged into main (original `abc4e3d7`) |
-| `studies/swap_killed_futures` | `PREREGISTRATION.md` dated 2026-07-15 in the document; the folder entered main in one commit, `fad90df` — 2026-07-30 13:15 (+0200) (original `4a9094ec`) | same commit |
+| `studies/trend_futures_funnel` | `9c51b10` — 2026-06-14 14:27 (+0200), "LOCK pre-registration (non-crypto futures trend sleeve)", on branch `claude/trend-futures-sleeve` (original `6163805`) | `ce7aacf` — 2026-08-24 16:39 (+0200), funnel P1–P4 and report merged into main (original `abc4e3d7`) |
+| `studies/swap_killed_futures` | `PREREGISTRATION.md` dated 2026-07-15 in the document; the folder entered main in one commit, `7662f9b` — 2026-07-30 13:15 (+0200) (original `4a9094ec`) | same commit |
 | `studies/month_end_treasury_flow` | study and results in one commit, `6a3c866` — 2026-07-29 20:21 (+0200), "VEHICULE TROUVE" | same commit |
-| `studies/gold_asia_overnight` | reports and code brought under version control on 2026-08-22 (`c20684f`), after the work; the reports carry their own dates (June 2026) | same |
-| `studies/overnight_index_premium` | dossier and code, `d70cb26` — 2026-09-02 03:28 (+0200), "remonte les 6 dossiers du desk quant"; decisions recorded the day before in `25a5c4a` | same |
+| `studies/gold_asia_overnight` | reports and code brought under version control on 2026-08-22 (`74328a9`), after the work; the reports carry their own dates (June 2026) | same |
+| `studies/overnight_index_premium` | dossier and code, `bf8c069` — 2026-09-02 03:28 (+0200), "remonte les 6 dossiers du desk quant"; decisions recorded the day before in `053c45e` | same |
 
 What this does and does not establish: for `crypto_flows_placebo` and `trend_futures_funnel`, the
 pre-registration was committed before the results, and the commits are in this repository. For
