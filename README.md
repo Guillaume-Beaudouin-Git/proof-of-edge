@@ -101,13 +101,13 @@ uv run pytest -q
 uv run python studies/month_end_treasury_flow/reproduce.py
 ```
 
-The second command downloads the daily series from Yahoo Finance and re-runs the month-end
+The third command downloads the daily series from Yahoo Finance and re-runs the month-end
 Treasury-flow study end to end; its captured output is committed under
 `studies/month_end_treasury_flow/results/` (run of 2026-10-29: +16.25 bps per event, t_HAC 4.79,
 311 events, as in `RESULTS.md`).
 
-The `core/` package is self-contained (numpy, pandas, scipy, statsmodels, skfolio, matplotlib, jinja2). The study
-scripts are kept as they were run; they expect the data lake described below and are not
+The `core/` package is self-contained (numpy, pandas, scipy, statsmodels, skfolio, matplotlib, jinja2). The other
+study scripts are kept as they were run; they expect the data lake described below and are not
 exercised by the test suite.
 
 ---

@@ -48,7 +48,10 @@ def main() -> int:
                 log.write(proc.stderr)
                 print(proc.stderr, end="", file=sys.stderr)
                 print(f"[{step}] exit {proc.returncode}", file=sys.stderr)
-    print(f"\nwritten {out} ({failures} step(s) failed)")
+    summary = f"\n{failures} step(s) failed\n"
+    with out.open("a") as log:
+        log.write(summary)
+    print(f"\nwritten {out}{summary}", end="")
     return 1 if failures else 0
 
 

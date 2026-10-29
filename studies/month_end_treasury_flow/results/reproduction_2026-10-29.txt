@@ -438,3 +438,5 @@ Apex 4.0 100k  2 ZN (trail $3,000, flat)          0.5           5074.6          
     then 80% of the same 1-contract P&L, under a $2,000 kill barrier
     -> the propfirm sells LEVERAGE; 1 ZN needs ~$1,800 of margin, which the
        personal account already has. Nothing is being bought.
+
+0 step(s) failed
