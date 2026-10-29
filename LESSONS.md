@@ -88,3 +88,23 @@ The enumeration is free: it is written, not tested (Δn_tests = 0). Testing thos
 The attribution error cuts both ways, measured twice in the same session: (a) *false negative* — "the macro score is dead" when only *one* configuration was (cross-sectional, held, N ≥ 30, retail vehicle, small capital); breadth, vehicle and capital had not been varied, and the next round surfaced four live axes, one of them a priority. (b) *false positive at reopening* — pre-FOMC drift classed "underpowered, reopenable" (truncated sample, 49 of 102 events) when the *pre*-announcement drift is an uncertainty-resolution premium, hence structurally non-directional (no symmetric leg to test, even in theory) and dead since 2015–2016 (Kurov, Wolfe & Gilbert) ⇒ a *mechanical* kill, stays closed. A rule that catches only case (a) would be half a rule: this one forces naming *which* of the five motives kills, so it catches both.
 
 Anti-box-ticking safeguard: the enumeration is re-read at reopening. An axis listed as "could change the verdict" and then tested without effect is visible — the enumeration calibrates itself over time.
+
+---
+
+## Glossary
+
+- **L-numbers (L11 … L67)** — the lessons of this registry, cited by number throughout the studies and commit messages.
+- **ORB** — opening-range breakout, an intraday strategy on index futures/CFDs.
+- **TSMOM** — time-series momentum.
+- **DSR** — Deflated Sharpe Ratio (Bailey & López de Prado), the Sharpe corrected for the number of trials.
+- **HAC** — heteroskedasticity- and autocorrelation-consistent (Newey–West) standard errors; the programme uses lag 6.
+- **MDE** — minimum detectable effect at 80 % power.
+- **ERC** — equal risk contribution weights.
+- **Sleeve** — one strategy as a component of the book.
+- **Book** — the set of sleeves run on one account.
+- **Prop firm / challenge** — a proprietary-trading firm that funds a trader after a two-phase evaluation with profit targets and drawdown barriers (FTMO here).
+- **Swap** — the overnight financing charged by a CFD broker per leg held past the rollover.
+- **Dédale** — an internal name for a family of FX studies; appears in commit messages.
+- **Walk-forward** — sequential out-of-sample re-estimation; the programme requires at least five folds.
+- **Placebo (matched)** — a control built with the same construction as the strategy on random or shuffled inputs.
+- **Kill rule** — a pre-registered condition under which a study is closed without further modification.
