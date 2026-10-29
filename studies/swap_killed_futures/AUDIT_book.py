@@ -2,16 +2,17 @@
 AUDIT_book.py — full audit of the ~2.0 personal book.
 Reconstructs each sleeve with EXPLICIT look-ahead-safe timing, computes per-sleeve and book-level
 metrics (exposure, beta, alpha+HAC, Sharpe, Sortino, Calmar, MaxDD), Kelly sizing, expected 6mo/1yr
-returns, and €12k IBKR feasibility. Saves sleeve return series to parquet for independent re-audit.
+returns, and small-account IBKR feasibility. Saves sleeve return series to parquet for independent re-audit.
 
 Look-ahead policy (verify each): every signal is lagged so the position at month t uses only data
 through t-1. Spread hedge ratios (beta) are estimated on TRAIN 2005-2015 only; OOS = 2016+.
 Run: <venv>/python AUDIT_book.py
 """
+import os
 import warnings; warnings.filterwarnings("ignore")
 import numpy as np, pandas as pd, yfinance as yf, statsmodels.api as sm
 A = np.sqrt(12)
-OUT = "<HOME>/Desktop/Algo_claude_research_swapkilled/Multi_Asset/research/active/swapkilled_futures_2026-07"
+OUT = os.environ.get("RESEARCH_OUT", ".")
 
 def mk(s):
     if len(s) == 0: return s

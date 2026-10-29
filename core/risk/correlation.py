@@ -5,8 +5,6 @@ Tools for monitoring pairwise correlations between strategies to detect
 when diversification is breaking down (e.g. A+C both going short during a
 volatility spike — supposed to be uncorrelated, correlation suddenly +0.7).
 
-Next session: integrate with PortfolioState.historical_returns to generate
-daily alerts when any pair exceeds threshold.
 """
 
 from __future__ import annotations
@@ -100,7 +98,7 @@ def correlation_alert(
     Usage:
         alerts = correlation_alert(corr_matrix, threshold=0.5)
         if alerts:
-            print("⚠ Diversification alert:")
+            print("NOTE Diversification alert:")
             for a in alerts:
                 print(f"  {a['pair']}: corr={a['correlation']:+.2f} [{a['severity']}]")
     """
@@ -149,7 +147,6 @@ def diversification_ratio(
     Returns:
         float (typically 1.0 to 3.0 for well-diversified portfolios)
 
-    TODO next session: track over time to detect regime changes where DR drops.
     """
     clean = returns_df.dropna(how="all").tail(window)
     strats = list(clean.columns)

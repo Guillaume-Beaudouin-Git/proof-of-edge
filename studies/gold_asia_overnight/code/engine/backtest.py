@@ -1,7 +1,7 @@
 """
 Event-driven, one-position-at-a-time backtester with intrabar SL/TP resolution.
 
-Core discipline (hard rule from CLAUDE.md): a signal at the CLOSE of bar t is
+Core discipline (programme hard rule): a signal at the CLOSE of bar t is
 acted on at the OPEN of bar t+1 — "signal at T-1, trade at T". Enforced centrally
 so strategies cannot peek.
 

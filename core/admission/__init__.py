@@ -1,5 +1,5 @@
 """
-Portfolio.admission — sleeve admission on a MARGINAL criterion.
+core.admission — sleeve admission on a MARGINAL criterion.
 
 Replaces the legacy ratio gate ``SR(book + D) > 1.10 x SR(book)``, which asks a
 candidate to be a *return amplifier* and therefore rejects *diversifiers* — the
@@ -31,7 +31,7 @@ barrier
     ``pass_probability_delta``      Delta p(pass) and Delta days-to-funded
 """
 
-from Portfolio.admission.marginal import (  # noqa: F401
+from core.admission.marginal import (  # noqa: F401
     AdmissionResult,
     admit,
     bootstrap_delta_sharpe,
@@ -46,7 +46,7 @@ from Portfolio.admission.marginal import (  # noqa: F401
     portfolio_sharpe,
     stationary_bootstrap_indices,
 )
-from Portfolio.admission.barrier import (  # noqa: F401
+from core.admission.barrier import (  # noqa: F401
     BarrierConfig,
     CampaignResult,
     pass_probability_delta,

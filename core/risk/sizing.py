@@ -9,16 +9,12 @@ Two methods:
 Both return weights (0-1) that sum to 1.0.
 
 Usage:
-    from Portfolio.risk.sizing import equal_risk_contribution, inverse_vol_weighting
+    from core.risk.sizing import equal_risk_contribution, inverse_vol_weighting
 
     # From daily returns (n_days × n_strategies)
     weights_erc = equal_risk_contribution(returns_df, target_vol=0.15)
     weights_iv  = inverse_vol_weighting(returns_df, target_vol=0.15)
 
-Next session will:
-  (1) Call these with live A/B returns + C backtest proxy
-  (2) Compare ERC vs inverse-vol weights
-  (3) Feed weights into PortfolioState.capital_allocation
 """
 
 from __future__ import annotations
@@ -54,7 +50,7 @@ def inverse_vol_weighting(
         dict {strategy: weight} summing to 1.0 (before scaling by target_vol).
 
     Note:
-        The weights here are CAPITAL weights (how much of the $50K each gets).
+        The weights here are CAPITAL weights (the share of account capital each gets).
         The actual contract sizing per strategy is handled separately.
     """
     clean = returns_df.dropna(how="all").tail(window)

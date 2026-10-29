@@ -8,8 +8,8 @@ author≠auditor). Purpose: lift or discount the L5 roll-contamination flag befo
 
 | Sleeve | yfinance =F (front-month) | deep_history (roll-clean) | Verdict |
 |---|---|---|---|
-| **H4 commodity seasonality** | Sharpe **1.13**, placebo p=0.000 | Sharpe **0.47**, **placebo p=0.086 (fails)** | ❌ **ROLL ARTEFACT — flag NOT lifted** |
-| **H9 WTI-Brent stationarity** | ADF p=0.001, hl 19d | ADF **p=0.000, hl 24d** | ✅ **CONFIRMED — flag lifted** |
+| **H4 commodity seasonality** | Sharpe **1.13**, placebo p=0.000 | Sharpe **0.47**, **placebo p=0.086 (fails)** | FAIL **ROLL ARTEFACT — flag NOT lifted** |
+| **H9 WTI-Brent stationarity** | ADF p=0.001, hl 19d | ADF **p=0.000, hl 24d** | PASS **CONFIRMED — flag lifted** |
 
 ## Interpretation
 
@@ -39,5 +39,5 @@ The deployable book is essentially **H3 month-end Treasury (SR ~1.0, the anchor)
 small decorrelating satellite**. Combined Sharpe **1.02**, not the 1.51 reported pre-audit — one of the
 three "PASS" sleeves (H4) was a data artefact caught by the roll cross-check. This is the process working:
 **a rigorous roll-audit before capital is exactly what prevents deploying an artefact at leverage.**
-H3 is the one clean, granular, deploy-today sleeve (TLT fractional). H9 waits for ~€50k + a trend
+H3 is the one clean, granular, deploy-today sleeve (TLT fractional). H9 waits for a larger account (roughly 4× the base) + a trend
 kill-switch.

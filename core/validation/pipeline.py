@@ -3,7 +3,7 @@ High-level pipeline: generate a self-contained HTML CPCV report.
 
 Design: standalone HTML via a separate template_cpcv.html (no coupling to
 tearsheet.py or template.html). Reuses the same Jinja2 Environment pattern,
-matplotlib base64 encoding, and CSS palette from Portfolio/reporting/.
+matplotlib base64 encoding, and CSS palette from core/reporting/.
 """
 from __future__ import annotations
 
@@ -23,9 +23,9 @@ import numpy as np
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
-from Portfolio.validation.cpcv import run_cpcv
-from Portfolio.validation.multi_test import deflated_sharpe, harvey_liu_bhy
-from Portfolio.reporting.metrics import (
+from core.validation.cpcv import run_cpcv
+from core.validation.multi_test import deflated_sharpe, harvey_liu_bhy
+from core.reporting.metrics import (
     TRADING_DAYS,
     compute_psr_dsr,
     to_excess_returns,
@@ -144,10 +144,10 @@ def generate_cpcv_report(
     returns : pd.Series
         Daily total return series with datetime index.
     strategy_name : str
-        Header display name (e.g. "Strategy A — TSMOM v3").
+        Header display name.
     backtest_fn : Callable[[train_idx, test_idx], float]
-        Passed directly to run_cpcv. For non-parametric strategies, build
-        via make_tsmom_backtest_fn() in strategies/tsmom_signal.py.
+        Passed directly to run_cpcv. For non-parametric strategies, close over
+        your own signal function.
     n_trials : int
         Project-wide n_tests counter for DSR correction (honest reporting).
     output_path : str or Path
@@ -155,7 +155,7 @@ def generate_cpcv_report(
     n_folds : int, optional
         Override auto-selected fold count from optimal_folds_number.
     wf_baseline_sharpe : float, optional
-        Walk-forward OOS Sharpe (e.g. 1.33 for Strategy A). Shown as
+        Walk-forward OOS Sharpe. Shown as
         comparison baseline in the report.
 
     Returns

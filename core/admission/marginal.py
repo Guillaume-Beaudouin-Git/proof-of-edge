@@ -3,7 +3,7 @@ marginal.py — marginal (diversification-aware) sleeve admission criterion.
 
 Why the legacy gate is wrong
 ----------------------------
-``CLAUDE.md`` gated new sleeves on ``SR(book + D) > 1.10 x SR(book)``. That is a
+The previous admission rule gated new sleeves on ``SR(book + D) > 1.10 x SR(book)``. That is a
 *ratio* gate on the whole book, so it prices a candidate purely by how much
 return it adds per unit of book risk. A diversifier adds little return and a lot
 of covariance relief; the ratio gate cannot see the second term.

@@ -20,4 +20,4 @@
 | celestia | 2025-12-10 | 9.773e+08 | 8.523e+08 | +14.7% |
 | celestia | 2026-03-11 | 1.016e+09 | 8.901e+08 | +14.1% |
 
-Coverage bias (from phase0_audit): DefiLlama list skews to post-2022 survivors; early-cycle dead tokens absent at the SOURCE; Binance-perp requirement is the binding selection and Vision retains delisted symbols, so exchange-side survivorship is handled; calendar-side survivorship remains and is reported, not hidden.
+Coverage bias (from the phase-0 audit): DefiLlama list skews to post-2022 survivors; early-cycle dead tokens absent at the SOURCE; Binance-perp requirement is the binding selection and Vision retains delisted symbols, so exchange-side survivorship is handled; calendar-side survivorship remains and is reported, not hidden.

@@ -2,7 +2,7 @@
 CPCV validation suite — 8 tests (minimum required per session spec).
 
 Run from repo root:
-    python -m pytest Portfolio/validation/tests/test_cpcv.py -v
+    python -m pytest core/validation/tests/test_cpcv.py -v
 
 All tests use synthetic return series to avoid network calls.
 """
@@ -13,9 +13,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from Portfolio.validation.cpcv import run_cpcv
-from Portfolio.validation.multi_test import deflated_sharpe, harvey_liu_bhy
-from Portfolio.validation.pipeline import generate_cpcv_report
+from core.validation.cpcv import run_cpcv
+from core.validation.multi_test import deflated_sharpe, harvey_liu_bhy
+from core.validation.pipeline import generate_cpcv_report
 
 
 # ── Synthetic data helpers ─────────────────────────────────────────────────────

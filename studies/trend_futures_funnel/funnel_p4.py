@@ -9,6 +9,7 @@ Phase 4 — pre-registered rescue hypotheses (PREREG section 10), each L19-disci
   Crypto SHORT-ONLY ablation (bear convexity 2018/2022; avoids double-counting A's longs).
 """
 from __future__ import annotations
+import os
 from pathlib import Path
 import json
 import numpy as np
@@ -23,7 +24,7 @@ RESULTS = HERE / "results"
 CORE = ["NQ", "ES", "GC", "CL", "6E", "6A", "6B"]
 EXT = CORE + ["RTY", "SI", "ZN"]
 START, END = "2014-01-01", "2026-06-12"
-SEYK = Path("<HOME>/Desktop/Algo_claude/data/seykota_trend/daily")
+SEYK = Path(os.environ.get("RESEARCH_DATA_ROOT", "data")) / "seykota_trend" / "daily"
 
 specs = load_specs()
 PER_SIDE, ROLL_BP, MULT = build_costs(specs)

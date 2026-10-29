@@ -11,7 +11,7 @@ only to show divergence).
 - **Design (frozen):**
   - Grid: fixed log-spacing g, hard inventory cap L levels, lot notional = leverage·acct0/L (so full
     inventory = leverage·acct0). Buy one lot per down-step, take-profit one lot per up-step. Fee 5 bps RT.
-    acct0 = €12,000. Ruin = equity ≤ 50% acct0.
+    acct0 = 100 (index). Ruin = equity ≤ 50% acct0.
   - Processes: **(a) GBM zero-drift** (random walk) at vol ∈ {15%, 40%, 80%} ann; **(b) Ornstein-Uhlenbeck**
     on log-price, half-life ∈ {5, 20, 60} d, same vols. OU = genuine mean-reversion.
   - Horizons: 126 d (6mo) and 252 d (1yr). npath ≥ 2000, block/param MC.

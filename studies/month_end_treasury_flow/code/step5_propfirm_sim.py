@@ -1,6 +1,6 @@
 """Step 5 — can a futures-propfirm account actually MONETISE the month-end sleeve?
 
-Portfolio/admission/barrier.py is not reusable here: it hard-codes an FTMO 2-phase
+core/admission/barrier.py is not reusable here: it hard-codes a static-floor 2-phase
 %-of-balance contract with a mandatory daily stop (``daily_stop`` must be > 0),
 whereas futures firms run a 1-phase, dollar-denominated, no-daily-loss-limit
 contract. So this is a bespoke first-passage engine with the same philosophy:

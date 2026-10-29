@@ -18,7 +18,7 @@ Each test_list contains n_test_folds arrays (one per test fold in the
 combination). We concatenate them into a single test_idx for backtest_fn.
 test_idx is sorted but may be non-contiguous (purge gaps between chunks).
 
-Relationship to Portfolio/reporting/metrics.py
+Relationship to core/reporting/metrics.py
 ----------------------------------------------
 This module does NOT compute PSR/DSR itself; those are in multi_test.py.
 hac_sharpe_ratio() and to_excess_returns() from metrics.py can be used inside
@@ -27,12 +27,12 @@ backtest_fn if callers want HAC-corrected per-path Sharpes.
 from __future__ import annotations
 
 import math
+import warnings
 from typing import Callable
 
 import numpy as np
 import pandas as pd
 
-TRADING_DAYS: int = 252
 
 
 def _infer_purge_size(returns: pd.Series) -> int:
@@ -110,11 +110,10 @@ def run_cpcv(
     - CPCV paths are correlated (each bar appears C(k-1,p-1) times in test sets).
       The per-path Sharpe distribution is NOT IID — use as an overfitting
       diagnostic, not a frequentist CI.
-    - L15 (CLAUDE.md): for SR > 1.0 strategies, distribution width matters
+    - L15: for SR > 1.0 strategies, distribution width matters
       more than the mean. Inspect the full histogram before concluding.
-    - Caveat from session deep-research: CPCV should not be applied to
-      Strategy C (NQ ORB, ~250 trades/3.5yr) — insufficient sample for
-      30+ paths with adequate train size. Apply only to Strategy A (N≥1500).
+    - CPCV needs a large sample: ~250 trades over 3.5 years is not enough for
+      30+ paths with an adequate train size; apply it to daily series (N ≥ 1500).
     """
     from skfolio.model_selection import CombinatorialPurgedCV, optimal_folds_number
 
@@ -161,7 +160,10 @@ def run_cpcv(
                 flush=True,
             )
         sr = backtest_fn(train_idx, test_idx)
-        sharpes.append(float(sr) if not math.isnan(float(sr)) else 0.0)
+        if math.isnan(float(sr)):
+            warnings.warn(f"CPCV path {i} returned a NaN Sharpe and is skipped", RuntimeWarning, stacklevel=2)
+            continue
+        sharpes.append(float(sr))
 
     if verbose:
         print(f"  CPCV {n_splits}/{n_splits} complete.{' ' * 20}")

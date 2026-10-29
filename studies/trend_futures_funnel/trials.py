@@ -1,4 +1,4 @@
-"""Local trial ledger for honest DSR (PREREG section 8). NOT the FTMO register.
+"""Local trial ledger for honest DSR (PREREG section 8). not the programme-wide register.
 Every distinct signal/system config that produces a Sharpe is appended with
 dsr_count=True; cost-stress / execution variants of the same signal use
 dsr_count=False so they don't inflate the multiple-testing penalty."""

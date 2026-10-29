@@ -43,7 +43,7 @@ SECTION 4 -- rupture ENDOGENE (date estimee, non imposee), lundi/mardi seuls
   GER40  mardi : rupture estimee au 2024-03-12 (obs 540 avant / 117 apres) ; mean_pre=4.012 mean_post=19.378 bps ; t_diff=1.730 ; p_bootstrap(recherche corrigee)=0.5000
 
 ==============================================================================
-SECTION 5 -- net de spread ET de swap FTMO (asymetrique L30 -- sleeve LONG)
+SECTION 5 -- net de spread ET de prop-firm swap (asymetrique L30 -- sleeve LONG)
 ==============================================================================
 Cout applique par NUIT tenue (Mon/Tue = 1x, pas de jour triple ici) :
   US100: RT recent (2026-08-17, natif)=1.045 bps | RT spec conservateur (2026-06)=2.200 bps | swap_long mesure=-2.126 bps/nuit (short=0.092, triple_dow=4=vendredi, non touche Mon/Tue)
@@ -103,4 +103,4 @@ SECTION 8 -- volatilite, queue, et comparaison des options (Partie D)
   GER40: MARDI SEUL (coupe lundi) -- Sharpe_ann=0.461 (mean=4.17 std=65.13 bps/nuit, n=657)
   GER40: DELEVIER PLAT (Mon+Tue a poids moitie) -- Sharpe_ann IDENTIQUE a pool (0.748, L54: le delevier ne change pas le Sharpe, seulement l'echelle) mais expectation $ divisee par 2 ET les 2 nuits/semaine sont CONSERVEES (exposition-jours inchangee, contrairement a 'mardi seul')
 
-[ecrit] <HOME>/Desktop/Algo_claude/.worktrees/desk-overnight/Multi_Asset/research/active/desk_overnight_2026-09/results/analysis_results.json
+[written] results/

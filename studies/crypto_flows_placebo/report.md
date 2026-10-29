@@ -21,7 +21,7 @@ perps decline unconditionally — disguised short-alt beta, the exact failure mo
 to catch. **I-3 (funding-extremes IC): FAIL on all horizons** — extreme-high funding (P>97.5,
 n=999) precedes *continuation* (+20/+30/+113 bps at 8h/24h/72h), worst in the 2020-21
 funding-stays-extreme regime (+239 bps @72h against the contrarian short); the low tail is
-sub-threshold and regime-unstable. This replicates README §6.35's momentum-proxy verdict on
+sub-threshold and regime-unstable. This replicates the earlier momentum-proxy verdict on
 Binance 2020-2026 with an independent spec → **I-4 (carry-sizing overlay) is VOID** and the queued
 directional funding-contrarian candidate is dead twice over. **I-2: STOP(data)** (no free ≥3y hourly
 long/short liquidation history; $0 acquisition path memo'd). **F-1: STOP(prior)** (vrp_deribit
@@ -115,9 +115,9 @@ wrong-signed everywhere (momentum continuation), and 2020-21 is the worst case e
 pre-registration warned ("funding-stays-extreme-for-months trap"). The 24h low-tail bounce
 (+38.7, t 1.58) is the only contrarian-signed cell — sub-threshold and 2022-unstable. Leg (ii)
 (liquidation intensity) N/A(data). **Replication note:** independent spec (Binance vs HL, 2020-26 vs
-2023-26, percentile vs z-score, 13 vs 3 symbols) reproduces README §6.35's verdict — funding
+2023-26, percentile vs z-score, 13 vs 3 symbols) reproduces the earlier verdict — funding
 extremes confirm momentum, they do not signal reversal. **I-4 VOID; the queued directional
-funding-contrarian candidate dies with it (and was already dead by §6.35 — both recorded).**
+funding-contrarian candidate dies with it (and was already dead by the earlier finding — both recorded).**
 
 ## F-1 — VRP feasibility — STOP(prior)
 
@@ -134,13 +134,13 @@ the same DVOL-vs-RV object) should be archived onto this prior.
 
 ## Registry — delta and chain check
 
-Chain: `positive_dsr_register/REGISTER.md` audit **108** (2026-06-09) → announcement_premium +4 →
+Chain: trial registry at **108** (2026-06-09) → announcement_premium +4 →
 112 → backwardation_oil +3 → **115** (2026-06-10, incl. session_H +0) → **session_I +2 (I-1, I-3)
-→ 117**. Ledger line appended to REGISTER.md. Queued-candidate rationale recorded: directional
-funding-contrarian = dead (README §6.35 + I-3); unlock-drift = dead (I-1 K2/K3); VRP paid-data = dead
+→ 117**. Queued-candidate rationale recorded: directional
+funding-contrarian = dead (earlier finding + I-3); unlock-drift = dead (I-1 K2/K3); VRP paid-data = dead
 (F-1 prior). No survivors → **no paper-trade spec issued** (methodology step 5 not reached).
 
-## Candidats-leçons (NOMMÉS, non numérotés — max graven L = L24, candidates cited to L44)
+## Candidate lessons (NAMED, not numbered — max graven L = L24, candidates cited to L44)
 
 > **LESSON-CANDIDATE: unlock-drift-is-short-alt-beta** — a calendar-event claim on a structurally
 > bleeding universe must clear a *matched placebo calendar*, not just significance/decay/DSR gates:
@@ -162,9 +162,8 @@ funding-contrarian = dead (README §6.35 + I-3); unlock-drift = dead (I-1 K2/K3)
 ---
 *Discipline: delay-1 everywhere; UTC native; no same-bar fills (L26 — entry==funding-timestamp
 resolves to next); no synthetic data; gaps failed loud (5 events skipped I-3, 1 symbol dropped I-1,
-3+1 delisted symbols resolved via Vision archive fallback, all logged). `_automation/` and live
-strategy configs untouched; Strategy B untouched. Artifacts: `preregistration.md` (+ appended
-results), `phase0_audit.md`, `i1_coverage.md`, `i1_results.json`, `i3_results.json`,
+3+1 delisted symbols resolved via Vision archive fallback, all logged). Live strategy configs untouched. Artifacts: `preregistration.md` (+ appended
+results), `i1_coverage.md`, `i1_results.json`, `i3_results.json`,
 `i2_data_memo.md`, `figures/`, `code/` (lib_data, i1_build_events, i1_run, i3_fetch, i3_run,
 make_figs). Caches regenerable, gitignored. No orphan reports — everything in this directory is
 committed (commit-or-delete, session_H lesson).*

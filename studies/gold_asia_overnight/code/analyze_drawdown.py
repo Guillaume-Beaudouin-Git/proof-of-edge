@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE))
 from engine import data, stats as S  # noqa: E402
 
 ANN = 252.0; WIN = [23, 0, 1, 2, 3, 4, 5, 6]; SPREAD = 1.5

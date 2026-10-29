@@ -14,7 +14,7 @@ process. Metric per prereg = ruin probability + E[g], NOT Sharpe (which is the a
 | Cap 3 | 12.0% | 35.8% | 12,005 |
 | Flat | 0.1% | 6.8% | 11,994 |
 
-Mean final ≈ €12,000 for ALL variants → **martingale creates zero edge**; it only trades P(small win)
+Mean final ≈ the starting balance for ALL variants → **martingale creates zero edge**; it only trades P(small win)
 for P(catastrophe). More doublings / bigger base = more ruin, same E.
 
 **Real small edge (p=53%, 1:1), 3yr:**

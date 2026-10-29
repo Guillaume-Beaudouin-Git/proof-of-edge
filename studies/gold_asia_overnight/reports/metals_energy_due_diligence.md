@@ -41,7 +41,7 @@ Both instruments trade ~24/5, and — exactly as for gold — their **positive d
 | Monte-Carlo P(SR>1) | **92%** [5th-pct SR 0.93] | 62% [5th-pct 0.59] |
 | **Break-even spread (RT)** | **~5.3 bp** | ~3.5 bp |
 
-![Silver & WTI gross equity and per-year Sharpe](../metals_energy_research/results/fig_silver_wti.png)
+*(silver/WTI figure not published)*
 
 **Net Sharpe by round-trip spread** (the decision variable; cost = one quoted spread, commission 0, swap-free):
 
@@ -78,5 +78,5 @@ For FTMO actionability (edge ÷ realistic spread, robustness):
 
 ---
 
-*Reproduce:* `python metals_energy_research/{candidates,diagnostic,final_analysis}.py`
-*Artefacts:* `metals_energy_research/results/fig_silver_wti.png`. *Method mirrors* `reports/gold_ASIA_23_8_due_diligence.md`.
+*Reproduce:* the metals/energy scripts (not published)
+*Artefacts:* the metals/energy basket figures (not published). *Method mirrors* `reports/gold_ASIA_23_8_due_diligence.md`.

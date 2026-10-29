@@ -14,8 +14,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import os
+
 PROJ = Path(__file__).resolve().parents[1]
-REPO = PROJ.parent  # .../Algo_claude
+REPO = Path(os.environ.get("RESEARCH_ROOT", PROJ.parent))  # the private research repository, or a data mirror
 CRYPTO_ZIPS = PROJ / "data_cache" / "crypto_5m" / "_zips"
 CRYPTO_PARQUET = PROJ / "data_cache" / "crypto_5m"
 GOLD_CACHE = PROJ / "data_cache" / "gold"

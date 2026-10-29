@@ -2,7 +2,7 @@
 
 **Date frozen:** 2026-07-15, before any H7 result. **Modified evaluation** (Sharpe is inadmissible here).
 
-## H7 — Do martingale / grid sizing overlays create deployable edge on a €12k account?
+## H7 — Do martingale / grid sizing overlays create deployable edge on a small personal account?
 
 - **Null hypothesis (prior):** martingale (double-after-loss) and grid (accumulate against move) are
   **position-sizing overlays, not alpha**. Theory says E[return] is set by the underlying signal, not the
@@ -22,7 +22,7 @@
     Fixed spacing g, fixed lot/level; buy on −g, take-profit on +g; two variants: (a) UNBOUNDED inventory,
     (b) CAPPED at L levels then flat. Track cash + inventory MtM.
   - **Martingale:** base bet = long-after-down-day on an index (~50% win, near-fair). Bet = base·2^(losses),
-    reset on win; variants: K∈{unbounded, cap 3, cap 5}. Account €12k, base = 1% risk.
+    reset on win; variants: K∈{unbounded, cap 3, cap 5}. Small personal account, base = 1% risk.
 - **Kill / promote rule (frozen):**
   - PROMOTE only if MC **P(ruin over 3yr) < 20%** AND **E[g] > 0** after cost. Else CLASSIFY as
     artifact (smooth-Sharpe / ruin-tail), NOT deployable.

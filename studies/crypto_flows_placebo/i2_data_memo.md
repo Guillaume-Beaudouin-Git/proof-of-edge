@@ -9,7 +9,7 @@ the deliverable: source, cost, EV of acquiring.*
 Per-symbol hourly liquidation notional, long/short split, ≥3 years (must include the Oct-2025 and
 Nov-2025 cascades as in-sample stress windows), for the ~13-symbol liquid-perp universe.
 
-## Free sources audited (all FAIL — probes in `phase0_audit.md` §2 D3)
+## Free sources audited (all FAIL — probes in the phase-0 audit §2 D3, not published)
 | Source | Result |
 |---|---|
 | Binance Vision bulk | No `liquidationSnapshot` data type under `futures/um/daily/` (2026-06-10 listing). `forceOrder` websocket = live-only AND throttled to 1 msg/s/symbol since 2021-04-27 (notional censoring even if recorded from now on). |

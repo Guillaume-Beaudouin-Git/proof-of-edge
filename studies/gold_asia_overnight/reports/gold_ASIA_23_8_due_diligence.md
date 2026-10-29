@@ -39,7 +39,7 @@ Crucially, the 8-hour window return is **uncorrelated with the full-day close-to
 
 > Each day: **BUY XAUUSD at 23:00 UTC, SELL at 07:00 UTC.** Enter *after* the 21:00–22:00 UTC rollover and exit before the next → the position is never held across a rollover → **no financing swap**. Position size = vol-target multiplier (trailing-median realised vol of the window return ÷ trailing 20-day vol, capped 3×, computed from past data only; average leverage ≈ 1.05×). Trade **complete windows only** (skip any day missing a window hour). Spread cost only.
 
-Reference implementation: `gold_research/strategy_overnight.py` (self-contained, reproduces the figures below).
+Reference implementation: `code/strategy_overnight.py` (self-contained, reproduces the figures below).
 
 ## 4. Data, methodology & code attestation
 
@@ -49,9 +49,9 @@ Reference implementation: `gold_research/strategy_overnight.py` (self-contained,
 
 ## 5. Performance
 
-![Equity, drawdown, per-year, Monte-Carlo](../gold_research/results/fig_stress_test.png)
+![Equity, drawdown, per-year, Monte-Carlo](../code/results/fig_stress_test.png)
 
-![Monthly net return heatmap](../gold_research/results/fig_monthly_heatmap.png)
+![Monthly net return heatmap](../code/results/fig_monthly_heatmap.png)
 
 Equity compounds ~6× over the sample at 6.8% volatility. Returns are broad-based across months and years (17/20 positive), not concentrated in a few prints (dropping the 20 best days of ~5,000 still leaves Sharpe 0.82). The **positive daily skew (+0.35)** is unusual and valuable: unlike option-selling/carry strategies, the tail is on the **upside**, so the strategy does not blow up on a bad day (worst day −3.8% in 19 years).
 
@@ -59,7 +59,7 @@ Equity compounds ~6× over the sample at 6.8% volatility. Returns are broad-base
 
 ### 6.1 Drawdown profile — and what drove 2017–2021 (the key question)
 
-![Underwater curve & rolling 12-month Sharpe](../gold_research/results/fig_underwater_rolling.png)
+![Underwater curve & rolling 12-month Sharpe](../code/results/fig_underwater_rolling.png)
 
 | Worst drawdowns | Peak → Trough → Recover | Depth | Duration |
 |---|---|--:|--:|
@@ -137,5 +137,5 @@ Gold is among the most liquid markets globally (spot turnover > $100 bn/day; COM
 
 ---
 
-*Reproduction:* `python gold_research/{eda,candidates,mod2,validate,intraday_noswap,refine_noswap,audit_code,risk_audit,stress_mc,analyze_drawdown}.py`
-*Strategy code:* `gold_research/strategy_overnight.py` · *Audit:* `reports/gold_strategy_risk_audit.md` · *Research narrative:* `reports/gold_overnight_strategy.md`
+*Reproduction:* `python code/{eda,candidates,mod2,validate,intraday_noswap,refine_noswap,audit_code,risk_audit,stress_mc,analyze_drawdown}.py`
+*Strategy code:* `code/strategy_overnight.py` · *Audit:* `reports/gold_strategy_risk_audit.md` · *Research narrative:* `reports/gold_overnight_strategy.md`

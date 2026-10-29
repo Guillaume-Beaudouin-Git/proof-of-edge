@@ -2,13 +2,13 @@
 barrier.py — translate a Sharpe improvement into the metric that actually pays:
 probability of passing a 2-phase propfirm challenge, and time to funded.
 
-Sharpe is a means, not the objective. On a $10k FTMO-style account the objective
+Sharpe is a means, not the objective. On a small prop-firm account the objective
 is a **first-passage** problem against three barriers:
 
     * profit target   +10% (phase 1) then +5% (phase 2), from phase start
     * daily stop      -5% intraday from the day's starting balance
-    * static floor    -10% from the *initial* balance (FTMO is static, not
-      trailing — see memory note ``ftmo_dd_model_static_2026-07``)
+    * static floor    -10% from the *initial* balance (FTMO's floor is static, not
+      trailing)
 
 Two consequences that Sharpe alone hides and this module exposes:
 
@@ -21,7 +21,7 @@ Two consequences that Sharpe alone hides and this module exposes:
     Sharpe suggests. That is exactly the diversifier the ratio gate rejects.
 
 The engine is a plain daily-resolution Monte Carlo over historical or bootstrap
-paths. It is deliberately independent of ``data/ftmo_portfolio`` so it can be
+paths. It is deliberately independent of the live-book data folder so it can be
 unit-tested; it is a *comparative* tool (Delta p between two books on the same
 paths), not a replacement for the audited cleanroom funnel.
 """
@@ -43,7 +43,7 @@ class BarrierConfig:
     FTMO-style 2-phase challenge barriers, expressed as fractions of the
     *initial* balance (static floor, per the live account model).
 
-    Defaults are the FTMO $10k 2-step contract used by this project.
+    Defaults are the two-step contract used by this project.
     """
 
     target_p1: float = 0.10
@@ -156,7 +156,7 @@ def simulate_campaign(
         :class:`CampaignResult`. ``p_pass`` is the probability of clearing
         *both* phases; ``median_days_to_funded`` is over passing paths only.
     """
-    from Portfolio.admission.marginal import stationary_bootstrap_indices
+    from core.admission.marginal import stationary_bootstrap_indices
 
     cfg = cfg or BarrierConfig()
     r = np.asarray(pd.Series(daily_returns).dropna().values, dtype=float) * float(scale)
@@ -227,7 +227,7 @@ def pass_probability_delta(
     diversification effect, which is the quantity under test. Set it to False
     only when you want the effect of the sleeve *at unchanged gross exposure*.
     """
-    from Portfolio.admission.marginal import _resolve_weights  # noqa: PLC0415
+    from core.admission.marginal import _resolve_weights  # noqa: PLC0415
 
     cfg = cfg or BarrierConfig()
     book_df = book.to_frame("book") if isinstance(book, pd.Series) else book.copy()

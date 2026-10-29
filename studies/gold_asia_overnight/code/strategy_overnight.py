@@ -93,7 +93,7 @@ def backtest(h1: pd.DataFrame, spread_bps: float | None = None,
 if __name__ == "__main__":
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    sys.path.insert(0, str(Path(__file__).resolve().parents[0]))
     from engine import data, stats as S
 
     h1 = data.load_h1("XAUUSD")

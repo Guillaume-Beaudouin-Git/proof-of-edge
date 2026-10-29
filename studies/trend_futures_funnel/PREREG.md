@@ -3,8 +3,7 @@
 **Status: LOCKED 2026-06-14, before any signal/return/metric computation.**
 Any change to the kill criteria, gates, universe, cost model, or hypotheses below AFTER
 data contact invalidates the pre-registration and must be logged as such in REPORT.md.
-This file is git-committed as the lock. Separate program from FTMO — does NOT touch the
-FTMO `REGISTER.md` (single-writer convention). Trials are logged in `trials_log.csv` here.
+This file is git-committed as the lock (private repository, commit 6163805, 2026-06-14 14:27). Trials are logged in `trials_log.csv` here.
 
 ---
 
@@ -173,7 +172,7 @@ the same realized vol)
 ## 11. Reproduction / engine
 
 Reuse the verified `data/seykota_trend/engine.py` (V1–V7 pass: accounting identity, no
-look-ahead, fill integrity, −1R bounded). Port into `strategies/trend_futures/engine.py` with:
+look-ahead, fill integrity, −1R bounded). Port into `studies/trend_futures_funnel/engine.py` with:
 futures per-instrument bp costs, explicit roll-day cost, no swap, an integer-micro sizing mode.
 Re-run the V1–V7 verification on the futures port before trusting any number.
 

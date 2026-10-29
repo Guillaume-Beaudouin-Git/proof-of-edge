@@ -3,15 +3,16 @@ Performance metrics for strategy tear sheets.
 
 All Sharpe computations use:
   - Excess returns (daily returns minus DTB3 RF via FRED, annualised fraction / 365)
-  - HAC Newey-West standard errors, lag = 6 (CLAUDE.md §Methodology L8)
+  - HAC Newey-West standard errors, lag = 6 (programme rule: HAC, lag 6)
 
 PSR/DSR follow Bailey & López de Prado (2012/2014) exactly, consistent with
-_automation/feasibility/stats/dsr.py (same formulas, self-contained for path safety).
+a sibling module (same formulas, kept self-contained).
 """
 from __future__ import annotations
 
 import io
 import math
+import warnings
 from typing import Optional
 
 import numpy as np
@@ -57,10 +58,12 @@ def fetch_risk_free(start: pd.Timestamp, end: pd.Timestamp) -> pd.Series:
     bdays = pd.bdate_range(start, end)
     rf_raw = _fetch_fred_dtb3_raw()
     if rf_raw is None:
+        warnings.warn("FRED DTB3 unreachable: risk-free rate set to zero, returns are NOT excess returns", RuntimeWarning, stacklevel=2)
         return pd.Series(0.0, index=bdays)
     mask = (rf_raw.index >= start) & (rf_raw.index <= end)
     rf_period = rf_raw.loc[mask]
     if rf_period.empty:
+        warnings.warn("No FRED DTB3 observation in the requested period: risk-free rate set to zero", RuntimeWarning, stacklevel=2)
         return pd.Series(0.0, index=bdays)
     return rf_period.reindex(bdays).ffill().fillna(0.0)
 
@@ -102,7 +105,7 @@ def hac_sharpe_ratio(
     returns_excess : pd.Series
         Daily excess returns (already RF-subtracted).
     lag : int
-        Newey-West bandwidth (default 6, CLAUDE.md L8).
+        Newey-West bandwidth (default 6, the programme's HAC rule).
 
     Returns
     -------

@@ -16,12 +16,12 @@ substitution) mean-revert OOS where data-mined pairs do not (L44 mechanism-first
 
 | Spread | 1× CAGR | 1× max-DD | 2× CAGR | 2× max-DD | two-sided |
 |---|---|---|---|---|---|
-| Gasoline-Crude | +5.4% | −29% | +9.0% | −49% | ✅ |
-| HeatOil-Crude | +4.3% | −30% | +7.4% | −47% | ✅ |
-| WTI-Brent | +3.2% | −39% | +5.7% | −66% (ruin) | ✅ |
-| Corn-Wheat | +3.3% | −36% | +5.8% | −58% | ✅ |
+| Gasoline-Crude | +5.4% | −29% | +9.0% | −49% | PASS |
+| HeatOil-Crude | +4.3% | −30% | +7.4% | −47% | PASS |
+| WTI-Brent | +3.2% | −39% | +5.7% | −66% (ruin) | PASS |
+| Corn-Wheat | +3.3% | −36% | +5.8% | −58% | PASS |
 
-**Audit catch:** the OU-MC (calibrated to half-life+vol) reported 0% ruin and €13k — it was IDEALIZED
+**Audit catch:** the OU-MC (calibrated to half-life+vol) reported 0% ruin and a positive terminal balance — it was IDEALIZED
 (stable mean). The real path (drifting mean, 2020 oil crash) shows −29 to −39% DD at 1× and ruin at 2×.
 Lead with the real path, not the MC.
 
@@ -33,14 +33,14 @@ Lead with the real path, not the MC.
 3. **DD is large and regime-driven** (−29 to −39% at 1×): the drawdowns come from exactly the H8-predicted
    trend-against-grid mode (2020 crack blowout). **H8 trend kill-switch is mandatory** (would have cut 2020).
 4. **Not an aggressive scaler:** leverage to raise return breaches the DD budget (2× → −47 to −66%).
-5. **€12k deployment blockers:** granularity (crack = full-size RB+HO+CL, no micros → ~$60-140k notional →
-   untradable at €12k); L5 roll contamination of continuous front-month spreads → magnitude provisional.
+5. **Small-account deployment blockers:** granularity (crack = full-size RB+HO+CL, no micros → ~$60-140k notional →
+   untradable at small account size); L5 roll contamination of continuous front-month spreads → magnitude provisional.
 
 ## Verdict
 
 The grid hunt succeeded on its narrow question (a real mean-reverting underlying exists) and failed on the
 user's actual goal (aggressive scaling). Gasoline-Crude / HeatOil-Crude crack-spread grids are a
 **legitimate but modest decorrelated sleeve** (~SR 0.5-0.7 class), on par with H3/H4, more DD-heavy, with
-a mandatory trend kill-switch and a €12k granularity blocker. Consistent with the session's constant
+a mandatory trend kill-switch and a small-account granularity blocker. Consistent with the session's constant
 lesson: **real edges are modest (~SR 0.5-1.0); no single-engine aggressive scaler exists** — growth comes
 from combining modest decorrelated sleeves at fractional Kelly, not from a hot strategy or a sizing trick.

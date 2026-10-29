@@ -111,7 +111,7 @@ short −27.4k** — shorts lose on NQ/ES/GC/6A/6E, profit only on CL/6B (→ K2
 
 ## 3. Marginal contribution to the A+B book (the real deliverable)
 
-Book params (CLAUDE.md / `_audit/portfolio_recalc_2026-06-10.md`): SR_A 1.33, SR_B 2.0 (proxy, L14),
+Book params as documented on 2026-06-10 (SR_A 1.33, SR_B 2.0 proxy per L14 — figures the programme has since retracted; the NO-GO verdict rests on K1 and K2 and does not depend on them),
 ρ_AB 0.039 → **canonical equal-risk book Sharpe 2.310** (reproduced exactly). A reconstructed from
 crypto (Sharpe 1.24 ≈ documented), B from the delta-neutral ledger (sparse, n=94).
 
@@ -151,8 +151,8 @@ justification** — this is a clean kill, logged as a deliverable.
 ## 5. Deployable config
 **None.** NO-GO. No configuration passes RESEARCH_PASS ∧ Book-slot ∧ (¬K1 ∧ ¬K2 ∧ ¬K3).
 
-## 6. Candidate lessons (named, not numbered — engrave at reconciliation per CLAUDE.md)
-- **`futures-removes-swap-but-edge-was-thin`**: the futures re-test confirms swap was the FTMO
+## 6. Candidate lessons (named, not numbered — engraved at the next reconciliation)
+- **`futures-removes-swap-but-edge-was-thin`**: the futures re-test confirms swap was FTMO
   killer (cost-immune: 0.50→0.47 @3×), but the swap-free edge is sub-threshold (SR 0.50) — the
   weekly/daily non-crypto trend corner is closed on its *own thinness*, not on costs. Complements L36.
 - **`trend-decorrelation-vs-sharpe-tradeoff`**: the L25/K2 fix for a long-drift universe (drop the
@@ -171,15 +171,14 @@ justification** — this is a clean kill, logged as a deliverable.
 
 ## 7. Reproduction
 ```
-PY="/Users/.../Unholy returns/Python3.12.9/myenv/bin/python"   # pandas/pyarrow/statsmodels/yfinance
-$PY strategies/trend_futures/data_build.py        # build continuous bars (network: yfinance)
-$PY strategies/trend_futures/verify.py            # V1-V7
-$PY strategies/trend_futures/funnel_p1_ic.py      # Phase 1 IC gate
-$PY strategies/trend_futures/funnel_p2_backtest.py# Phase 2 + trial ledger seed
-$PY strategies/trend_futures/funnel_p3_robust.py  # Phase 3 grid/ablation/WF/bootstrap
-$PY strategies/trend_futures/funnel_p4.py         # Phase 4 H1/H2/H3 + crypto-short
-$PY strategies/trend_futures/funnel_dsr.py        # K1 DSR over full trial count
-$PY strategies/trend_futures/funnel_p8_marginal.py# K3 marginal-to-A+B (network: yfinance)
+PY="python3"   # pandas/pyarrow/statsmodels/yfinance
+$PY studies/trend_futures_funnel/data_build.py        # build continuous bars (network: yfinance)
+$PY studies/trend_futures_funnel/verify.py            # V1-V7
+$PY studies/trend_futures_funnel/funnel_p1_ic.py      # Phase 1 IC gate
+$PY studies/trend_futures_funnel/funnel_p2_backtest.py# Phase 2 + trial ledger seed
+$PY studies/trend_futures_funnel/funnel_p3_robust.py  # Phase 3 grid/ablation/WF/bootstrap
+$PY studies/trend_futures_funnel/funnel_p4.py         # Phase 4 H1/H2/H3 + crypto-short
+$PY studies/trend_futures_funnel/funnel_dsr.py        # K1 DSR over full trial count
+$PY studies/trend_futures_funnel/funnel_p8_marginal.py# K3 marginal-to-A+B (network: yfinance)
 ```
 Artifacts: `results/*.json|*.parquet`, `daily/*.parquet` (regenerable, gitignored), `trials_log.csv`.
-Separate program — `PREREG.md`/this report do **not** touch the FTMO `REGISTER.md`.

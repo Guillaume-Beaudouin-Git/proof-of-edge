@@ -183,7 +183,7 @@ def main() -> None:
                     f"{r['rel_err']:+.1%} |\n" if pd.notna(r["rel_err"]) else
                     f"| {r['token']} | {r['date']} | — | — | FAIL |\n")
         f.write("\n")
-        f.write("Coverage bias (from phase0_audit): DefiLlama list skews to post-2022 survivors; "
+        f.write("Coverage bias (from the phase-0 audit): DefiLlama list skews to post-2022 survivors; "
                 "early-cycle dead tokens absent at the SOURCE; Binance-perp requirement is the binding "
                 "selection and Vision retains delisted symbols, so exchange-side survivorship is handled; "
                 "calendar-side survivorship remains and is reported, not hidden.\n")

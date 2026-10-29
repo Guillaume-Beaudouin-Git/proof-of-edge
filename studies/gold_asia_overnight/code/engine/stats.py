@@ -1,7 +1,7 @@
 """
 Performance and statistical-significance metrics shared across all modules.
 
-Methodology choices (aligned with the project constitution in CLAUDE.md):
+Methodology choices (aligned with the programme rules):
 - Sharpe is computed on a REGULARLY SAMPLED return series (daily realized P&L)
   and annualised by sqrt(trading_days_per_year). We never annualise a per-trade
   series by sqrt(252) (lesson L47).
@@ -173,7 +173,7 @@ def fold_metrics(daily_returns, n_folds: int = 5, periods_per_year: float = 365.
     Split a daily return series into n_folds equal-time segments and report the
     Sharpe of each. For rule-based strategies with no fitted parameters every
     segment is effectively out-of-sample, so the fraction of positive folds is a
-    walk-forward consistency score (CLAUDE.md gate: WF > 50% / 60%).
+    walk-forward consistency score (programme gate: WF > 50% / 60%).
     """
     r = np.asarray(daily_returns, dtype=float)
     n = r.size

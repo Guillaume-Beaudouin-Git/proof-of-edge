@@ -7,6 +7,7 @@ canonical A+B SR=2.31 and (ii) optimal tangency. Book-slot gate: marginal uplift
 > 0 AND monthly corr(sleeve, A) < 0.4. D-gate (2.54) reported for context.
 """
 from __future__ import annotations
+import os
 import sys, warnings
 from pathlib import Path
 import numpy as np
@@ -18,12 +19,12 @@ sys.path.insert(0, str(HERE))
 from engine import Params, load_universe, simulate, build_costs, load_specs
 import metrics as M
 
-ROOT = Path("<HOME>/Desktop/Algo_claude")
+ROOT = Path(os.environ.get("RESEARCH_ROOT", "."))
 CORE = ["NQ", "ES", "GC", "CL", "6E", "6A", "6B"]
 specs = load_specs(); PER, ROLL, MULT = build_costs(specs); DATA = load_universe(CORE)
 others = tuple(s for s in CORE if s != "CL")
 
-# documented book params (CLAUDE.md / _audit/portfolio_recalc_2026-06-10.md)
+# book params as documented on 2026-06-10 (since retracted; kept so that K3 reproduces)
 SR_A, SR_B, RHO_AB = 1.33, 2.0, 0.039
 
 

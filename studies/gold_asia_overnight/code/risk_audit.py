@@ -20,7 +20,7 @@ import statsmodels.api as sm
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE))
 from engine import data, stats as S  # noqa: E402
 
 ANN = 252.0

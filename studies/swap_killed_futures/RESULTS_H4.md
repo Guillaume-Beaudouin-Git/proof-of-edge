@@ -9,11 +9,11 @@ OOS 2013-2026.
 
 | # | Criterion | Result | Pass |
 |---|---|---|---|
-| 1 | Beat B&H | seasonal book **SR 1.13** vs EW B&H commodities **0.54** | ✅ |
-| 2 | Non-beta / timing | selection sign-frozen on train, traded blind OOS; beats passive commodity hold | ✅ |
-| 3 | DSR ≥ 0.70 | N=1 (OOS-validated single family) DSR=1.00; placebo corroborates | ✅ |
-| 4 | Regime-stable | **2013-2019 SR 1.15 · 2020-2026 SR 1.16** — near-identical across two very different regimes | ✅ strong |
-| 5 | Placebo / not-mined | book SR 1.13 vs 1000 random-month-selection books **p95=0.51, empirical p=0.000** | ✅ strong |
+| 1 | Beat B&H | seasonal book **SR 1.13** vs EW B&H commodities **0.54** | PASS |
+| 2 | Non-beta / timing | selection sign-frozen on train, traded blind OOS; beats passive commodity hold | PASS |
+| 3 | DSR ≥ 0.70 | N=1 (OOS-validated single family) DSR=1.00; placebo corroborates | PASS |
+| 4 | Regime-stable | **2013-2019 SR 1.15 · 2020-2026 SR 1.16** — near-identical across two very different regimes | PASS strong |
+| 5 | Placebo / not-mined | book SR 1.13 vs 1000 random-month-selection books **p95=0.51, empirical p=0.000** | PASS strong |
 
 OOS ann 19.5%, vol 17.2%, MaxDD −32.0% (fits the DD budget), skew −0.32 (mild).
 
@@ -47,8 +47,8 @@ This — not a single levered engine — is the realistic path to controlled-DD 
 ## Next
 
 1. Re-run H4 on roll-adjusted / true-excess data → lift the PROVISIONAL flag (or discount the magnitude).
-2. Measure H3×H4 realized correlation → confirm the diversification, build combined-book ERC sizing at €12k.
+2. Measure H3×H4 realized correlation → confirm the diversification, build combined-book ERC sizing at small account size.
 3. Optionally continue for a 3rd decorrelated sleeve (FX/rates flow, or the deferred H2 carry with curve data).
 
 ---
-**⚠️ CORRECTION 2026-07-15 (roll audit, see ROLL_AUDIT.md):** on independent roll-clean data (deep_history broker-continuous) this sleeve collapses to Sharpe **0.47** and fails its placebo (p=0.086). The 1.13 was largely a seasonal roll-yield artefact. **H4 DROPPED from the deployable book** — the L5 flag is NOT lifted.
+**NOTE CORRECTION 2026-07-15 (roll audit, see ROLL_AUDIT.md):** on independent roll-clean data (deep_history broker-continuous) this sleeve collapses to Sharpe **0.47** and fails its placebo (p=0.086). The 1.13 was largely a seasonal roll-yield artefact. **H4 DROPPED from the deployable book** — the L5 flag is NOT lifted.

@@ -3,20 +3,20 @@ import numpy as np
 import pytest
 from numpy.typing import NDArray
 
-from Portfolio.risk.trailing_dd_simulator import (
+from core.risk.trailing_dd_simulator import (
     PropfirmConfig,
     RunResult,
     simulate_run,
     simulate_n_runs,
     make_gaussian_generator,
-    make_iter10_trade_generator,
+    make_nq_trade_generator,
 )
 
 # Canonical Select Flex 25K defaults (matches module defaults)
 DEFAULT = PropfirmConfig()
 
 # Historical baseline config: 3 MNQ + $1,500 eval DD (the "old wrong" config)
-# This reproduces the known 66%/27% from propfirm_tradeify_25k_sizing.py v1.
+# This reproduces the known 66%/27% from the original sizing script v1.
 BASELINE_CONFIG = PropfirmConfig(
     trailing_dd_eval=1_500.0,
     trailing_dd_funded=1_500.0,
@@ -127,18 +127,18 @@ class TestFundedPhase:
 class TestBaselineReproduction:
 
     def test_baseline_iter10_reproduction(self):
-        """Reproduce known 66%/27% from propfirm_tradeify_25k_sizing.py block bootstrap.
+        """Reproduce known 66%/27% from the original sizing script block bootstrap.
 
         Config: 3 MNQ + $1,500 eval DD (historical baseline, "old wrong" config).
         Generator: trade-based Bernoulli (bounded losses from hard SL cap).
-          iter_10 avg_winner_nq=$1,571.60, avg_loser_nq=-$421.45, win_rate=27.75%,
+          NQ study avg_winner_nq=$1,571.60, avg_loser_nq=-$421.45, win_rate=27.75%,
           trade_freq=45.8%. Max daily loss for 3 MNQ = $127.19 (hard SL cap).
         Targets: P(eval pass) in [61%, 71%], P(bust) in [22%, 32%].
 
         Note: Gaussian generators over-estimate bust probability because they allow
         single-day losses exceeding the hard SL cap. Trade-based generator is required.
         """
-        gen = make_iter10_trade_generator(
+        gen = make_nq_trade_generator(
             n_days=BASELINE_CONFIG.max_eval_days + BASELINE_CONFIG.funded_days,
             n_mnq=BASELINE_N_CONTRACTS,
             seed=SEED_BASELINE,
@@ -148,7 +148,7 @@ class TestBaselineReproduction:
         p_pass = result.p_eval_pass
         p_bust = result.p_bust
 
-        print(f"\n  iter_10 baseline (3 MNQ, DD=$1,500, unlimited):")
+        print(f"\n  NQ baseline (3 MNQ, DD=$1,500, unlimited):")
         print(f"  P(pass)={p_pass:.1%}  P(bust)={p_bust:.1%}  P(timeout)={result.p_timeout:.1%}")
         print(f"  E[days_to_target]={result.e_days_to_target:.0f}d")
 

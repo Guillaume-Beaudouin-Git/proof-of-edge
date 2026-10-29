@@ -24,7 +24,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-sys.path.insert(0, str(HERE.parent))
+sys.path.insert(0, str(HERE))
 from engine import stats as S  # noqa: E402
 import intraday as iz  # noqa: E402
 

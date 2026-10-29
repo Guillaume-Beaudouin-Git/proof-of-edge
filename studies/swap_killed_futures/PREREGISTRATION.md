@@ -1,7 +1,6 @@
 # PRE-REGISTRATION — Swap-killed families re-examined on IBKR real-futures costs
 
 **Date frozen:** 2026-07-15 · **Author:** quant research session (personal-account universe)
-**Branch:** `claude/research-swapkilled-futures-2026-07` (worktree, off `origin/main`)
 **Status:** FROZEN before any result. Any change to signal/kill-rules after a result = new N, logged.
 
 > **This file is written and committed BEFORE running a single backtest.** Results go in
@@ -36,7 +35,7 @@ basis, not charged as a marked-up nightly swap).
 
 - **Vehicle:** IBKR real futures (CME/CBOT micros where they exist). No CFD, no swap markup.
 - **Objective:** a **stationary, non-beta edge** deployable for **growth-optimal (Kelly-fractional)
-  scaling** on a DD-tolerant personal account (~€12k start, DD budget 40–50%).
+  scaling** on a DD-tolerant personal account (small start, DD budget 40–50%).
 - **Not** a propfirm gate. DD is a *sizing lever*, not a selection criterion.
 
 ## 2. `PERSONAL_PASS` gate (anti-artefact — every criterion mandatory, frozen)
@@ -117,7 +116,7 @@ closed. Removing it is the experimental treatment.
 
 - Session N starts at the current repo global ledger and increments per distinct test. Each hypothesis's
   variant count is logged in its `RESULTS_H*.md`.
-- **Session close (MAIN dir, not worktree):** `python3 tools/check_register_integrity.py` before the
+- **Session close:** the registry integrity check before the
   closing commit (cited paths exist + git-tracked, N chain monotonic).
 - No live file touched. Additive folder only. No git-HEAD ops on other sessions' branches.
 

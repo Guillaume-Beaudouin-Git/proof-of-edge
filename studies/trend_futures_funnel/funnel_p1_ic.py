@@ -12,6 +12,7 @@ Gate: primary |t|>2.5 PASS; 1.65-2.5 MARGINAL (proceed, DSR decisive); else with
       secondary ~ placebo -> STOP.
 """
 from __future__ import annotations
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -20,7 +21,7 @@ import statsmodels.api as sm
 HERE = Path(__file__).resolve().parent
 DAILY = HERE / "daily"
 CORE = ["NQ", "ES", "GC", "CL", "6E", "6A", "6B"]
-RAW = Path("<HOME>/Desktop/Algo_claude/data/raw")
+RAW = Path(os.environ.get("RESEARCH_DATA_ROOT", "data")) / "raw"
 
 
 def load_rf_daily(index: pd.DatetimeIndex) -> pd.Series:

@@ -5,7 +5,7 @@ Implements:
   - deflated_sharpe(): Bailey-López de Prado (2014) DSR p-value
   - harvey_liu_bhy(): Benjamini-Hochberg-Yekutieli FDR at portfolio level
 
-Relationship to Portfolio/reporting/metrics.py
+Relationship to core/reporting/metrics.py
 ----------------------------------------------
 metrics.compute_psr_dsr() computes DSR as a single-strategy point estimate.
 deflated_sharpe() here accepts a non-annualised SR_observed + n_trials and
@@ -21,7 +21,7 @@ from typing import Sequence
 import numpy as np
 from scipy import stats as scipy_stats
 
-from Portfolio.reporting.metrics import (
+from core.reporting.metrics import (
     TRADING_DAYS,
     _expected_max_std_normal,
     _sr_se_per_period,

@@ -2,7 +2,7 @@
 
 *2026-06-10. Registry inherited N=115. Trials pre-registered here: **I-1, I-3** (+ conditional I-4
 spec, runs only if I-3 passes). I-2 = STOP(data), F-1 = STOP(prior) — NOT pre-registered (no paper
-trials), see `phase0_audit.md`. External effect sizes (Keyrock 16k-events, Tokenomist/Animoca,
+trials), see the phase-0 audit (not published). External effect sizes (Keyrock 16k-events, Tokenomist/Animoca,
 Kim n=52 preprint) are HYPOTHESIS-TIER ONLY: everything below is re-derived from raw data; no kill
 threshold is calibrated on them. Results append below the line at the end — never above.*
 
@@ -11,7 +11,7 @@ threshold is calibrated on them. Results append below the line at the end — ne
 ## Global cost model (all trials)
 
 - Taker fee **5 bps/side** (Binance UM VIP0 4 bps + buffer). Slippage **1 bp/side BTC & ETH**,
-  **4 bps/side other alts** ($10-50k clips). Live-book sanity recorded in `phase0_audit.md`
+  **4 bps/side other alts** ($10-50k clips). Live-book sanity recorded in the phase-0 audit (not published)
   (BTC ±1bp $170-830k ✓; SOL ±4bp ~$700k ✓; APT ±4bp $3-10k → alts gate also reports a **2×
   slippage stress column**, sensitivity only).
 - **Realized per-event funding** on any held perp leg, computed from the historical Binance funding
@@ -70,7 +70,7 @@ only. If categories were missing the contrast would be N/A — they are present 
 
 ## TRIAL I-3 — Funding-extremes IC study (registry +1; gates I-4)
 
-**Controlling prior (cited, not calibrated on)**: README §6.35 — funding z-score is a momentum
+**Controlling prior (cited, not calibrated on)**: an earlier study of the programme (funding z-score, 2023–26) — funding z-score is a momentum
 proxy on HL BTC/ETH/SOL 2023-26 at 1-7d (contrarian IC significantly inverted). New cells here:
 Binance 2020-2026 (incl. 2020-21 bull = the funding-stays-extreme-for-months trap), 8h horizon,
 rolling-1y percentile standardization, 13-symbol universe. Expected outcome under the prior:
@@ -94,7 +94,7 @@ Regime splits: 2020-21 / 2022 / 2023 / 2024-26.
 neither leg's sign flips in any regime split at that horizon. Anything else = FAIL ⇒ **I-4 void**
 and the queued directional funding-contrarian candidate is dead (it is already dead by §6.35 —
 both recorded in the registry rationale).
-Leg (ii) forward liquidation intensity: **N/A(data)** — D3 failed (phase0_audit §2).
+Leg (ii) forward liquidation intensity: **N/A(data)** — D3 failed (phase-0 audit §2, not published).
 
 ## TRIAL I-4 — CONDITIONAL carry-sizing overlay (runs ONLY on I-3 PASS; registry +1 if run)
 
@@ -108,7 +108,7 @@ never touched**; decision deferred to the N ≥ 250 milestone (L14).
 
 ---
 *Phase-2 discipline: delay-1, UTC, no same-bar fills (L26), fail-loud gaps, no edits to
-`_automation/` or live strategy configs. REGISTER.md +1 per trial actually run. Code and caches
+live strategy configs. Trial registry +1 per trial actually run. Code and caches
 under this directory only; raw fetched data in `cache/` (gitignored, regenerable).*
 
 ---
@@ -134,9 +134,9 @@ under this directory only; raw fetched data in `cache/` (gitignored, regenerable
   (t 1.34), +29.9 @24h, +113.2 @72h (t 1.60) — wrong sign for the contrarian short everywhere, worst in
   the 2020-21 trap regime (+239 bps @72h). Low-tail (P<2.5) right-signed at 24h (+38.7, t 1.58) but
   sub-threshold and sign-flipped in 2022 (−12.6 @72h). No horizon passes both-sides + sign-stability.
-  Replicates README §6.35 (momentum proxy) on Binance 2020-2026 with the percentile spec.
+  Replicates the earlier momentum-proxy finding on Binance 2020-2026 with the percentile spec.
 - **I-4: VOID** (gate failed; frozen overlay map never run, +0 trials). The queued directional
-  funding-contrarian candidate is dead (by §6.35 prior + this replication).
+  funding-contrarian candidate is dead (by the earlier finding + this replication).
 - **F-1: STOP(prior)** — `vrp_deribit/DECISION.md` (costs 200% of gross, 0/13 WF folds). +0 trials.
 
 **Registry: 115 → 117** (+2: I-1, I-3). No survivors → no paper-trade spec issued.

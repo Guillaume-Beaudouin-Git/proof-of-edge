@@ -44,7 +44,7 @@ From Module 2: faithfully replicated, the pin-bar + EMA filter has a **statistic
 
 Instead of guessing a pattern, I profiled where gold's returns and volatility actually live (XAUUSD M1, true-UTC, 2007–2026):
 
-![Gold hourly profile](../gold_research/results/fig_hourly_profile.png)
+![Gold hourly profile](../code/results/fig_hourly_profile.png)
 
 Two structural facts jumped out:
 
@@ -64,7 +64,7 @@ So the exploitable structure is the **overnight drift**, not candle shapes.
 
 *The numbers below validate the price edge (no swap) on the original `ON_22_8` window; the deployable swap-free `ASIA_23_8` figures are in §0. The anti-overfit conclusions — true-OOS window selection, walk-forward, plateau neighbourhood, ~1.05× leverage — carry over to `ASIA_23_8`, which shares the same vol-targeted overnight-drift mechanism shifted one hour to clear the rollover.*
 
-![ON_22_8 validation](../gold_research/results/fig_ON_22_8_validation.png)
+![ON_22_8 validation](../code/results/fig_ON_22_8_validation.png)
 
 - **True out-of-sample.** The window was re-selected using **only 2007–2018**; the search independently picked 22:00/8h, and on the **untouched 2018–2026** it delivers **Sharpe 1.08**. Not overfit.
 - **Walk-forward (window re-selected each fold).** Every fold independently selects 22:8; test-fold Sharpes **+1.51 / +3.10 / +0.33 / +2.10** — all positive.
@@ -75,18 +75,18 @@ So the exploitable structure is the **overnight drift**, not candle shapes.
 
 ## 5. The strategy (deployable)
 
-> Each day, **buy XAUUSD at 23:00 UTC, sell at 07:00 UTC** — enter *after* the rollover, exit before the next, so the position is never held across a rollover (**swap-free**). Size = vol-target multiplier (trailing-median realised vol of the window return / trailing 20-day vol, capped 3×, past data only). Flat 07:00→23:00. One round trip per day, **spread cost only**. Code: `gold_research/strategy_overnight.py` (self-contained, swap-aware; recommended `ASIA_23_8` config).
+> Each day, **buy XAUUSD at 23:00 UTC, sell at 07:00 UTC** — enter *after* the rollover, exit before the next, so the position is never held across a rollover (**swap-free**). Size = vol-target multiplier (trailing-median realised vol of the window return / trailing 20-day vol, capped 3×, past data only). Flat 07:00→23:00. One round trip per day, **spread cost only**. Code: `code/strategy_overnight.py` (self-contained, swap-aware; recommended `ASIA_23_8` config).
 
 **Economic rationale:** gold's positive drift is concentrated in the US-close→Asia window — Asian physical and official-sector (central-bank) accumulation, plus systematic re-hedging after the US settlement. The US session, dominated by macro/positioning noise, contributes ~0. Harvesting only the drift window is a *risk-timing* edge: same drift, far less exposure.
 
 ## 6. Honest caveats & next steps
 
-- **Correction from the risk audit (`reports/gold_strategy_risk_audit.md`): it is alpha, not gold beta.** Regressed on buy-&-hold gold: β = 0.012, R² = 0.001, α = +2.95 bp/day (HAC t 4.8) — the 8-hour window is orthogonal to gold's daily close-to-close move. Positive in **17/20 years incl. the 2013–15 bear**, so it is not the secular bull. The real risks are **execution, not beta**: (1) entry must be at 23:00 UTC *to the hour* (1h late → Sharpe 0.37 — the edge is the first post-rollover hour); (2) drawdowns are long (max −19%, up to ~4.8y underwater, Calmar 0.39); (3) ≤1.5 bp spread + swap-free rollover. Monte-Carlo: P(Sharpe>1)=66%, 5th-pct 0.71.
+- **Correction from the risk audit (`gold_strategy_risk_audit.md`): it is alpha, not gold beta.** Regressed on buy-&-hold gold: β = 0.012, R² = 0.001, α = +2.95 bp/day (HAC t 4.8) — the 8-hour window is orthogonal to gold's daily close-to-close move. Positive in **17/20 years incl. the 2013–15 bear**, so it is not the secular bull. The real risks are **execution, not beta**: (1) entry must be at 23:00 UTC *to the hour* (1h late → Sharpe 0.37 — the edge is the first post-rollover hour); (2) drawdowns are long (max −19%, up to ~4.8y underwater, Calmar 0.39); (3) ≤1.5 bp spread + swap-free rollover. Monte-Carlo: P(Sharpe>1)=66%, 5th-pct 0.71.
 - **Overnight execution.** 22:00–06:00 UTC spans liquid hours (US post-close, Asian session); the cost grid confirms robustness to ~3.5 bp, but live spreads at 22:00 UTC should be monitored.
 - **Next steps to harden / de-beta:** (1) a market-neutral version (overnight-long minus a slow gold-trend or a small daytime short) — tested here, lower Sharpe due to 2× turnover, but removes beta; (2) refine fills on M1 (engine supports it); (3) size within a portfolio against the existing book (low correlation to the crypto/FX sleeves).
 
 **Bottom line:** the pin-bar idea was correctly abandoned; the structural overnight-drift edge is real, economically grounded, and — uniquely among everything tested in this project — **passes Sharpe > 1 and DSR > 0.5 out-of-sample with a deployable, low-leverage rule.**
 
-*Reproduce:* `python gold_research/eda.py && python gold_research/candidates.py && python gold_research/mod2.py && python gold_research/validate.py`
-*Strategy:* `gold_research/strategy_overnight.py`
-*Artefacts:* `gold_research/results/validation_summary.json`, `fig_hourly_profile.png`, `fig_ON_22_8_validation.png`.
+*Reproduce:* `python code/eda.py && python code/candidates.py && python code/mod2.py && python code/validate.py`
+*Strategy:* `code/strategy_overnight.py`
+*Artefacts:* `code/results/validation_summary.json`, `fig_hourly_profile.png`, `fig_ON_22_8_validation.png`.

@@ -6,12 +6,13 @@ deflated-Sharpe haircut, i.e. observed Sharpe - E[max SR | N_trials]; KILL if
 Bailey-LdP DSR probability (significance reference 0.95).
 """
 from __future__ import annotations
+import os
 import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, "<HOME>/Desktop/Algo_claude")
+sys.path.insert(0, os.environ.get("RESEARCH_ROOT", "."))
 from dsr import deflated_sharpe_ratio, _expected_max_sr
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))

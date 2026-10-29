@@ -56,7 +56,7 @@ Viability requires confirmed **swap-free rollover (≤22:00 UTC)** *and* **≤1.
 
 ## 4. Monte-Carlo
 
-![Stress test](../gold_research/results/fig_stress_test.png)
+![Stress test](../code/results/fig_stress_test.png)
 
 2,000 stationary-block-bootstrap paths (preserve autocorrelation): **Sharpe median 1.10, 5th pct 0.71, 95th 1.50; P(SR>1) = 66%, P(SR>0.5) = 99%.** Max-DD median −13%, worst-5th −20%. Annual return median +7.5% [5th +4.9%]. The downside tail is benign (even adverse resamples keep Sharpe > 0.7).
 
@@ -72,5 +72,5 @@ Viability requires confirmed **swap-free rollover (≤22:00 UTC)** *and* **≤1.
 
 **Recommended next steps:** (1) paper-trade the 23:00 UTC fill to measure the real entry slippage — it is the make-or-break variable; (2) build the de-beta'd variant only if you want to suppress the (already tiny) residual gold exposure; (3) size it small in the book — its ~0 correlation to gold and to the crypto/FX sleeves makes it a good diversifier even at Sharpe ~1.
 
-*Reproduce:* `python gold_research/audit_code.py && python gold_research/risk_audit.py && python gold_research/stress_mc.py`
-*Artefacts:* `gold_research/results/fig_stress_test.png`.
+*Reproduce:* `python code/audit_code.py && python code/risk_audit.py && python code/stress_mc.py`
+*Artefacts:* `code/results/fig_stress_test.png`.

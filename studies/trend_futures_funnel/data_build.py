@@ -27,6 +27,7 @@ for the six instruments that have no gold reference.
 """
 
 from __future__ import annotations
+import os
 
 import json
 import warnings
@@ -40,7 +41,7 @@ warnings.filterwarnings("ignore")
 HERE = Path(__file__).resolve().parent
 DAILY = HERE / "daily"
 DAILY.mkdir(exist_ok=True)
-DB_NQ = Path("<HOME>/Desktop/Algo_claude/data/raw/NQ_1min_databento_2010-2026.parquet")
+DB_NQ = Path(os.environ.get("RESEARCH_DATA_ROOT", "data")) / "raw" / "NQ_1min_databento_2010-2026.parquet"
 
 # --------------------------------------------------------------- instrument spec
 # multiplier = $ per 1.0 index/price point for the MICRO contract.

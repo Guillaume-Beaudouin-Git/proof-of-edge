@@ -1,13 +1,13 @@
 """
-Pytest configuration for Portfolio.admission tests.
+Pytest configuration for core.admission tests.
 
 The default suite must stay fast enough that it is actually run (< 60s); a test
 suite that is skipped protects nothing. Statistical tests that need a large
 number of Monte Carlo paths purely to tighten their own standard error are
 marked ``slow`` and excluded unless ``--runslow`` is passed:
 
-    /usr/bin/python3 -m pytest Portfolio/admission -q              # fast
-    /usr/bin/python3 -m pytest Portfolio/admission -q --runslow    # everything
+    /usr/bin/python3 -m pytest core/admission -q              # fast
+    /usr/bin/python3 -m pytest core/admission -q --runslow    # everything
 """
 from __future__ import annotations
 

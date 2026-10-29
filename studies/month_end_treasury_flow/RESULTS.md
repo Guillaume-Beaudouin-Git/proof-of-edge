@@ -33,7 +33,7 @@ the trading day and are held. Verified flat rules (2026):
 - **MyFundedFutures** — overnight holding **permitted on all plans** (Core, Rapid, Pro, Flex, Builder), no daily loss limit. → forfeits **nothing**.
 - **Apex Trader Funding 4.0** (since 2026‑03‑01) — flat by **16:59 ET**, resume 18:00 ET.
 - **Topstep** — auto-flatten **15:10 CT = 16:10 ET**, resume 18:00 ET.
-- **FTMO** — confirmed dead, and re-confirmed here: `PropFirms/ftmo/rules.md:135-143`, no bond/treasury/rate CFD in any of the 5 listed categories. Not pursued further.
+- **FTMO** — confirmed dead, and re-confirmed here: FTMO's instrument list (`PropFirms/ftmo/rules.md`), no bond/treasury/rate CFD in any of the 5 listed categories. Not pursued further.
 
 ---
 
@@ -191,7 +191,7 @@ which is exactly where a monthly subscription bites.
 
 ## 4. First-passage simulation (`code/step5_propfirm_sim.py`)
 
-`Portfolio/admission/barrier.py` is **not** reusable — it hard-codes an FTMO 2-phase,
+`core/admission/barrier.py` is **not** reusable — it hard-codes a static-floor 2-phase,
 %-of-balance contract with a mandatory `daily_stop > 0`; futures firms are 1-phase,
 dollar-denominated, no daily loss limit. Bespoke engine, same philosophy: real event
 paths, block-bootstrapped (block = 3), equity marked at each of the 3 event EODs,
@@ -238,7 +238,7 @@ Counterfactual — the *same trade*, in the personal futures account that alread
 
 | capital | size | margin | expected | sd | worst event | share of P&L |
 |---|---|---:|---:|---:|---:|---:|
-| **~$13.0k (€12k)** | **1 ZN** | ~$1,800 (14%) | **+$2,275/yr (+17.6%)** | $2,473 | −$2,009 (−15.5%) | **100%** |
+| **small personal account (~$13k)** | **1 ZN** | ~$1,800 (14%) | **+$2,275/yr (+17.6%)** | $2,473 | −$2,009 (−15.5%) | **100%** |
 | ~$13.0k | 2 ZN | ~$3,600 (28%) | +$4,550/yr (+35.1%) | $4,946 | −$4,018 (−31.0%) | 100% |
 | ~$54k | 4 ZN | ~$7,200 (13%) | +$9,101/yr (+16.9%) | $9,892 | −$8,035 (−14.9%) | 100% |
 
@@ -248,7 +248,7 @@ hit 63%. That matches the `personal_book_research_2026-07` figure (trend +
 bond-month-end, combined SR 1.02) — consistent, not a new claim.
 
 **A propfirm sells leverage on capital you don't have. One ZN contract needs ~$1,800
-of margin. The €12k personal account already carries it — comfortably.** So the
+of margin. The small personal account already carries it — comfortably.** So the
 propfirm route asks for 11 months of waiting and ~$639 of subscriptions in order to
 end up with **80% of the P&L of one contract**, under a $2,000 barrier that a single
 historical event has already breached, on a plan that is no longer sold. It is
@@ -289,7 +289,7 @@ historical event has already breached, on a plan that is no longer sold. It is
   fits, the propfirm is strictly dominated (fees + split + barrier, zero benefit).
   Corollary of L24: it is a *vehicle* test, and it is cheaper than the MC.
 - `sequencing-debt` — B1 was rejected twice on the vehicle, both times by rulings
-  written before it existed (FTMO gate‑0, then the NQ-driven futures-firm freeze).
+  written before it existed (FTMO gate 0, then the NQ-driven futures-firm freeze).
   A blanket venue exclusion should carry the *instrument class it was derived from*,
   or it silently pre-kills unrelated future candidates.
 
@@ -318,4 +318,4 @@ data/                                 fetched OHLC caches (regenerable — do no
 - [Apex futures trading times](https://support.apextraderfunding.com/hc/en-us/articles/31519771524891-Futures-Trading-Times)
 - [CME 10-Year T-Note contract specs (Ironbeam)](https://www.ironbeam.com/knowledge-base/10-year-u-s-treasury-note-futures-zn-contract-specifications/)
 - [CME Micro Treasury Yield futures](https://www.cmegroup.com/markets/interest-rates/micro-treasury-futures.html)
-- In-repo: `PropFirms/ftmo/rules.md:135-143` (bond CFDs absent — re-confirmed)
+- In-repo: FTMO's instrument list (`PropFirms/ftmo/rules.md`) (bond CFDs absent — re-confirmed)

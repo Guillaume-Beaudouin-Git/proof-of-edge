@@ -1,16 +1,16 @@
-"""Tests for Portfolio.admission — marginal sleeve admission criterion."""
+"""Tests for core.admission — marginal sleeve admission criterion."""
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 import pytest
 
-from Portfolio.admission.barrier import (
+from core.admission.barrier import (
     BarrierConfig,
     pass_probability_delta,
     simulate_campaign,
 )
-from Portfolio.admission.marginal import (
+from core.admission.marginal import (
     admit,
     bootstrap_delta_sharpe,
     calendar_sharpe,

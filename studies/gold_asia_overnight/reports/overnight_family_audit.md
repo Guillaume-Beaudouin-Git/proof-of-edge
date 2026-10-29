@@ -13,7 +13,7 @@ Independent reconstruction of each sleeve's daily gross return (causal vol-targe
 
 ## Key finding — diversification is real but partial (the joke, quantified)
 
-![Basket equity & cross-correlation](../metals_energy_research/results/fig_basket_audit.png)
+*(basket figure not published)*
 
 | | GOLD | SILVER | WTI | SOYBEAN |
 |---|--:|--:|--:|--:|
@@ -53,4 +53,4 @@ Average pairwise correlation **0.26**; **PCA PC1 = 45%** of variance (4 independ
 3. **Treat regime risk explicitly:** trailing-12m-drift kill switches per sleeve; size for a multi-year flat stretch; cap single-day loss and skip soybean USDA mornings.
 4. **Diversify the *mechanism*, not just the asset:** the top research priority is to find **one genuinely orthogonal edge** (a non-drift mechanism) so the book is not 100% exposed to a single overnight factor. Until then, keep the family a *minor* allocation.
 
-*Reproduce:* `python metals_energy_research/basket_audit.py` · *Artefact:* `metals_energy_research/results/fig_basket_audit.png` · *Underlying tear-sheets:* `reports/gold_ASIA_23_8_due_diligence.md`, `soybean_ftmo_due_diligence.md`, `metals_energy_due_diligence.md`.
+*Reproduce:* the basket audit script (not published) · *Artefact:* the metals/energy basket figures (not published) · *Underlying tear-sheets:* `reports/gold_ASIA_23_8_due_diligence.md`, `soybean_ftmo_due_diligence.md`, `metals_energy_due_diligence.md`.

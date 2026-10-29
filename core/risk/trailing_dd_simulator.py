@@ -6,10 +6,9 @@ Models Tradeify Select Flex 25K mechanics exactly:
   - Funded: EOD trailing DD ($1,000), lock when EOD >= capital + DD_funded + $100
 
 Sources:
-  help.tradeify.co/articles/12853921 (eval rules, 2026-05-24 — 403 Forbidden, from session)
-  help.tradeify.co/articles/12853966 (funded/flex rules, verbatim: "locks when EOD balance
-    exceeds your drawdown amount by $100; floor = $100 above your starting balance")
-  help.tradeify.co/articles/10495897 (trailing DD mechanics)
+  help.tradeify.co articles on evaluation, funded/flex and trailing-DD rules
+  (retrieved 2026-05-24): the funded account locks when the EOD balance exceeds the
+  drawdown amount by $100; floor = $100 above the starting balance.
 """
 from __future__ import annotations
 
@@ -40,7 +39,7 @@ class PropfirmConfig:
     funded_days: int = 180
     payout_threshold_days: int = 5         # winning days needed (since last payout)
     win_day_min_pnl: float = 100.0         # min daily PnL to count as winning day
-    max_payout: float = 1_250.0            # per-request cap on 25K Select Flex
+    max_payout: float = 1_250.0            # per-request cap on the 25K evaluation
     payout_pct_of_profit: float = 0.50     # 50% of total profits per payout
 
 
@@ -80,8 +79,8 @@ def simulate_run(
 
     EOD-only approximation validity: this simulator models `daily_pnl` as a single
     net figure and checks bust once per bar. This is exact when daily_pnl equals the
-    worst intraday equity swing — which holds for Strategy C (hard SL cap per trade,
-    max 1 trade/day). It overestimates survival for strategies with large intraday
+    worst intraday equity swing — which holds for a strategy with a hard stop per trade and
+    at most one trade a day. It overestimates survival for strategies with large intraday
     swings that recover by EOD (e.g., mean-reversion, multi-trade days without SL).
     Verify assumption before applying to a new strategy.
 
@@ -242,9 +241,9 @@ def make_gaussian_generator(
     rho: float = -0.05,
     seed: int | None = None,
 ) -> Callable[[], NDArray[np.float64]]:
-    """AR(1) Gaussian generator — general-purpose, NOT calibrated for iter_10.
+    """AR(1) Gaussian generator — general-purpose, NOT calibrated to the NQ study.
 
-    For iter_10 survival tests use make_iter10_trade_generator, which respects
+    For NQ-study survival tests use make_nq_trade_generator, which respects
     the hard SL cap (bounded daily loss). The Gaussian allows unrealistic
     tail losses that inflate bust probability vs block bootstrap reality.
     """
@@ -264,24 +263,25 @@ def make_gaussian_generator(
     return generate
 
 
-def make_iter10_trade_generator(
+def make_nq_trade_generator(
     n_days: int,
     n_mnq: int = 3,
     seed: int | None = None,
 ) -> Callable[[], NDArray[np.float64]]:
-    """Trade-based daily P&L generator calibrated to iter_10 (N=346, Sharpe 1.52).
+    """Trade-based daily P&L generator calibrated to an NQ opening-range study (N=346 trades;
+    headline Sharpe 1.52 before deflation, about 1.1 after the DSR, see L20).
 
-    Models Strategy C correctly: max 1 trade per day, hard SL cap, bounded losses.
+    Models that strategy correctly: max 1 trade per day, hard SL cap, bounded losses.
 
-    Scales iter_10 NQ trade stats to n_mnq MNQ contracts using:
+    Scales the NQ trade stats to n_mnq MNQ contracts using:
       nq_pts = (nq_pnl + $19 cost) / 20 (NQ point value)
       mnq_pnl = nq_pts × $2 × n_mnq - $2.15 × n_mnq (MNQ cost)
 
-    Per-trade stats (from results.json iter_10):
+    Per-trade stats (from that study's results file):
       avg_winner_nq=$1,571.60, avg_loser_nq=-$421.45, win_rate=27.75%
       trade_freq=45.8% (346 trades / ~756 trading days 2022-2025)
 
-    Reproduces iter_10 MC for 3 MNQ + $1,000 DD (correct config, confirmed 2026-05-25):
+    Reproduces the NQ study's MC for 3 MNQ + $1,000 DD (correct config, confirmed 2026-05-25):
       P(pass) ≈ 53.7%, P(bust) ≈ 46.2% (N=20k, seed=42, max_eval_days=180).
       Old figure (66%/27%) used BASELINE_CONFIG (eval_DD=$1,500) — see test file.
     """
