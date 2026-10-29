@@ -8,7 +8,7 @@ innocent, and most of them stay guilty.**
 This is the public part of a private research programme started in 2024. It holds the research
 engine, the method, and six complete studies — three that survived and three that did not — each with its pre-registration, its results and
 the verdict, and its code where the code is self-contained. The few strategies that were proven innocent run live, fully automated,
-on a proprietary-trading-firm account; the record of how they earned that, and of what was
+on a prop-firm (FTMO) account; the record of how they earned that, and of what was
 rejected along the way, is what is published here.
 
 ---
@@ -17,13 +17,13 @@ rejected along the way, is what is published here.
 
 | | |
 |---|---|
-| **Live** | A fully automated book on a prop-firm funded account: two-step evaluation passed with zero manual trades, live since August 2026 |
+| **Live** | A fully automated book on an FTMO funded account (\$10k, Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
 | **Live record** | 10 weeks, max drawdown **−2.1 %**, no risk barrier approached, return flat |
 | **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly P&L reconciliation against the model |
 
 The account is small and so are the returns. That is the point: the system is a **falsification
-engine** first and a money engine second. The live system, the broker and the account details
-stay private; what is published is the method and the studies.
+engine** first and a money engine second. The live system and the account identifiers stay
+private; what is published is the method and the studies.
 
 ---
 
