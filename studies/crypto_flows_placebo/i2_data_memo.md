@@ -15,7 +15,7 @@ Nov-2025 cascades as in-sample stress windows), for the ~13-symbol liquid-perp u
 | Binance Vision bulk | No `liquidationSnapshot` data type under `futures/um/daily/` (2026-06-10 listing). `forceOrder` websocket = live-only AND throttled to 1 msg/s/symbol since 2021-04-27 (notional censoring even if recorded from now on). |
 | Coinalyze REST | HTTP 401 — free tier exists but needs an account + API key (cannot register autonomously). |
 | Bybit public.bybit.com | No liquidation directory. |
-| Hyperliquid | No historical liquidation archive in free API (prior: `_bootstrap_v2_notes.md` §6.34). |
+| Hyperliquid | No historical liquidation archive in free API (prior: an earlier bootstrap note (not published) §6.34). |
 | Coinglass | Paid (API from ~$29/mo, liquidation history on higher tiers). |
 
 ## Recommended path (cheapest first)

@@ -6,7 +6,7 @@ Systematic trading research, run solo, with one rule: **a strategy is guilty unt
 innocent, and most of them stay guilty.**
 
 This is the public part of a private research programme started in 2024. It holds the research
-engine, the method, and six complete studies — three that survived and three that did not — each with its pre-registration, its results and
+engine, the method, and six complete studies — three with a validated edge, three closed — each with its pre-registration, its results and
 the verdict, and its code where the code is self-contained. The few strategies that were proven innocent run live, fully automated,
 on a prop-firm (FTMO) account; the record of how they earned that, and of what was
 rejected along the way, is what is published here.
@@ -32,7 +32,7 @@ private; what is published is the method and the studies.
 Five rules, each written after a specific failure.
 
 **1. Pre-registration.** Hypothesis, signal construction, universe, metrics and **kill rules** are
-frozen in a `PREREGISTRATION.md` *before the data is touched*. Kill rules are not renegotiated
+frozen in a pre-registration file *before the data is touched*. Kill rules are not renegotiated
 after seeing results. When a verdict later needs revisiting, an **amendment** is appended — never
 an edit. `PROVENANCE.md` gives, for each study, the commit that froze the pre-registration and the
 one that added the results.

@@ -1,14 +1,15 @@
 # overnight_index_premium — what is published here
 
 The deployed sleeve: long US100 and GER40 from just after the cash close to the next cash open,
-on Monday and Tuesday nights. This dossier (September 2026) answers one question the team had left
+on Monday and Tuesday nights. This dossier (September 2026) answers one question the programme had left
 open for two months: does Monday deserve to be traded, or had it "collapsed since 2022"?
 
 Published: `DOSSIER_OVERNIGHT.md` (translated from the French original), the three scripts under
 `code/` (independent reconstruction from minute bars, statistics library with HAC, block bootstrap
 and endogenous break search, and the analysis that produces every numbered section), and the raw
 outputs under `results/` (the reconstructed overnight series for both indices, the results JSON
-and the run logs).
+and the run logs; the two `.txt` logs are the original run's output and are in French, the
+script's messages were translated afterwards and a re-run reproduces them in English).
 
 What the dossier establishes: per-day t-statistics never clear the programme's cumulative Šidák
 threshold; the pooled Monday + Tuesday test — the object actually deployed — does clear it gross

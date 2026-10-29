@@ -208,7 +208,7 @@ statistically the wrong test** — it never had the power to decide on its own.
    > not cherry-picked. **The midweek concentration is a post-hoc**, but **cross-confirmed
    > NQ + GER40 + US100** (3 markets, same day) → credible, not an isolated cell. Treat +4.9 as the
    > hard floor, midweek as the improvement."
-   An honest acknowledgement by the team at the time — but it is an admission of after-the-fact
+   An honest acknowledgement at the time — but it is an admission of after-the-fact
    selection, not a pre-registration.
 
 2. The overnight candidate log of the same date (2026-06-03) treats the "equity overnight premium"
@@ -244,7 +244,7 @@ statistically the wrong test** — it never had the power to decide on its own.
 
 **Verdict of Part B: the selection is FORTUITOUS in the statistical sense (post-hoc, DSR-fail on its
 own grid), MOTIVATED in the mechanism sense (cross-confirmed on 3 independent markets in the
-founding document, which is a real safeguard against pure noise).** The team documented it
+founding document, which is a real safeguard against pure noise).** It was documented
 honestly at the time (rare), but the resolve-before-signing clause was never honoured. My own
 re-analysis (Part A, §A.7) is the first genuine attempt to settle this two-month-old caveat — and
 the verdict it returns (gross edge robust at the pooled level, net positive but under the hardest
@@ -254,7 +254,7 @@ unreserved PASS.
 **Additional point, outside the strict scope of the question but relevant to the recommendation**:
 the nightly US100 pre-registration and verdict of July 2026 (on an earlier account, not the current
 one) document the only two historical losses specifically associated with Monday nights (−$354,
-−$402, both flattened by the 5-minute breaker). The team's settled diagnosis (hypothesis Hb2,
+−$402, both flattened by the 5-minute breaker). The settled diagnosis (hypothesis Hb2,
 confirmed): this was NOT a defective Monday edge but a **software bug** — GER40 skipped Mondays (a
 stale flag), making the book mono-sleeve US100 and undiversified precisely on those nights, hence
 over-sized by the margin-cap mechanism. The fix (deployed 2026-07-14) restored the GER40 leg on

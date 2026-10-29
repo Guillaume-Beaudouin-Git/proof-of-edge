@@ -5,7 +5,9 @@ research repository with `git filter-repo` (paths renamed to the public layout, 
 and account identifiers replaced). Commit dates and messages are the originals; the final
 commits are the public curation (translations, firm-name and balance scrubs, READMEs). Hashes
 differ from the private repository's because the history was rewritten; the original hashes
-are given for cross-reference with `research-archive`, which publishes the full repository.
+are given for cross-reference with the private repository. The history is not scrubbed of
+account balances or of the names of the private repository's files; only secrets, the server
+address, account identifiers and local paths were replaced.
 
 | study | pre-registration frozen | results added |
 |---|---|---|
