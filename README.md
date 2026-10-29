@@ -35,7 +35,8 @@ Five rules, each written after a specific failure.
 frozen in a pre-registration file *before the data is touched*. Kill rules are not renegotiated
 after seeing results. When a verdict later needs revisiting, an **amendment** is appended — never
 an edit. `PROVENANCE.md` gives, for each study, the commit that froze the pre-registration and the
-one that added the results: the version control proves the order for two of the six studies; for
+one that added the results, and `PREREGISTRATION_FREEZE.md` the SHA-256 of each pre-registration at
+that commit: the version control proves the order for two of the six studies; for
 the other four the order is documented inside the files only, and the studies say so.
 
 **2. Measure the cost on the venue you actually trade.** A strategy was killed for weeks on a
@@ -75,6 +76,7 @@ core/admission/      the test a new sleeve must pass to enter the book (ΔSharpe
 studies/             complete studies: pre-registration, results, verdict, and code where self-contained
 LESSONS.md           the numbered lesson registry: one verdict per lesson, with the number that earned it
 PROVENANCE.md        where and when each study's pre-registration and results were committed
+PREREGISTRATION_FREEZE.md  SHA-256 of each pre-registration at its freezing commit and at HEAD
 ```
 
 ### The studies
@@ -91,12 +93,18 @@ PROVENANCE.md        where and when each study's pre-registration and results we
 Each folder reads the same way: the pre-registration first, then the results, then the code (see each folder's README for what is and is not published).
 Figures and result tables are committed; raw market data is not (see below).
 
-### Running the tests
+### Running the tests, and reproducing a study
 
 ```
-uv sync --extra dev
+uv sync --extra dev --extra studies
 uv run pytest -q
+uv run python studies/month_end_treasury_flow/reproduce.py
 ```
+
+The second command downloads the daily series from Yahoo Finance and re-runs the month-end
+Treasury-flow study end to end; its captured output is committed under
+`studies/month_end_treasury_flow/results/` (run of 2026-10-29: +16.25 bps per event, t_HAC 4.79,
+311 events, as in `RESULTS.md`).
 
 The `core/` package is self-contained (numpy, pandas, scipy, statsmodels, skfolio, matplotlib, jinja2). The study
 scripts are kept as they were run; they expect the data lake described below and are not

@@ -5,6 +5,10 @@ rest of the time: the month-end rebalancing flow into duration. The question of 
 whether the effect exists (it was found in an earlier hypothesis, see `studies/swap_killed_futures`,
 H3) but on which vehicle, at which size, it is actually collectable.
 
+Reproducible from public data: `uv run --extra studies python studies/month_end_treasury_flow/reproduce.py`
+(Yahoo Finance daily series; the hourly steps use a rolling 730-day window and drift). The captured
+output of the 2026-10-29 run is in `results/`.
+
 Published: `RESULTS.md` (the full study: replication and split, session identification, hourly
 shape, long-sample economics, prop-firm barrier simulation, vehicle verdict) and the seven scripts
 under `code/`, one per step, in the order they were run.
