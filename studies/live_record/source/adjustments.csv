@@ -1,0 +1,2 @@
+date,amount_usd,note
+2026-10-01,-10.78,"Balance reset from $10,010.78 (flat close of 2026-09-30, pre-swap) to $10,000.00 at the 2026-10-01 00:00 mark, with no fill and no swap in between. Consistent with the FTMO payout mechanism (a withdrawal brings the balance back to the initial capital); not documented by a statement in this repository. The $10.78 is counted as realised, outside the curve."

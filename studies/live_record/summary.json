@@ -1,0 +1,214 @@
+{
+ "schema": "proof-of-edge.live_record.v1",
+ "built_at_utc": "2026-10-30T14:04:08Z",
+ "source_commit": "b153a02",
+ "source_sha256": {
+  "adjustments.csv": "3a58f79b5b5d707f6a036daac0675d3fc8a3df99def6a4e87e0d4ad41e5f5162",
+  "fills.csv": "4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b",
+  "point_values.csv": "3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08",
+  "positions.csv": "e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7",
+  "reconcile.csv": "e73e412abcd418956b06c2214c5787ba0e640d91d424c251e430d007d7d30f58",
+  "snapshots.csv": "739c727539bd00292b8f94d2a889bd901c2f97a24e4cb09b098b9b63fb95c604",
+  "swaps.csv": "273aea7d9b437a6bc01a69ee40ced8a86918e48268b5679bd5d0fbd4268ce436"
+ },
+ "external_anchor": "https://profile.ftmo.com/user/E6X6MTH381",
+ "account": {
+  "firm": "FTMO",
+  "programme": "Swing, two-step evaluation, funded",
+  "currency": "USD",
+  "initial_balance_usd": 10000.0,
+  "daily_loss_limit_pct": 5.0,
+  "max_loss_limit_pct": 10.0,
+  "static_floor_usd": 9000.0,
+  "instruments": [
+   "GER40",
+   "US100",
+   "XAUUSD"
+  ],
+  "timezone": "Europe/Paris (marks at 00:00 and 22:58)"
+ },
+ "period": {
+  "first_mark": "2026-08-18 00:00",
+  "last_mark": "2026-10-30 00:00",
+  "first_trade": "2026-08-18 16:10:14",
+  "last_fill": "2026-10-28 14:30",
+  "calendar_days": 73,
+  "trading_days": 54,
+  "complete_trading_days": 53,
+  "missing_weekdays": [],
+  "n_marks": 125
+ },
+ "pnl": {
+  "total_usd": -73.93,
+  "return_pct_of_initial": -0.739,
+  "current_equity_usd": 9915.29,
+  "current_balance_usd": 9915.29,
+  "external_adjustments_usd": -10.78,
+  "adjustments": [
+   {
+    "date": "2026-10-01",
+    "amount_usd": -10.78,
+    "note": "Balance reset from $10,010.78 (flat close of 2026-09-30, pre-swap) to $10,000.00 at the 2026-10-01 00:00 mark, with no fill and no swap in between. Consistent with the FTMO payout mechanism (a withdrawal brings the balance back to the initial capital); not documented by a statement in this repository. The $10.78 is counted as realised, outside the curve."
+   }
+  ],
+  "swaps_total_usd": -28.12
+ },
+ "daily": {
+  "n": 53,
+  "mean_usd": -1.39,
+  "std_usd": 25.18,
+  "t_stat": -0.4,
+  "best_usd": 96.43,
+  "best_date": "2026-09-30",
+  "worst_usd": -75.86,
+  "worst_date": "2026-09-01",
+  "active_days": 47,
+  "positive_active_days_pct": 44.7,
+  "worst_day_pct_of_daily_limit": 15.2
+ },
+ "drawdown": {
+  "max_usd": -212.27,
+  "max_pct_of_initial": -2.123,
+  "peak_date": "2026-08-25",
+  "trough_date": "2026-09-11",
+  "current_usd": -96.58,
+  "basis": "trading-only equity curve (external adjustments removed), on the 00:00 Paris marks"
+ },
+ "barriers": {
+  "daily_loss_floor_rule": "balance at 00:00 CE(S)T minus 5 % of the initial balance",
+  "max_loss_floor_rule": "static: initial balance minus 10 %",
+  "min_distance_daily_floor_usd": 414.36,
+  "min_distance_daily_floor_pct_of_initial": 4.14,
+  "min_distance_daily_floor_date": "2026-09-01",
+  "min_distance_static_floor_usd": 810.38,
+  "min_distance_static_floor_date": "2026-09-11",
+  "current_distance_daily_floor_usd": 500.0,
+  "current_distance_static_floor_usd": 915.29,
+  "basis": "minimum over the 00:00 and 22:58 Paris marks; intraday lows are not in the export"
+ },
+ "trades": {
+  "n_round_trips": 76,
+  "all": {
+   "n": 76,
+   "win_rate_pct": 48.7,
+   "avg_pnl_usd": -1.74,
+   "gross_pnl_usd": -132.21,
+   "median_holding_hours": 15.4,
+   "avg_notional_usd": 4154.0,
+   "best_usd": 41.89,
+   "worst_usd": -48.11
+  },
+  "by_sleeve": {
+   "overnight": {
+    "n": 41,
+    "win_rate_pct": 53.7,
+    "avg_pnl_usd": -1.34,
+    "gross_pnl_usd": -54.83,
+    "median_holding_hours": 15.4,
+    "avg_notional_usd": 3450.0,
+    "best_usd": 22.22,
+    "worst_usd": -48.11
+   },
+   "orb": {
+    "n": 35,
+    "win_rate_pct": 42.9,
+    "avg_pnl_usd": -2.21,
+    "gross_pnl_usd": -77.38,
+    "median_holding_hours": 5.5,
+    "avg_notional_usd": 4978.0,
+    "best_usd": 41.89,
+    "worst_usd": -26.07
+   }
+  },
+  "unmatched_fills": [
+   {
+    "ts": "2026-09-07 16:20:16",
+    "kind": "entry_without_exit",
+    "symbol": "US100",
+    "sleeve": "orb",
+    "side": "short",
+    "lots": 0.6,
+    "price": 29572.93,
+    "reason": "funded_orb_entry"
+   },
+   {
+    "ts": "2026-09-29 22:05:00",
+    "kind": "entry_without_exit",
+    "symbol": "XAUUSD",
+    "sleeve": "overnight",
+    "side": "short",
+    "lots": 0.04,
+    "price": 4174.22,
+    "reason": "rebalance"
+   }
+  ],
+  "n_fills": 154,
+  "mean_abs_slippage_bps": 1.44,
+  "basis": "FIFO pairing of the EA fill log per instrument and sleeve; gross of swaps; FTMO indices carry no commission"
+ },
+ "per_instrument": {
+  "GER40": {
+   "trades": {
+    "n": 21,
+    "win_rate_pct": 57.1,
+    "avg_pnl_usd": -0.71,
+    "gross_pnl_usd": -15.01,
+    "median_holding_hours": 15.4,
+    "avg_notional_usd": 3440.0,
+    "best_usd": 21.97,
+    "worst_usd": -29.01
+   },
+   "marks_with_position_pct": 33.6,
+   "avg_notional_when_held_usd": 3440.0,
+   "max_notional_usd": 3630.0,
+   "avg_notional_pct_of_initial": 11.56,
+   "swaps_usd": -12.87,
+   "swap_nights": 21
+  },
+  "US100": {
+   "trades": {
+    "n": 55,
+    "win_rate_pct": 45.5,
+    "avg_pnl_usd": -2.13,
+    "gross_pnl_usd": -117.2,
+    "median_holding_hours": 5.8,
+    "avg_notional_usd": 4426.0,
+    "best_usd": 41.89,
+    "worst_usd": -48.11
+   },
+   "marks_with_position_pct": 33.6,
+   "avg_notional_when_held_usd": 4141.0,
+   "max_notional_usd": 17744.0,
+   "avg_notional_pct_of_initial": 13.91,
+   "swaps_usd": -15.08,
+   "swap_nights": 21
+  },
+  "XAUUSD": {
+   "trades": {
+    "n": 0,
+    "win_rate_pct": null,
+    "avg_pnl_usd": null,
+    "gross_pnl_usd": 0.0,
+    "median_holding_hours": null,
+    "avg_notional_usd": null,
+    "best_usd": null,
+    "worst_usd": null
+   },
+   "marks_with_position_pct": 1.6,
+   "avg_notional_when_held_usd": 16697.0,
+   "max_notional_usd": 16697.0,
+   "avg_notional_pct_of_initial": 2.67,
+   "swaps_usd": -0.17,
+   "swap_nights": 1
+  }
+ },
+ "reconciliation": {
+  "days_logged": 53,
+  "days_full": 53,
+  "days_degraded": 0,
+  "days_unexplained": 16,
+  "max_abs_residual_usd": 24.41,
+  "sum_pnl_real_full_days_usd": -97.82,
+  "sum_pnl_model_full_days_usd": 79.77
+ }
+}

@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Live record</title>
+<meta name="description" content="Live record of the FTMO funded account behind proof-of-edge: equity, drawdown, daily P&amp;L, barriers.">
+<style>
+:root {
+  color-scheme: light;
+  --surface: #fcfcfb; --surface-2: #f3f2ef; --border: #dedcd6;
+  --text: #0b0b0b; --text-2: #52514e; --text-3: #7a7873;
+  --line: #2a78d6; --pos: #2a78d6; --neg: #e34948; --zero: #b3b1aa; --dd: #e34948;
+  --grid: #e9e8e3; --axis: #b3b1aa;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface: #1a1a19; --surface-2: #232322; --border: #3a3936;
+    --text: #f0efec; --text-2: #c3c2b7; --text-3: #8f8d86;
+    --line: #3987e5; --pos: #3987e5; --neg: #e66767; --zero: #5c5a55; --dd: #e66767;
+    --grid: #2c2c2a; --axis: #5c5a55;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #1a1a19; --surface-2: #232322; --border: #3a3936;
+  --text: #f0efec; --text-2: #c3c2b7; --text-3: #8f8d86;
+  --line: #3987e5; --pos: #3987e5; --neg: #e66767; --zero: #5c5a55; --dd: #e66767;
+  --grid: #2c2c2a; --axis: #5c5a55;
+}
+* { box-sizing: border-box; }
+html { background: var(--surface); }
+body { margin: 0; background: var(--surface); color: var(--text);
+  font: 15px/1.55 ui-serif, Georgia, "Times New Roman", serif; }
+main { max-width: 820px; margin: 0 auto; padding: 32px 16px 48px; overflow-wrap: anywhere; }
+header { margin-bottom: 28px; }
+.kicker { font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--text-3); margin: 0 0 6px; }
+.kicker a { color: inherit; }
+h1 { font-size: 26px; line-height: 1.2; margin: 0 0 12px; font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 36px 0 6px; font-weight: 600; }
+.lede { color: var(--text-2); margin: 0; }
+a { color: var(--text); text-decoration-color: var(--axis); }
+.caption { color: var(--text-2); font-size: 13.5px; margin: 0 0 10px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.tile { border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; background: var(--surface-2); display: flex; flex-direction: column; gap: 2px; }
+.tile .label { font-size: 12.5px; color: var(--text-2); }
+.tile .value { font: 600 22px/1.2 ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+.tile .sub { font-size: 12.5px; color: var(--text-3); }
+.chart { width: 100%; height: auto; display: block; }
+.chart .grid { stroke: var(--grid); stroke-width: 1; }
+.chart .axis { stroke: var(--axis); stroke-width: 1; }
+.chart .tickmark { stroke: var(--axis); stroke-width: 1; }
+.chart .tick { fill: var(--text-3); font: 12px ui-monospace, Menlo, Consolas, monospace; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; stroke-dasharray: 3 3; }
+.chart .line { fill: none; stroke: var(--line); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart.drawdown .line { stroke: var(--dd); }
+.chart.drawdown .area { fill: var(--dd); fill-opacity: 0.12; }
+.chart .bar.pos { fill: var(--pos); }
+.chart .bar.neg { fill: var(--neg); }
+.chart .bar.zero { fill: var(--zero); }
+.chart .hit rect { fill: transparent; }
+.chart .hit .hitbox { fill: transparent; }
+.chart .hit circle { fill: var(--line); stroke: var(--surface); stroke-width: 2; opacity: 0; }
+.chart.drawdown .hit circle { fill: var(--dd); }
+.chart .hit:hover circle { opacity: 1; }
+.chart .hit:hover .bar { filter: brightness(0.85); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { color: var(--text-2); font-weight: 500; font-size: 12.5px; }
+tbody th { font-weight: 500; }
+.wide tbody th { white-space: nowrap; }
+td.num { font: 13.5px ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.note { color: var(--text-3); font-size: 12.5px; }
+.kv th { width: 30%; }
+.kv td.num { width: 32%; white-space: normal; }
+.scroll { overflow-x: auto; }
+ul { padding-left: 20px; }
+li { margin: 2px 0; }
+footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text-2); font-size: 13px; }
+code { font: 12.5px ui-monospace, Menlo, Consolas, monospace; }
+code.hash { word-break: break-all; color: var(--text-3); }
+.hashes { list-style: none; padding: 0; }
+@media (max-width: 560px) { h1 { font-size: 22px; } .kv th { width: 36%; } .tile .value { font-size: 19px; } }
+</style>
+</head>
+<body>
+<main>
+<header>
+<p class="kicker"><a href="../../">proof-of-edge</a> / live record</p>
+<h1>FTMO funded account, live record</h1>
+<p class="lede">A $10,000.00 FTMO funded account (Swing, two-step evaluation, funded), traded by a fully
+automated book: overnight index exposure on US100 and GER40, and an opening-range breakout on US100.
+Marks are the broker's balance and equity as read by the Expert Advisor at 00:00 and 22:58 Paris;
+the curve below is trading only, with external balance adjustments removed and listed.
+External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopener">FTMO verified trader profile</a>.</p>
+</header>
+
+<section class="tiles" aria-label="Headline figures">
+<div class="tile"><span class="label">P&amp;L since funding</span><span class="value">−$73.93</span><span class="sub">−0.74 % of initial</span></div>
+<div class="tile"><span class="label">Max drawdown</span><span class="value">−2.12 %</span><span class="sub">−$212.27</span></div>
+<div class="tile"><span class="label">Days live</span><span class="value">73</span><span class="sub">54 trading days</span></div>
+<div class="tile"><span class="label">Closest to daily floor</span><span class="value">$414.36</span><span class="sub">of a $500.00 allowance</span></div>
+<div class="tile"><span class="label">Round trips</span><span class="value">76</span><span class="sub">win rate 48.7 %</span></div>
+</section>
+
+<section>
+<h2>Equity</h2>
+<p class="caption">Trading-only equity on the 00:00 Paris marks, USD. Dotted line: initial balance. Hover a point for the value.</p>
+<svg class="chart equity" viewBox="0 0 760 260" role="img" aria-label="Equity, trading only, 00:00 Paris marks">
+<title>Equity, trading only, 00:00 Paris marks</title>
+<line class="grid" x1="64" x2="744" y1="230.0" y2="230.0"/>
+<text class="tick" x="56" y="234.0" text-anchor="end">$9,750</text>
+<line class="grid" x1="64" x2="744" y1="192.4" y2="192.4"/>
+<text class="tick" x="56" y="196.4" text-anchor="end">$9,800</text>
+<line class="grid" x1="64" x2="744" y1="154.7" y2="154.7"/>
+<text class="tick" x="56" y="158.7" text-anchor="end">$9,850</text>
+<line class="grid" x1="64" x2="744" y1="117.1" y2="117.1"/>
+<text class="tick" x="56" y="121.1" text-anchor="end">$9,900</text>
+<line class="grid" x1="64" x2="744" y1="79.5" y2="79.5"/>
+<text class="tick" x="56" y="83.5" text-anchor="end">$9,950</text>
+<line class="grid" x1="64" x2="744" y1="41.8" y2="41.8"/>
+<text class="tick" x="56" y="45.8" text-anchor="end">$10,000</text>
+<line class="tickmark" x1="64.0" x2="64.0" y1="230" y2="235"/>
+<text class="tick" x="64.0" y="248" text-anchor="middle">Aug 2026</text>
+<line class="tickmark" x1="192.3" x2="192.3" y1="230" y2="235"/>
+<text class="tick" x="192.3" y="248" text-anchor="middle">Sep</text>
+<line class="tickmark" x1="474.6" x2="474.6" y1="230" y2="235"/>
+<text class="tick" x="474.6" y="248" text-anchor="middle">Oct</text>
+<line class="axis" x1="64" x2="744" y1="230" y2="230"/>
+<line class="baseline" x1="64" x2="744" y1="41.8" y2="41.8"/>
+<polyline class="line" points="64.0,43.1 76.8,31.4 89.7,31.2 102.5,48.8 115.3,51.1 128.2,24.8 141.0,51.4 153.8,43.4 166.6,61.7 179.5,88.0 192.3,145.1 205.1,130.1 218.0,114.8 230.8,114.8 243.6,117.3 256.5,128.4 269.3,157.0 282.1,165.3 294.9,184.6 307.8,164.0 320.6,151.3 333.4,155.8 346.3,154.2 359.1,154.2 371.9,120.8 384.8,106.5 397.6,95.7 410.4,75.9 423.2,94.6 436.1,87.2 448.9,106.3 461.7,33.7 474.6,44.2 487.4,63.8 500.2,61.1 513.1,58.9 525.9,76.7 538.7,95.5 551.5,95.5 564.4,99.6 577.2,110.6 590.0,119.9 602.9,98.2 615.7,98.2 628.5,109.4 641.4,97.2 654.2,102.6 667.0,102.6 679.8,102.6 692.7,105.2 705.5,100.0 718.3,97.5 731.2,97.5 744.0,97.5"/>
+<g class="hit"><rect x="64.0" y="12" width="6.4" height="218"/><circle cx="64.0" cy="43.1" r="4"/><title>2026-08-18: $9,998.29 (−$1.71)</title></g>
+<g class="hit"><rect x="70.4" y="12" width="12.8" height="218"/><circle cx="76.8" cy="31.4" r="4"/><title>2026-08-19: $10,013.88 (+$13.88)</title></g>
+<g class="hit"><rect x="83.2" y="12" width="12.8" height="218"/><circle cx="89.7" cy="31.2" r="4"/><title>2026-08-20: $10,014.15 (+$14.15)</title></g>
+<g class="hit"><rect x="96.1" y="12" width="12.8" height="218"/><circle cx="102.5" cy="48.8" r="4"/><title>2026-08-21: $9,990.78 (−$9.22)</title></g>
+<g class="hit"><rect x="108.9" y="12" width="12.8" height="218"/><circle cx="115.3" cy="51.1" r="4"/><title>2026-08-24: $9,987.72 (−$12.28)</title></g>
+<g class="hit"><rect x="121.7" y="12" width="12.8" height="218"/><circle cx="128.2" cy="24.8" r="4"/><title>2026-08-25: $10,022.65 (+$22.65)</title></g>
+<g class="hit"><rect x="134.6" y="12" width="12.8" height="218"/><circle cx="141.0" cy="51.4" r="4"/><title>2026-08-26: $9,987.34 (−$12.66)</title></g>
+<g class="hit"><rect x="147.4" y="12" width="12.8" height="218"/><circle cx="153.8" cy="43.4" r="4"/><title>2026-08-27: $9,997.87 (−$2.13)</title></g>
+<g class="hit"><rect x="160.2" y="12" width="12.8" height="218"/><circle cx="166.6" cy="61.7" r="4"/><title>2026-08-28: $9,973.60 (−$26.40)</title></g>
+<g class="hit"><rect x="173.1" y="12" width="12.8" height="218"/><circle cx="179.5" cy="88.0" r="4"/><title>2026-08-31: $9,938.71 (−$61.29)</title></g>
+<g class="hit"><rect x="185.9" y="12" width="12.8" height="218"/><circle cx="192.3" cy="145.1" r="4"/><title>2026-09-01: $9,862.85 (−$137.15)</title></g>
+<g class="hit"><rect x="198.7" y="12" width="12.8" height="218"/><circle cx="205.1" cy="130.1" r="4"/><title>2026-09-02: $9,882.75 (−$117.25)</title></g>
+<g class="hit"><rect x="211.5" y="12" width="12.8" height="218"/><circle cx="218.0" cy="114.8" r="4"/><title>2026-09-03: $9,903.08 (−$96.92)</title></g>
+<g class="hit"><rect x="224.4" y="12" width="12.8" height="218"/><circle cx="230.8" cy="114.8" r="4"/><title>2026-09-04: $9,903.08 (−$96.92)</title></g>
+<g class="hit"><rect x="237.2" y="12" width="12.8" height="218"/><circle cx="243.6" cy="117.3" r="4"/><title>2026-09-07: $9,899.75 (−$100.25)</title></g>
+<g class="hit"><rect x="250.0" y="12" width="12.8" height="218"/><circle cx="256.5" cy="128.4" r="4"/><title>2026-09-08: $9,885.03 (−$114.97)</title></g>
+<g class="hit"><rect x="262.9" y="12" width="12.8" height="218"/><circle cx="269.3" cy="157.0" r="4"/><title>2026-09-09: $9,846.98 (−$153.02)</title></g>
+<g class="hit"><rect x="275.7" y="12" width="12.8" height="218"/><circle cx="282.1" cy="165.3" r="4"/><title>2026-09-10: $9,835.92 (−$164.08)</title></g>
+<g class="hit"><rect x="288.5" y="12" width="12.8" height="218"/><circle cx="294.9" cy="184.6" r="4"/><title>2026-09-11: $9,810.38 (−$189.62)</title></g>
+<g class="hit"><rect x="301.4" y="12" width="12.8" height="218"/><circle cx="307.8" cy="164.0" r="4"/><title>2026-09-14: $9,837.71 (−$162.29)</title></g>
+<g class="hit"><rect x="314.2" y="12" width="12.8" height="218"/><circle cx="320.6" cy="151.3" r="4"/><title>2026-09-15: $9,854.54 (−$145.46)</title></g>
+<g class="hit"><rect x="327.0" y="12" width="12.8" height="218"/><circle cx="333.4" cy="155.8" r="4"/><title>2026-09-16: $9,848.55 (−$151.45)</title></g>
+<g class="hit"><rect x="339.8" y="12" width="12.8" height="218"/><circle cx="346.3" cy="154.2" r="4"/><title>2026-09-17: $9,850.75 (−$149.25)</title></g>
+<g class="hit"><rect x="352.7" y="12" width="12.8" height="218"/><circle cx="359.1" cy="154.2" r="4"/><title>2026-09-18: $9,850.72 (−$149.28)</title></g>
+<g class="hit"><rect x="365.5" y="12" width="12.8" height="218"/><circle cx="371.9" cy="120.8" r="4"/><title>2026-09-21: $9,895.03 (−$104.97)</title></g>
+<g class="hit"><rect x="378.3" y="12" width="12.8" height="218"/><circle cx="384.8" cy="106.5" r="4"/><title>2026-09-22: $9,914.08 (−$85.92)</title></g>
+<g class="hit"><rect x="391.2" y="12" width="12.8" height="218"/><circle cx="397.6" cy="95.7" r="4"/><title>2026-09-23: $9,928.39 (−$71.61)</title></g>
+<g class="hit"><rect x="404.0" y="12" width="12.8" height="218"/><circle cx="410.4" cy="75.9" r="4"/><title>2026-09-24: $9,954.73 (−$45.27)</title></g>
+<g class="hit"><rect x="416.8" y="12" width="12.8" height="218"/><circle cx="423.2" cy="94.6" r="4"/><title>2026-09-25: $9,929.84 (−$70.16)</title></g>
+<g class="hit"><rect x="429.7" y="12" width="12.8" height="218"/><circle cx="436.1" cy="87.2" r="4"/><title>2026-09-28: $9,939.69 (−$60.31)</title></g>
+<g class="hit"><rect x="442.5" y="12" width="12.8" height="218"/><circle cx="448.9" cy="106.3" r="4"/><title>2026-09-29: $9,914.35 (−$85.65)</title></g>
+<g class="hit"><rect x="455.3" y="12" width="12.8" height="218"/><circle cx="461.7" cy="33.7" r="4"/><title>2026-09-30: $10,010.78 (+$10.78)</title></g>
+<g class="hit"><rect x="468.2" y="12" width="12.8" height="218"/><circle cx="474.6" cy="44.2" r="4"/><title>2026-10-01: $9,996.89 (−$3.11)</title></g>
+<g class="hit"><rect x="481.0" y="12" width="12.8" height="218"/><circle cx="487.4" cy="63.8" r="4"/><title>2026-10-02: $9,970.82 (−$29.18)</title></g>
+<g class="hit"><rect x="493.8" y="12" width="12.8" height="218"/><circle cx="500.2" cy="61.1" r="4"/><title>2026-10-05: $9,974.35 (−$25.65)</title></g>
+<g class="hit"><rect x="506.6" y="12" width="12.8" height="218"/><circle cx="513.1" cy="58.9" r="4"/><title>2026-10-06: $9,977.38 (−$22.62)</title></g>
+<g class="hit"><rect x="519.5" y="12" width="12.8" height="218"/><circle cx="525.9" cy="76.7" r="4"/><title>2026-10-07: $9,953.70 (−$46.30)</title></g>
+<g class="hit"><rect x="532.3" y="12" width="12.8" height="218"/><circle cx="538.7" cy="95.5" r="4"/><title>2026-10-08: $9,928.75 (−$71.25)</title></g>
+<g class="hit"><rect x="545.1" y="12" width="12.8" height="218"/><circle cx="551.5" cy="95.5" r="4"/><title>2026-10-09: $9,928.75 (−$71.25)</title></g>
+<g class="hit"><rect x="558.0" y="12" width="12.8" height="218"/><circle cx="564.4" cy="99.6" r="4"/><title>2026-10-12: $9,923.29 (−$76.71)</title></g>
+<g class="hit"><rect x="570.8" y="12" width="12.8" height="218"/><circle cx="577.2" cy="110.6" r="4"/><title>2026-10-13: $9,908.67 (−$91.33)</title></g>
+<g class="hit"><rect x="583.6" y="12" width="12.8" height="218"/><circle cx="590.0" cy="119.9" r="4"/><title>2026-10-14: $9,896.28 (−$103.72)</title></g>
+<g class="hit"><rect x="596.5" y="12" width="12.8" height="218"/><circle cx="602.9" cy="98.2" r="4"/><title>2026-10-15: $9,925.15 (−$74.85)</title></g>
+<g class="hit"><rect x="609.3" y="12" width="12.8" height="218"/><circle cx="615.7" cy="98.2" r="4"/><title>2026-10-16: $9,925.15 (−$74.85)</title></g>
+<g class="hit"><rect x="622.1" y="12" width="12.8" height="218"/><circle cx="628.5" cy="109.4" r="4"/><title>2026-10-19: $9,910.21 (−$89.79)</title></g>
+<g class="hit"><rect x="634.9" y="12" width="12.8" height="218"/><circle cx="641.4" cy="97.2" r="4"/><title>2026-10-20: $9,926.46 (−$73.54)</title></g>
+<g class="hit"><rect x="647.8" y="12" width="12.8" height="218"/><circle cx="654.2" cy="102.6" r="4"/><title>2026-10-21: $9,919.22 (−$80.78)</title></g>
+<g class="hit"><rect x="660.6" y="12" width="12.8" height="218"/><circle cx="667.0" cy="102.6" r="4"/><title>2026-10-22: $9,919.22 (−$80.78)</title></g>
+<g class="hit"><rect x="673.4" y="12" width="12.8" height="218"/><circle cx="679.8" cy="102.6" r="4"/><title>2026-10-23: $9,919.22 (−$80.78)</title></g>
+<g class="hit"><rect x="686.3" y="12" width="12.8" height="218"/><circle cx="692.7" cy="105.2" r="4"/><title>2026-10-26: $9,915.76 (−$84.24)</title></g>
+<g class="hit"><rect x="699.1" y="12" width="12.8" height="218"/><circle cx="705.5" cy="100.0" r="4"/><title>2026-10-27: $9,922.78 (−$77.22)</title></g>
+<g class="hit"><rect x="711.9" y="12" width="12.8" height="218"/><circle cx="718.3" cy="97.5" r="4"/><title>2026-10-28: $9,926.07 (−$73.93)</title></g>
+<g class="hit"><rect x="724.8" y="12" width="12.8" height="218"/><circle cx="731.2" cy="97.5" r="4"/><title>2026-10-29: $9,926.07 (−$73.93)</title></g>
+<g class="hit"><rect x="737.6" y="12" width="6.4" height="218"/><circle cx="744.0" cy="97.5" r="4"/><title>2026-10-30: $9,926.07 (−$73.93)</title></g>
+</svg>
+</section>
+
+<section>
+<h2>Drawdown</h2>
+<p class="caption">Distance to the high-water mark of the same curve, USD.</p>
+<svg class="chart drawdown" viewBox="0 0 760 180" role="img" aria-label="Drawdown from high-water mark, USD">
+<title>Drawdown from high-water mark, USD</title>
+<line class="grid" x1="64" x2="744" y1="150.0" y2="150.0"/>
+<text class="tick" x="56" y="154.0" text-anchor="end">−$250</text>
+<line class="grid" x1="64" x2="744" y1="124.2" y2="124.2"/>
+<text class="tick" x="56" y="128.2" text-anchor="end">−$200</text>
+<line class="grid" x1="64" x2="744" y1="98.3" y2="98.3"/>
+<text class="tick" x="56" y="102.3" text-anchor="end">−$150</text>
+<line class="grid" x1="64" x2="744" y1="72.5" y2="72.5"/>
+<text class="tick" x="56" y="76.5" text-anchor="end">−$100</text>
+<line class="grid" x1="64" x2="744" y1="46.6" y2="46.6"/>
+<text class="tick" x="56" y="50.6" text-anchor="end">−$50</text>
+<line class="grid" x1="64" x2="744" y1="20.8" y2="20.8"/>
+<text class="tick" x="56" y="24.8" text-anchor="end">$0</text>
+<line class="tickmark" x1="64.0" x2="64.0" y1="150" y2="155"/>
+<text class="tick" x="64.0" y="168" text-anchor="middle">Aug 2026</text>
+<line class="tickmark" x1="192.3" x2="192.3" y1="150" y2="155"/>
+<text class="tick" x="192.3" y="168" text-anchor="middle">Sep</text>
+<line class="tickmark" x1="474.6" x2="474.6" y1="150" y2="155"/>
+<text class="tick" x="474.6" y="168" text-anchor="middle">Oct</text>
+<line class="axis" x1="64" x2="744" y1="150" y2="150"/>
+<line class="baseline" x1="64" x2="744" y1="20.8" y2="20.8"/>
+<polygon class="area" points="64.0,20.8 64.0,21.7 76.8,20.8 89.7,20.8 102.5,32.9 115.3,34.4 128.2,20.8 141.0,39.0 153.8,33.6 166.6,46.1 179.5,64.2 192.3,103.4 205.1,93.1 218.0,82.6 230.8,82.6 243.6,84.3 256.5,91.9 269.3,111.6 282.1,117.3 294.9,130.5 307.8,116.4 320.6,107.7 333.4,110.8 346.3,109.6 359.1,109.6 371.9,86.7 384.8,76.9 397.6,69.5 410.4,55.9 423.2,68.8 436.1,63.7 448.9,76.8 461.7,26.9 474.6,34.1 487.4,47.6 500.2,45.7 513.1,44.2 525.9,56.4 538.7,69.3 551.5,69.3 564.4,72.1 577.2,79.7 590.0,86.1 602.9,71.2 615.7,71.2 628.5,78.9 641.4,70.5 654.2,74.2 667.0,74.2 679.8,74.2 692.7,76.0 705.5,72.4 718.3,70.7 731.2,70.7 744.0,70.7 744.0,20.8"/>
+<polyline class="line" points="64.0,21.7 76.8,20.8 89.7,20.8 102.5,32.9 115.3,34.4 128.2,20.8 141.0,39.0 153.8,33.6 166.6,46.1 179.5,64.2 192.3,103.4 205.1,93.1 218.0,82.6 230.8,82.6 243.6,84.3 256.5,91.9 269.3,111.6 282.1,117.3 294.9,130.5 307.8,116.4 320.6,107.7 333.4,110.8 346.3,109.6 359.1,109.6 371.9,86.7 384.8,76.9 397.6,69.5 410.4,55.9 423.2,68.8 436.1,63.7 448.9,76.8 461.7,26.9 474.6,34.1 487.4,47.6 500.2,45.7 513.1,44.2 525.9,56.4 538.7,69.3 551.5,69.3 564.4,72.1 577.2,79.7 590.0,86.1 602.9,71.2 615.7,71.2 628.5,78.9 641.4,70.5 654.2,74.2 667.0,74.2 679.8,74.2 692.7,76.0 705.5,72.4 718.3,70.7 731.2,70.7 744.0,70.7"/>
+<g class="hit"><rect x="64.0" y="12" width="6.4" height="138"/><circle cx="64.0" cy="21.7" r="4"/><title>2026-08-18: −$1.71 (-0.02 % of initial)</title></g>
+<g class="hit"><rect x="70.4" y="12" width="12.8" height="138"/><circle cx="76.8" cy="20.8" r="4"/><title>2026-08-19: $0.00 (0.00 % of initial)</title></g>
+<g class="hit"><rect x="83.2" y="12" width="12.8" height="138"/><circle cx="89.7" cy="20.8" r="4"/><title>2026-08-20: $0.00 (0.00 % of initial)</title></g>
+<g class="hit"><rect x="96.1" y="12" width="12.8" height="138"/><circle cx="102.5" cy="32.9" r="4"/><title>2026-08-21: −$23.37 (-0.23 % of initial)</title></g>
+<g class="hit"><rect x="108.9" y="12" width="12.8" height="138"/><circle cx="115.3" cy="34.4" r="4"/><title>2026-08-24: −$26.43 (-0.26 % of initial)</title></g>
+<g class="hit"><rect x="121.7" y="12" width="12.8" height="138"/><circle cx="128.2" cy="20.8" r="4"/><title>2026-08-25: $0.00 (0.00 % of initial)</title></g>
+<g class="hit"><rect x="134.6" y="12" width="12.8" height="138"/><circle cx="141.0" cy="39.0" r="4"/><title>2026-08-26: −$35.31 (-0.35 % of initial)</title></g>
+<g class="hit"><rect x="147.4" y="12" width="12.8" height="138"/><circle cx="153.8" cy="33.6" r="4"/><title>2026-08-27: −$24.78 (-0.25 % of initial)</title></g>
+<g class="hit"><rect x="160.2" y="12" width="12.8" height="138"/><circle cx="166.6" cy="46.1" r="4"/><title>2026-08-28: −$49.05 (-0.49 % of initial)</title></g>
+<g class="hit"><rect x="173.1" y="12" width="12.8" height="138"/><circle cx="179.5" cy="64.2" r="4"/><title>2026-08-31: −$83.94 (-0.84 % of initial)</title></g>
+<g class="hit"><rect x="185.9" y="12" width="12.8" height="138"/><circle cx="192.3" cy="103.4" r="4"/><title>2026-09-01: −$159.80 (-1.60 % of initial)</title></g>
+<g class="hit"><rect x="198.7" y="12" width="12.8" height="138"/><circle cx="205.1" cy="93.1" r="4"/><title>2026-09-02: −$139.90 (-1.40 % of initial)</title></g>
+<g class="hit"><rect x="211.5" y="12" width="12.8" height="138"/><circle cx="218.0" cy="82.6" r="4"/><title>2026-09-03: −$119.57 (-1.20 % of initial)</title></g>
+<g class="hit"><rect x="224.4" y="12" width="12.8" height="138"/><circle cx="230.8" cy="82.6" r="4"/><title>2026-09-04: −$119.57 (-1.20 % of initial)</title></g>
+<g class="hit"><rect x="237.2" y="12" width="12.8" height="138"/><circle cx="243.6" cy="84.3" r="4"/><title>2026-09-07: −$122.90 (-1.23 % of initial)</title></g>
+<g class="hit"><rect x="250.0" y="12" width="12.8" height="138"/><circle cx="256.5" cy="91.9" r="4"/><title>2026-09-08: −$137.62 (-1.38 % of initial)</title></g>
+<g class="hit"><rect x="262.9" y="12" width="12.8" height="138"/><circle cx="269.3" cy="111.6" r="4"/><title>2026-09-09: −$175.67 (-1.76 % of initial)</title></g>
+<g class="hit"><rect x="275.7" y="12" width="12.8" height="138"/><circle cx="282.1" cy="117.3" r="4"/><title>2026-09-10: −$186.73 (-1.87 % of initial)</title></g>
+<g class="hit"><rect x="288.5" y="12" width="12.8" height="138"/><circle cx="294.9" cy="130.5" r="4"/><title>2026-09-11: −$212.27 (-2.12 % of initial)</title></g>
+<g class="hit"><rect x="301.4" y="12" width="12.8" height="138"/><circle cx="307.8" cy="116.4" r="4"/><title>2026-09-14: −$184.94 (-1.85 % of initial)</title></g>
+<g class="hit"><rect x="314.2" y="12" width="12.8" height="138"/><circle cx="320.6" cy="107.7" r="4"/><title>2026-09-15: −$168.11 (-1.68 % of initial)</title></g>
+<g class="hit"><rect x="327.0" y="12" width="12.8" height="138"/><circle cx="333.4" cy="110.8" r="4"/><title>2026-09-16: −$174.10 (-1.74 % of initial)</title></g>
+<g class="hit"><rect x="339.8" y="12" width="12.8" height="138"/><circle cx="346.3" cy="109.6" r="4"/><title>2026-09-17: −$171.90 (-1.72 % of initial)</title></g>
+<g class="hit"><rect x="352.7" y="12" width="12.8" height="138"/><circle cx="359.1" cy="109.6" r="4"/><title>2026-09-18: −$171.93 (-1.72 % of initial)</title></g>
+<g class="hit"><rect x="365.5" y="12" width="12.8" height="138"/><circle cx="371.9" cy="86.7" r="4"/><title>2026-09-21: −$127.62 (-1.28 % of initial)</title></g>
+<g class="hit"><rect x="378.3" y="12" width="12.8" height="138"/><circle cx="384.8" cy="76.9" r="4"/><title>2026-09-22: −$108.57 (-1.09 % of initial)</title></g>
+<g class="hit"><rect x="391.2" y="12" width="12.8" height="138"/><circle cx="397.6" cy="69.5" r="4"/><title>2026-09-23: −$94.26 (-0.94 % of initial)</title></g>
+<g class="hit"><rect x="404.0" y="12" width="12.8" height="138"/><circle cx="410.4" cy="55.9" r="4"/><title>2026-09-24: −$67.92 (-0.68 % of initial)</title></g>
+<g class="hit"><rect x="416.8" y="12" width="12.8" height="138"/><circle cx="423.2" cy="68.8" r="4"/><title>2026-09-25: −$92.81 (-0.93 % of initial)</title></g>
+<g class="hit"><rect x="429.7" y="12" width="12.8" height="138"/><circle cx="436.1" cy="63.7" r="4"/><title>2026-09-28: −$82.96 (-0.83 % of initial)</title></g>
+<g class="hit"><rect x="442.5" y="12" width="12.8" height="138"/><circle cx="448.9" cy="76.8" r="4"/><title>2026-09-29: −$108.30 (-1.08 % of initial)</title></g>
+<g class="hit"><rect x="455.3" y="12" width="12.8" height="138"/><circle cx="461.7" cy="26.9" r="4"/><title>2026-09-30: −$11.87 (-0.12 % of initial)</title></g>
+<g class="hit"><rect x="468.2" y="12" width="12.8" height="138"/><circle cx="474.6" cy="34.1" r="4"/><title>2026-10-01: −$25.76 (-0.26 % of initial)</title></g>
+<g class="hit"><rect x="481.0" y="12" width="12.8" height="138"/><circle cx="487.4" cy="47.6" r="4"/><title>2026-10-02: −$51.83 (-0.52 % of initial)</title></g>
+<g class="hit"><rect x="493.8" y="12" width="12.8" height="138"/><circle cx="500.2" cy="45.7" r="4"/><title>2026-10-05: −$48.30 (-0.48 % of initial)</title></g>
+<g class="hit"><rect x="506.6" y="12" width="12.8" height="138"/><circle cx="513.1" cy="44.2" r="4"/><title>2026-10-06: −$45.27 (-0.45 % of initial)</title></g>
+<g class="hit"><rect x="519.5" y="12" width="12.8" height="138"/><circle cx="525.9" cy="56.4" r="4"/><title>2026-10-07: −$68.95 (-0.69 % of initial)</title></g>
+<g class="hit"><rect x="532.3" y="12" width="12.8" height="138"/><circle cx="538.7" cy="69.3" r="4"/><title>2026-10-08: −$93.90 (-0.94 % of initial)</title></g>
+<g class="hit"><rect x="545.1" y="12" width="12.8" height="138"/><circle cx="551.5" cy="69.3" r="4"/><title>2026-10-09: −$93.90 (-0.94 % of initial)</title></g>
+<g class="hit"><rect x="558.0" y="12" width="12.8" height="138"/><circle cx="564.4" cy="72.1" r="4"/><title>2026-10-12: −$99.36 (-0.99 % of initial)</title></g>
+<g class="hit"><rect x="570.8" y="12" width="12.8" height="138"/><circle cx="577.2" cy="79.7" r="4"/><title>2026-10-13: −$113.98 (-1.14 % of initial)</title></g>
+<g class="hit"><rect x="583.6" y="12" width="12.8" height="138"/><circle cx="590.0" cy="86.1" r="4"/><title>2026-10-14: −$126.37 (-1.26 % of initial)</title></g>
+<g class="hit"><rect x="596.5" y="12" width="12.8" height="138"/><circle cx="602.9" cy="71.2" r="4"/><title>2026-10-15: −$97.50 (-0.97 % of initial)</title></g>
+<g class="hit"><rect x="609.3" y="12" width="12.8" height="138"/><circle cx="615.7" cy="71.2" r="4"/><title>2026-10-16: −$97.50 (-0.97 % of initial)</title></g>
+<g class="hit"><rect x="622.1" y="12" width="12.8" height="138"/><circle cx="628.5" cy="78.9" r="4"/><title>2026-10-19: −$112.44 (-1.12 % of initial)</title></g>
+<g class="hit"><rect x="634.9" y="12" width="12.8" height="138"/><circle cx="641.4" cy="70.5" r="4"/><title>2026-10-20: −$96.19 (-0.96 % of initial)</title></g>
+<g class="hit"><rect x="647.8" y="12" width="12.8" height="138"/><circle cx="654.2" cy="74.2" r="4"/><title>2026-10-21: −$103.43 (-1.03 % of initial)</title></g>
+<g class="hit"><rect x="660.6" y="12" width="12.8" height="138"/><circle cx="667.0" cy="74.2" r="4"/><title>2026-10-22: −$103.43 (-1.03 % of initial)</title></g>
+<g class="hit"><rect x="673.4" y="12" width="12.8" height="138"/><circle cx="679.8" cy="74.2" r="4"/><title>2026-10-23: −$103.43 (-1.03 % of initial)</title></g>
+<g class="hit"><rect x="686.3" y="12" width="12.8" height="138"/><circle cx="692.7" cy="76.0" r="4"/><title>2026-10-26: −$106.89 (-1.07 % of initial)</title></g>
+<g class="hit"><rect x="699.1" y="12" width="12.8" height="138"/><circle cx="705.5" cy="72.4" r="4"/><title>2026-10-27: −$99.87 (-1.00 % of initial)</title></g>
+<g class="hit"><rect x="711.9" y="12" width="12.8" height="138"/><circle cx="718.3" cy="70.7" r="4"/><title>2026-10-28: −$96.58 (-0.97 % of initial)</title></g>
+<g class="hit"><rect x="724.8" y="12" width="12.8" height="138"/><circle cx="731.2" cy="70.7" r="4"/><title>2026-10-29: −$96.58 (-0.97 % of initial)</title></g>
+<g class="hit"><rect x="737.6" y="12" width="6.4" height="138"/><circle cx="744.0" cy="70.7" r="4"/><title>2026-10-30: −$96.58 (-0.97 % of initial)</title></g>
+</svg>
+</section>
+
+<section>
+<h2>Daily P&amp;L</h2>
+<p class="caption">00:00 to 00:00 Paris, so each bar includes that night's swaps. Friday bars run to Monday 00:00.</p>
+<svg class="chart bars" viewBox="0 0 760 220" role="img" aria-label="Daily P&amp;L, 00:00 to 00:00 Paris, USD">
+<title>Daily P&amp;L, 00:00 to 00:00 Paris, USD</title>
+<line class="grid" x1="64" x2="744" y1="190.0" y2="190.0"/>
+<text class="tick" x="56" y="194.0" text-anchor="end">−$100</text>
+<line class="grid" x1="64" x2="744" y1="147.7" y2="147.7"/>
+<text class="tick" x="56" y="151.7" text-anchor="end">−$50</text>
+<line class="grid" x1="64" x2="744" y1="105.3" y2="105.3"/>
+<text class="tick" x="56" y="109.3" text-anchor="end">+$0</text>
+<line class="grid" x1="64" x2="744" y1="63.0" y2="63.0"/>
+<text class="tick" x="56" y="67.0" text-anchor="end">+$50</text>
+<line class="grid" x1="64" x2="744" y1="20.6" y2="20.6"/>
+<text class="tick" x="56" y="24.6" text-anchor="end">+$100</text>
+<line class="tickmark" x1="64.0" x2="64.0" y1="190" y2="195"/>
+<text class="tick" x="64.0" y="208" text-anchor="middle">Aug 2026</text>
+<line class="tickmark" x1="194.8" x2="194.8" y1="190" y2="195"/>
+<text class="tick" x="194.8" y="208" text-anchor="middle">Sep</text>
+<line class="tickmark" x1="482.5" x2="482.5" y1="190" y2="195"/>
+<text class="tick" x="482.5" y="208" text-anchor="middle">Oct</text>
+<line class="axis" x1="64" x2="744" y1="190" y2="190"/>
+<line class="baseline" x1="64" x2="744" y1="105.3" y2="105.3"/>
+<g class="hit"><rect class="bar neg" x="58.6" y="105.3" width="10.8" height="1.4" rx="1"/><rect class="hitbox" x="57.6" y="12" width="12.8" height="178"/><title>2026-08-18: −$1.71</title></g>
+<g class="hit"><rect class="bar pos" x="71.7" y="92.1" width="10.8" height="13.2" rx="1"/><rect class="hitbox" x="70.7" y="12" width="12.8" height="178"/><title>2026-08-19: +$15.59</title></g>
+<g class="hit"><rect class="bar pos" x="84.7" y="105.1" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="83.7" y="12" width="12.8" height="178"/><title>2026-08-20: +$0.27</title></g>
+<g class="hit"><rect class="bar neg" x="97.8" y="105.3" width="10.8" height="19.8" rx="1"/><rect class="hitbox" x="96.8" y="12" width="12.8" height="178"/><title>2026-08-21: −$23.37</title></g>
+<g class="hit"><rect class="bar neg" x="110.9" y="105.3" width="10.8" height="2.6" rx="1"/><rect class="hitbox" x="109.9" y="12" width="12.8" height="178"/><title>2026-08-24: −$3.06</title></g>
+<g class="hit"><rect class="bar pos" x="124.0" y="75.7" width="10.8" height="29.6" rx="1"/><rect class="hitbox" x="123.0" y="12" width="12.8" height="178"/><title>2026-08-25: +$34.93</title></g>
+<g class="hit"><rect class="bar neg" x="137.0" y="105.3" width="10.8" height="29.9" rx="1"/><rect class="hitbox" x="136.0" y="12" width="12.8" height="178"/><title>2026-08-26: −$35.31</title></g>
+<g class="hit"><rect class="bar pos" x="150.1" y="96.4" width="10.8" height="8.9" rx="1"/><rect class="hitbox" x="149.1" y="12" width="12.8" height="178"/><title>2026-08-27: +$10.53</title></g>
+<g class="hit"><rect class="bar neg" x="163.2" y="105.3" width="10.8" height="20.6" rx="1"/><rect class="hitbox" x="162.2" y="12" width="12.8" height="178"/><title>2026-08-28: −$24.27</title></g>
+<g class="hit"><rect class="bar neg" x="176.3" y="105.3" width="10.8" height="29.5" rx="1"/><rect class="hitbox" x="175.3" y="12" width="12.8" height="178"/><title>2026-08-31: −$34.89</title></g>
+<g class="hit"><rect class="bar neg" x="189.4" y="105.3" width="10.8" height="64.2" rx="1"/><rect class="hitbox" x="188.4" y="12" width="12.8" height="178"/><title>2026-09-01: −$75.86</title></g>
+<g class="hit"><rect class="bar pos" x="202.4" y="88.5" width="10.8" height="16.9" rx="1"/><rect class="hitbox" x="201.4" y="12" width="12.8" height="178"/><title>2026-09-02: +$19.90</title></g>
+<g class="hit"><rect class="bar pos" x="215.5" y="88.1" width="10.8" height="17.2" rx="1"/><rect class="hitbox" x="214.5" y="12" width="12.8" height="178"/><title>2026-09-03: +$20.33</title></g>
+<g class="hit"><rect class="bar zero" x="228.6" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="227.6" y="12" width="12.8" height="178"/><title>2026-09-04: +$0.00</title></g>
+<g class="hit"><rect class="bar neg" x="241.7" y="105.3" width="10.8" height="2.8" rx="1"/><rect class="hitbox" x="240.7" y="12" width="12.8" height="178"/><title>2026-09-07: −$3.33</title></g>
+<g class="hit"><rect class="bar neg" x="254.7" y="105.3" width="10.8" height="12.5" rx="1"/><rect class="hitbox" x="253.7" y="12" width="12.8" height="178"/><title>2026-09-08: −$14.72</title></g>
+<g class="hit"><rect class="bar neg" x="267.8" y="105.3" width="10.8" height="32.2" rx="1"/><rect class="hitbox" x="266.8" y="12" width="12.8" height="178"/><title>2026-09-09: −$38.05</title></g>
+<g class="hit"><rect class="bar neg" x="280.9" y="105.3" width="10.8" height="9.4" rx="1"/><rect class="hitbox" x="279.9" y="12" width="12.8" height="178"/><title>2026-09-10: −$11.06</title></g>
+<g class="hit"><rect class="bar neg" x="294.0" y="105.3" width="10.8" height="21.6" rx="1"/><rect class="hitbox" x="293.0" y="12" width="12.8" height="178"/><title>2026-09-11: −$25.54</title></g>
+<g class="hit"><rect class="bar pos" x="307.0" y="82.2" width="10.8" height="23.1" rx="1"/><rect class="hitbox" x="306.0" y="12" width="12.8" height="178"/><title>2026-09-14: +$27.33</title></g>
+<g class="hit"><rect class="bar pos" x="320.1" y="91.1" width="10.8" height="14.3" rx="1"/><rect class="hitbox" x="319.1" y="12" width="12.8" height="178"/><title>2026-09-15: +$16.83</title></g>
+<g class="hit"><rect class="bar neg" x="333.2" y="105.3" width="10.8" height="5.1" rx="1"/><rect class="hitbox" x="332.2" y="12" width="12.8" height="178"/><title>2026-09-16: −$5.99</title></g>
+<g class="hit"><rect class="bar pos" x="346.3" y="103.5" width="10.8" height="1.9" rx="1"/><rect class="hitbox" x="345.3" y="12" width="12.8" height="178"/><title>2026-09-17: +$2.20</title></g>
+<g class="hit"><rect class="bar neg" x="359.4" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="358.4" y="12" width="12.8" height="178"/><title>2026-09-18: −$0.03</title></g>
+<g class="hit"><rect class="bar pos" x="372.4" y="67.8" width="10.8" height="37.5" rx="1"/><rect class="hitbox" x="371.4" y="12" width="12.8" height="178"/><title>2026-09-21: +$44.31</title></g>
+<g class="hit"><rect class="bar pos" x="385.5" y="89.2" width="10.8" height="16.1" rx="1"/><rect class="hitbox" x="384.5" y="12" width="12.8" height="178"/><title>2026-09-22: +$19.05</title></g>
+<g class="hit"><rect class="bar pos" x="398.6" y="93.2" width="10.8" height="12.1" rx="1"/><rect class="hitbox" x="397.6" y="12" width="12.8" height="178"/><title>2026-09-23: +$14.31</title></g>
+<g class="hit"><rect class="bar pos" x="411.7" y="83.0" width="10.8" height="22.3" rx="1"/><rect class="hitbox" x="410.7" y="12" width="12.8" height="178"/><title>2026-09-24: +$26.34</title></g>
+<g class="hit"><rect class="bar neg" x="424.7" y="105.3" width="10.8" height="21.1" rx="1"/><rect class="hitbox" x="423.7" y="12" width="12.8" height="178"/><title>2026-09-25: −$24.89</title></g>
+<g class="hit"><rect class="bar pos" x="437.8" y="97.0" width="10.8" height="8.3" rx="1"/><rect class="hitbox" x="436.8" y="12" width="12.8" height="178"/><title>2026-09-28: +$9.85</title></g>
+<g class="hit"><rect class="bar neg" x="450.9" y="105.3" width="10.8" height="21.5" rx="1"/><rect class="hitbox" x="449.9" y="12" width="12.8" height="178"/><title>2026-09-29: −$25.34</title></g>
+<g class="hit"><rect class="bar pos" x="464.0" y="23.7" width="10.8" height="81.7" rx="1"/><rect class="hitbox" x="463.0" y="12" width="12.8" height="178"/><title>2026-09-30: +$96.43</title></g>
+<g class="hit"><rect class="bar neg" x="477.0" y="105.3" width="10.8" height="11.8" rx="1"/><rect class="hitbox" x="476.0" y="12" width="12.8" height="178"/><title>2026-10-01: −$13.89</title></g>
+<g class="hit"><rect class="bar neg" x="490.1" y="105.3" width="10.8" height="22.1" rx="1"/><rect class="hitbox" x="489.1" y="12" width="12.8" height="178"/><title>2026-10-02: −$26.07</title></g>
+<g class="hit"><rect class="bar pos" x="503.2" y="102.3" width="10.8" height="3.0" rx="1"/><rect class="hitbox" x="502.2" y="12" width="12.8" height="178"/><title>2026-10-05: +$3.53</title></g>
+<g class="hit"><rect class="bar pos" x="516.3" y="102.8" width="10.8" height="2.6" rx="1"/><rect class="hitbox" x="515.3" y="12" width="12.8" height="178"/><title>2026-10-06: +$3.03</title></g>
+<g class="hit"><rect class="bar neg" x="529.4" y="105.3" width="10.8" height="20.1" rx="1"/><rect class="hitbox" x="528.4" y="12" width="12.8" height="178"/><title>2026-10-07: −$23.68</title></g>
+<g class="hit"><rect class="bar neg" x="542.4" y="105.3" width="10.8" height="21.1" rx="1"/><rect class="hitbox" x="541.4" y="12" width="12.8" height="178"/><title>2026-10-08: −$24.95</title></g>
+<g class="hit"><rect class="bar zero" x="555.5" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="554.5" y="12" width="12.8" height="178"/><title>2026-10-09: +$0.00</title></g>
+<g class="hit"><rect class="bar neg" x="568.6" y="105.3" width="10.8" height="4.6" rx="1"/><rect class="hitbox" x="567.6" y="12" width="12.8" height="178"/><title>2026-10-12: −$5.46</title></g>
+<g class="hit"><rect class="bar neg" x="581.7" y="105.3" width="10.8" height="12.4" rx="1"/><rect class="hitbox" x="580.7" y="12" width="12.8" height="178"/><title>2026-10-13: −$14.62</title></g>
+<g class="hit"><rect class="bar neg" x="594.7" y="105.3" width="10.8" height="10.5" rx="1"/><rect class="hitbox" x="593.7" y="12" width="12.8" height="178"/><title>2026-10-14: −$12.39</title></g>
+<g class="hit"><rect class="bar pos" x="607.8" y="80.9" width="10.8" height="24.4" rx="1"/><rect class="hitbox" x="606.8" y="12" width="12.8" height="178"/><title>2026-10-15: +$28.87</title></g>
+<g class="hit"><rect class="bar zero" x="620.9" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="619.9" y="12" width="12.8" height="178"/><title>2026-10-16: +$0.00</title></g>
+<g class="hit"><rect class="bar neg" x="634.0" y="105.3" width="10.8" height="12.7" rx="1"/><rect class="hitbox" x="633.0" y="12" width="12.8" height="178"/><title>2026-10-19: −$14.94</title></g>
+<g class="hit"><rect class="bar pos" x="647.0" y="91.6" width="10.8" height="13.8" rx="1"/><rect class="hitbox" x="646.0" y="12" width="12.8" height="178"/><title>2026-10-20: +$16.25</title></g>
+<g class="hit"><rect class="bar neg" x="660.1" y="105.3" width="10.8" height="6.1" rx="1"/><rect class="hitbox" x="659.1" y="12" width="12.8" height="178"/><title>2026-10-21: −$7.24</title></g>
+<g class="hit"><rect class="bar zero" x="673.2" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="672.2" y="12" width="12.8" height="178"/><title>2026-10-22: +$0.00</title></g>
+<g class="hit"><rect class="bar zero" x="686.3" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="685.3" y="12" width="12.8" height="178"/><title>2026-10-23: +$0.00</title></g>
+<g class="hit"><rect class="bar neg" x="699.4" y="105.3" width="10.8" height="2.9" rx="1"/><rect class="hitbox" x="698.4" y="12" width="12.8" height="178"/><title>2026-10-26: −$3.46</title></g>
+<g class="hit"><rect class="bar pos" x="712.4" y="99.4" width="10.8" height="5.9" rx="1"/><rect class="hitbox" x="711.4" y="12" width="12.8" height="178"/><title>2026-10-27: +$7.02</title></g>
+<g class="hit"><rect class="bar pos" x="725.5" y="102.5" width="10.8" height="2.8" rx="1"/><rect class="hitbox" x="724.5" y="12" width="12.8" height="178"/><title>2026-10-28: +$3.29</title></g>
+<g class="hit"><rect class="bar zero" x="738.6" y="105.3" width="10.8" height="1.0" rx="1"/><rect class="hitbox" x="737.6" y="12" width="12.8" height="178"/><title>2026-10-29: +$0.00</title></g>
+</svg>
+</section>
+
+<section>
+<h2>Key figures</h2>
+<div class="scroll"><table class="kv"><tbody>
+<tr><th scope="row">Account</th><td class="num">FTMO, Swing, two-step evaluation, funded, $10,000.00</td><td></td></tr>
+<tr><th scope="row">First mark</th><td class="num">2026-08-18 00:00 Paris</td><td class="note">account funded, book flat</td></tr>
+<tr><th scope="row">First trade</th><td class="num">2026-08-18 16:10:14</td><td></td></tr>
+<tr><th scope="row">Last mark</th><td class="num">2026-10-30 00:00 Paris</td><td></td></tr>
+<tr><th scope="row">Days live</th><td class="num">73 calendar, 54 trading</td><td class="note">53 complete 00:00-to-00:00 days</td></tr>
+<tr><th scope="row">P&L, trading only</th><td class="num">−$73.93</td><td class="note">−0.74 % of initial</td></tr>
+<tr><th scope="row">Current equity</th><td class="num">$9,915.29</td><td class="note">balance $9,915.29</td></tr>
+<tr><th scope="row">External adjustments</th><td class="num">−$10.78</td><td class="note">removed from the curve, see notes</td></tr>
+<tr><th scope="row">Swaps billed</th><td class="num">−$28.12</td><td class="note">included in P&L</td></tr>
+<tr><th scope="row">Max drawdown</th><td class="num">−$212.27 (−2.12 % of initial)</td><td class="note">2026-08-25 to 2026-09-11</td></tr>
+<tr><th scope="row">Current drawdown</th><td class="num">−$96.58</td><td></td></tr>
+<tr><th scope="row">Daily P&L</th><td class="num">mean −$1.39, sd $25.18</td><td class="note">t = -0.4, n = 53</td></tr>
+<tr><th scope="row">Best / worst day</th><td class="num">+$96.43 / −$75.86</td><td class="note">2026-09-30 / 2026-09-01</td></tr>
+<tr><th scope="row">Active days positive</th><td class="num">44.7 %</td><td class="note">47 days with non-zero P&L</td></tr>
+<tr><th scope="row">Round trips</th><td class="num">76</td><td class="note">win rate 48.7 %, avg −$1.74</td></tr>
+<tr><th scope="row">Unpaired fills</th><td class="num">2</td><td class="note">entry or exit missing from the fill log; P&L is in the equity series</td></tr>
+<tr><th scope="row">Mean |slippage|</th><td class="num">1.44 bps</td><td class="note">154 fills</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>FTMO barriers</h2>
+<div class="scroll"><table class="kv"><tbody>
+<tr><th scope="row">Daily loss floor</th><td class="num">5.0 %</td><td class="note">balance at 00:00 CE(S)T minus 5 % of the initial balance</td></tr>
+<tr><th scope="row">Closest approach, daily floor</th><td class="num">$414.36 (4.14 % of initial)</td><td class="note">2026-09-01</td></tr>
+<tr><th scope="row">Worst day vs daily limit</th><td class="num">15.2 % of the limit used</td><td class="note">limit $500.00</td></tr>
+<tr><th scope="row">Max loss floor</th><td class="num">10.0 %, $9,000.00</td><td class="note">static: initial balance minus 10 %</td></tr>
+<tr><th scope="row">Closest approach, max loss floor</th><td class="num">$810.38</td><td class="note">2026-09-11</td></tr>
+<tr><th scope="row">Current distances</th><td class="num">daily $500.00, max loss $915.29</td><td></td></tr>
+</tbody></table></div>
+<p class="caption">Distances are measured on the 00:00 and 22:58 marks; intraday lows are not in the export, so the true closest approach can only be smaller.</p>
+</section>
+
+<section>
+<h2>By instrument</h2>
+<div class="scroll"><table class="wide">
+<thead><tr><th>Instrument</th><th>Round trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Swaps</th><th>Marks with position</th><th>Avg notional when held</th><th>Max notional</th><th>Avg exposure, % of initial</th></tr></thead>
+<tbody>
+<tr><th scope="row">GER40</th><td class="num">21</td><td class="num">57.1 %</td><td class="num">−$0.71</td><td class="num">−$15.01</td><td class="num">−$12.87</td><td class="num">33.6 %</td><td class="num">$3,440.00</td><td class="num">$3,630.00</td><td class="num">11.56 %</td></tr><tr><th scope="row">US100</th><td class="num">55</td><td class="num">45.5 %</td><td class="num">−$2.13</td><td class="num">−$117.20</td><td class="num">−$15.08</td><td class="num">33.6 %</td><td class="num">$4,141.00</td><td class="num">$17,744.00</td><td class="num">13.91 %</td></tr><tr><th scope="row">XAUUSD</th><td class="num">0</td><td class="num">n/a</td><td class="num">n/a</td><td class="num">+$0.00</td><td class="num">−$0.17</td><td class="num">1.6 %</td><td class="num">$16,697.00</td><td class="num">$16,697.00</td><td class="num">2.67 %</td></tr>
+</tbody></table></div>
+<p class="caption">Trade P&amp;L is gross of swaps and converted at the broker's point value of the exit day. Exposure is the notional reported by the terminal at each mark.</p>
+</section>
+
+<section>
+<h2>By sleeve</h2>
+<div class="scroll"><table class="wide">
+<thead><tr><th>Sleeve</th><th>Round trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Median hold, h</th><th>Best / worst</th></tr></thead>
+<tbody>
+<tr><th scope="row">Overnight index (US100, GER40)</th><td class="num">41</td><td class="num">53.7 %</td><td class="num">−$1.34</td><td class="num">−$54.83</td><td class="num">15.4</td><td class="num">+$22.22 / −$48.11</td></tr><tr><th scope="row">Opening-range breakout (US100)</th><td class="num">35</td><td class="num">42.9 %</td><td class="num">−$2.21</td><td class="num">−$77.38</td><td class="num">5.5</td><td class="num">+$41.89 / −$26.07</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>Notes on the data</h2>
+<ul>
+<li><strong>External balance adjustments</strong> (removed from the curve, counted outside P&amp;L): <ul><li>2026-10-01: −$10.78. Balance reset from $10,010.78 (flat close of 2026-09-30, pre-swap) to $10,000.00 at the 2026-10-01 00:00 mark, with no fill and no swap in between. Consistent with the FTMO payout mechanism (a withdrawal brings the balance back to the initial capital); not documented by a statement in this repository. The $10.78 is counted as realised, outside the curve.</li></ul></li>
+<li><strong>Fills that could not be paired</strong> (2): <ul><li>2026-09-07 16:20:16 US100 short 0.6 lots, funded_orb_entry: entry without exit</li><li>2026-09-29 22:05:00 XAUUSD short 0.04 lots, rebalance: entry without exit</li></ul></li>
+<li><strong>Missing weekdays</strong> in the mark series: none.</li>
+<li><strong>Nightly reconciliation</strong> (real P&amp;L against a replay of the model on the day's prices): 53 nights logged, 53 with a full model replay, 0 degraded (close-freeze fallback); 16 flagged above tolerance; largest residual $24.41; real −$97.82 vs model +$79.77 on the replayed days.</li>
+</ul>
+</section>
+
+<footer>
+<p>Built 2026-10-30T14:04:08Z UTC, working tree at repository commit <code>b153a02</code> (the data files land in the commit that follows it).
+Source extracts and their SHA-256:</p>
+<ul class="hashes"><li><code>adjustments.csv</code> <code class="hash">3a58f79b5b5d707f6a036daac0675d3fc8a3df99def6a4e87e0d4ad41e5f5162</code></li><li><code>fills.csv</code> <code class="hash">4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b</code></li><li><code>point_values.csv</code> <code class="hash">3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08</code></li><li><code>positions.csv</code> <code class="hash">e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7</code></li><li><code>reconcile.csv</code> <code class="hash">e73e412abcd418956b06c2214c5787ba0e640d91d424c251e430d007d7d30f58</code></li><li><code>snapshots.csv</code> <code class="hash">739c727539bd00292b8f94d2a889bd901c2f97a24e4cb09b098b9b63fb95c604</code></li><li><code>swaps.csv</code> <code class="hash">273aea7d9b437a6bc01a69ee40ced8a86918e48268b5679bd5d0fbd4268ce436</code></li></ul>
+<p>Data: <a href="../../studies/live_record/data/equity_daily.csv">equity_daily.csv</a>,
+<a href="../../studies/live_record/data/trades.csv">trades.csv</a>,
+<a href="../../studies/live_record/summary.json">summary.json</a>.
+Method and provenance: <a href="../../studies/live_record/README.md">studies/live_record/README.md</a>.
+Every figure on this page is read from <code>summary.json</code>.</p>
+</footer>
+</main>
+</body>
+</html>

@@ -18,7 +18,7 @@ rejected along the way, is what is published here.
 | | |
 |---|---|
 | **Live** | A fully automated book on an FTMO funded account (\$10k, Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
-| **Live record** | 10 weeks, max drawdown **−2.1 %**, no risk barrier approached, return flat — not yet backed by a file in this repository; a weekly equity series and tear sheet are the next addition |
+| **Live record** | 73 days (54 trading days), P&L **−$73.93** (−0.74 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](docs/live/index.html) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
 | **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly P&L reconciliation against the model |
 
 The account is small and so are the returns. That is the point: the system is a **falsification
@@ -74,6 +74,8 @@ core/risk/           volatility-targeted sizing, correlation monitoring, prop-fi
 core/admission/      the test a new sleeve must pass to enter the book (ΔSharpe at ERC weight,
                      block bootstrap, minimum detectable effect)
 studies/             complete studies: pre-registration, results, verdict, and code where self-contained
+studies/live_record/ the funded account's record: source extracts, builder, daily equity and trades, summary
+docs/live/           the static page built from it (GitHub Pages)
 LESSONS.md           the numbered lesson registry: one verdict per lesson, with the number that earned it
 PROVENANCE.md        where and when each study's pre-registration and results were committed
 PREREGISTRATION_FREEZE.md  SHA-256 of each pre-registration at its freezing commit and at HEAD
