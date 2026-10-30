@@ -1,4 +1,4 @@
-date,weekday,balance_open,equity_open,equity_close,pnl_usd,adjustment_usd,cum_pnl_usd,complete,daily_floor_usd,static_floor_usd,min_mark_equity,dist_daily_floor_usd,dist_static_floor_usd,n_fills,swaps_usd,equity_curve,drawdown_usd,drawdown_pct
+date,weekday,balance_open,equity_open,equity_next_open,pnl_usd,adjustment_usd,cum_pnl_usd,complete,daily_floor_usd,static_floor_usd,min_mark_equity,dist_daily_floor_usd,dist_static_floor_usd,n_fills,swaps_usd,equity_curve,drawdown_usd,drawdown_pct
 2026-08-18,Tue,10000.0,10000.0,9998.29,-1.71,0.0,-1.71,True,9500.0,9000.0,9998.29,498.29,998.29,4,-1.36,9998.29,-1.71,-0.017
 2026-08-19,Wed,10003.57,9998.29,10013.88,15.59,0.0,13.88,True,9503.57,9000.0,9998.29,494.72,998.29,4,0.0,10013.88,0.0,0.0
 2026-08-20,Thu,10013.88,10013.88,10014.15,0.27,0.0,14.15,True,9513.88,9000.0,10013.88,500.0,1013.88,2,0.0,10014.15,0.0,0.0

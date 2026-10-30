@@ -18,7 +18,7 @@ rejected along the way, is what is published here.
 | | |
 |---|---|
 | **Live** | A fully automated book on an FTMO funded account (\$10k, Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
-| **Live record** | 73 days (54 trading days), P&L **−$73.93** (−0.74 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](docs/live/index.html) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
+| **Live record** | 73 days (54 trading days) over two consecutive funded logins, chained; P&L **−$73.93** (−0.74 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](https://guillaume-beaudouin-git.github.io/proof-of-edge/live/) ([source](docs/live/index.html)) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
 | **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly P&L reconciliation against the model |
 
 The account is small and so are the returns. That is the point: the system is a **falsification

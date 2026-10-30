@@ -58,6 +58,7 @@ RECONCILE_COLUMNS = ["date", "mode", "pnl_real", "pnl_model", "delta_total", "d_
                      "d_cost", "d_timing", "d_micro", "residual_usd", "tol_usd",
                      "unexplained", "n_fills"]
 ADJUSTMENT_COLUMNS = ["date", "amount_usd", "note"]
+FILL_NOTE_COLUMNS = ["ts_paris", "note"]
 
 TS_FMT = "%Y.%m.%d %H:%M:%S"
 
@@ -179,6 +180,7 @@ class Source:
     point_values: pd.DataFrame
     reconcile: pd.DataFrame
     adjustments: pd.DataFrame
+    fill_notes: pd.DataFrame
     hashes: dict[str, str]
 
 
@@ -203,6 +205,7 @@ def load_source(src: Path) -> Source:
         point_values=read("point_values.csv", POINT_VALUE_COLUMNS),
         reconcile=read("reconcile.csv", RECONCILE_COLUMNS),
         adjustments=read("adjustments.csv", ADJUSTMENT_COLUMNS),
+        fill_notes=read("fill_notes.csv", FILL_NOTE_COLUMNS),
         hashes=hashes)
 
 
@@ -272,7 +275,7 @@ def daily_table(marks: pd.DataFrame, snapshots: pd.DataFrame, fills: pd.DataFram
         rows.append(dict(
             date=d, weekday=pd.Timestamp(d).day_name()[:3],
             balance_open=round(float(o["balance"]), 2), equity_open=round(float(o["equity"]), 2),
-            equity_close=None if math.isnan(close_eq_raw) else round(close_eq_raw, 2),
+            equity_next_open=None if math.isnan(close_eq_raw) else round(close_eq_raw, 2),
             pnl_usd=None if math.isnan(pnl) else round(pnl, 2),
             adjustment_usd=round(adj_in_window, 2),
             cum_pnl_usd=round(cum, 2), complete=complete,
@@ -317,9 +320,10 @@ def pair_trades(fills: pd.DataFrame, point_values: pd.DataFrame) -> tuple[pd.Dat
         return float(sub.iloc[0]["usd_per_point_per_lot"]) if len(sub) else float("nan")
 
     def as_unmatched(symbol: str, sleeve: str, e: dict, kind: str) -> dict:
+        pvv = point_value(symbol, e["ts"])
         return dict(ts=e["ts"].strftime("%Y-%m-%d %H:%M:%S"), kind=kind, symbol=symbol, sleeve=sleeve,
                     side="long" if e["sgn"] > 0 else "short", lots=round(e["lots"], 2),
-                    price=e["price"], reason=e["reason"])
+                    price=e["price"], notional_usd=round(e["lots"] * e["price"] * pvv, 0), reason=e["reason"])
 
     trades, unmatched = [], []
     books: dict[tuple, list[dict]] = {}
@@ -397,6 +401,9 @@ def _git_head() -> str:
 
 def summarise(src: Source, marks: pd.DataFrame, daily: pd.DataFrame, trades: pd.DataFrame,
               unmatched: list[dict], build_ts: datetime) -> dict:
+    notes = dict(zip(src.fill_notes["ts_paris"].astype(str), src.fill_notes["note"].astype(str))) if len(src.fill_notes) else {}
+    for u in unmatched:
+        u["note"] = notes.get(u["ts"], "")
     complete = daily[daily["complete"]].copy()
     pnl = complete["pnl_usd"].astype(float)
     n = int(len(pnl))
@@ -424,8 +431,11 @@ def summarise(src: Source, marks: pd.DataFrame, daily: pd.DataFrame, trades: pd.
         held_marks = pos.groupby("ts_paris")["notional_usd"].sum().abs()
         t = trades[trades["symbol"] == sym] if len(trades) else pd.DataFrame()
         sw = src.swaps[src.swaps["symbol"] == sym]
+        un = [u for u in unmatched if u["symbol"] == sym]
         per_symbol[sym] = dict(
             trades=_trade_stats(t),
+            unpaired_fills=len(un),
+            unpaired_notional_usd=round(sum(float(u["notional_usd"]) for u in un), 0),
             marks_with_position_pct=round(100 * len(held_marks) / n_marks, 1) if n_marks else None,
             avg_notional_when_held_usd=round(float(held_marks.mean()), 0) if len(held_marks) else 0.0,
             max_notional_usd=round(float(held_marks.max()), 0) if len(held_marks) else 0.0,
@@ -437,7 +447,11 @@ def summarise(src: Source, marks: pd.DataFrame, daily: pd.DataFrame, trades: pd.
 
     rec = src.reconcile
     rec_full = rec[rec["mode"] == "full"]
+    gap = (float(rec_full["pnl_model"].sum()) - float(rec_full["pnl_real"].sum())) if len(rec_full) else None
     reconcile = dict(
+        window="pnl_real is the terminal's equity at the day's close mark minus the 00:00 balance of the same day: pre-swap, and without the close-to-midnight interval, so it does not sum to the 00:00-to-00:00 P&L",
+        model_minus_real_usd=round(gap, 2) if gap is not None else None,
+        sum_d_micro_usd=round(float(rec_full["d_micro"].fillna(0).sum()), 2) if len(rec_full) else None,
         days_logged=int(len(rec)), days_full=int(len(rec_full)),
         days_degraded=int((rec["mode"] == "degraded").sum()),
         days_unexplained=int(rec["unexplained"].fillna(0).astype(int).sum()),
@@ -716,9 +730,9 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
     barrier_rows = "\n".join([
         row("Daily loss floor", acc["daily_loss_limit_pct"].__str__() + " %", b["daily_loss_floor_rule"]),
         row("Closest approach, daily floor", f"{_fmt_usd(b['min_distance_daily_floor_usd'])} ({_fmt_pct(b['min_distance_daily_floor_pct_of_initial'])} of initial)",
-            b["min_distance_daily_floor_date"]),
+            f"{b['min_distance_daily_floor_date']}; lowest mark of the day against the floor anchored on the 00:00 balance, as FTMO measures it"),
         row("Worst day vs daily limit", _fmt_pct(d["worst_day_pct_of_daily_limit"], nd=1) + " of the limit used",
-            f"limit {_fmt_usd(acc['initial_balance_usd'] * acc['daily_loss_limit_pct'] / 100)}"),
+            f"limit {_fmt_usd(acc['initial_balance_usd'] * acc['daily_loss_limit_pct'] / 100)}; equity-to-equity, 00:00 to 00:00, a different measure from the row above"),
         row("Max loss floor", f"{acc['max_loss_limit_pct']} %, {_fmt_usd(acc['static_floor_usd'])}", b["max_loss_floor_rule"]),
         row("Closest approach, max loss floor", _fmt_usd(b["min_distance_static_floor_usd"]), b["min_distance_static_floor_date"]),
         row("Current distances", f"daily {_fmt_usd(b['current_distance_daily_floor_usd'])}, max loss {_fmt_usd(b['current_distance_static_floor_usd'])}"),
@@ -733,6 +747,7 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
             f"<td class=\"num\">{_fmt_pct(ts['win_rate_pct'], nd=1) if ts['n'] else 'n/a'}</td>"
             f"<td class=\"num\">{_fmt_usd(ts['avg_pnl_usd'], signed=True) if ts['n'] else 'n/a'}</td>"
             f"<td class=\"num\">{_fmt_usd(ts['gross_pnl_usd'], signed=True)}</td>"
+            f"<td class=\"num\">{v['unpaired_fills']}" + (f" ({_fmt_usd(v['unpaired_notional_usd'])})" if v['unpaired_fills'] else "") + "</td>"
             f"<td class=\"num\">{_fmt_usd(v['swaps_usd'], signed=True)}</td>"
             f"<td class=\"num\">{v['marks_with_position_pct']} %</td>"
             f"<td class=\"num\">{_fmt_usd(v['avg_notional_when_held_usd'])}</td>"
@@ -752,7 +767,8 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
     adj_items = "".join(f"<li>{html.escape(a['date'])}: {_fmt_usd(float(a['amount_usd']), signed=True)}. {html.escape(str(a['note']))}</li>"
                         for a in p["adjustments"]) or "<li>none</li>"
     unmatched_items = "".join(
-        f"<li>{html.escape(u['ts'])} {html.escape(u['symbol'])} {u['side']} {u['lots']} lots, {html.escape(u['reason'])}: {html.escape(u['kind'].replace('_', ' '))}</li>"
+        f"<li>{html.escape(u['ts'])} {html.escape(u['symbol'])} {u['side']} {u['lots']} lots, notional {_fmt_usd(u['notional_usd'])}, "
+        f"{html.escape(u['reason'])}: {html.escape(u['kind'].replace('_', ' '))}. {html.escape(u.get('note', ''))}</li>"
         for u in t["unmatched_fills"]) or "<li>none</li>"
     missing_items = ", ".join(pe["missing_weekdays"]) or "none"
     hash_items = "".join(f"<li><code>{html.escape(k)}</code> <code class=\"hash\">{v}</code></li>" for k, v in s["source_sha256"].items())
@@ -760,7 +776,11 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
     rec_line = (f"{rec['days_logged']} nights logged, {rec['days_full']} with a full model replay, "
                 f"{rec['days_degraded']} degraded (close-freeze fallback); {rec['days_unexplained']} flagged above tolerance; "
                 f"largest residual {_fmt_usd(rec['max_abs_residual_usd'])}; real {_fmt_usd(rec['sum_pnl_real_full_days_usd'], signed=True)} "
-                f"vs model {_fmt_usd(rec['sum_pnl_model_full_days_usd'], signed=True)} on the replayed days.")
+                f"vs model {_fmt_usd(rec['sum_pnl_model_full_days_usd'], signed=True)} on the replayed days. "
+                f"Real and model differ by {_fmt_usd(rec['model_minus_real_usd'])}; {_fmt_usd(rec['sum_d_micro_usd'])} of it sits in the ORB term "
+                f"(d_micro), on days where the live ORB fired and the daily replay saw no trade (2026-09-25, 2026-10-02 among others) or the reverse "
+                f"(2026-09-04); 2026-08-21 is an unexplained residual of the same size. Why the live ORB and the replay disagree on firing is open. "
+                f"Window: {html.escape(rec['window'])}.")
 
     css = CSS
     return f"""<!doctype html>
@@ -779,7 +799,7 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
 <header>
 <p class="kicker"><a href="../../">proof-of-edge</a> / live record</p>
 <h1>FTMO funded account, live record</h1>
-<p class="lede">A {_fmt_usd(acc['initial_balance_usd'])} {acc['firm']} funded account ({acc['programme']}), traded by a fully
+<p class="lede">A {_fmt_usd(acc['initial_balance_usd'])} {acc['firm']} funded account ({acc['programme']}; two consecutive funded logins, chained, see notes), traded by a fully
 automated book: overnight index exposure on US100 and GER40, and an opening-range breakout on US100.
 Marks are the broker's balance and equity as read by the Expert Advisor at 00:00 and 22:58 Paris;
 the curve below is trading only, with external balance adjustments removed and listed.
@@ -796,7 +816,7 @@ External anchor: <a href="{FTMO_PROFILE}" rel="noopener">FTMO verified trader pr
 
 <section>
 <h2>Equity</h2>
-<p class="caption">Trading-only equity on the 00:00 Paris marks, USD. Dotted line: initial balance. Hover a point for the value.</p>
+<p class="caption">Trading-only equity on the 00:00 Paris marks, USD. Dotted line: initial balance. Hover or tap a point for the value.</p>
 {equity_svg}
 </section>
 
@@ -830,11 +850,11 @@ External anchor: <a href="{FTMO_PROFILE}" rel="noopener">FTMO verified trader pr
 <section>
 <h2>By instrument</h2>
 <div class="scroll"><table class="wide">
-<thead><tr><th>Instrument</th><th>Round trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Swaps</th><th>Marks with position</th><th>Avg notional when held</th><th>Max notional</th><th>Avg exposure, % of initial</th></tr></thead>
+<thead><tr><th>Instrument</th><th>Trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Unpaired</th><th>Swaps</th><th>Marks held</th><th>Avg notional</th><th>Max notional</th><th>Exposure</th></tr></thead>
 <tbody>
 {''.join(inst_rows)}
 </tbody></table></div>
-<p class="caption">Trade P&amp;L is gross of swaps and converted at the broker's point value of the exit day. Exposure is the notional reported by the terminal at each mark.</p>
+<p class="caption">Trade P&amp;L is gross of swaps and converted at the broker's point value of the exit day. Unpaired: entries whose exit the EA did not log, with their notional; the maximum notional column includes them. Marks held: share of the 00:00 and 22:58 marks with a position; avg notional: when held; exposure: average notional over all marks, as a share of the initial balance, from the notional the terminal reports at each mark.</p>
 </section>
 
 <section>
@@ -850,7 +870,7 @@ External anchor: <a href="{FTMO_PROFILE}" rel="noopener">FTMO verified trader pr
 <h2>Notes on the data</h2>
 <ul>
 <li><strong>External balance adjustments</strong> (removed from the curve, counted outside P&amp;L): <ul>{adj_items}</ul></li>
-<li><strong>Fills that could not be paired</strong> ({len(t['unmatched_fills'])}): <ul>{unmatched_items}</ul></li>
+<li><strong>Fills that could not be paired</strong> ({len(t['unmatched_fills'])}). The EA logs the orders it sends and did not log these exits; their P&amp;L is in the equity curve, not in the trade tables. They are also the two largest positions of the record: <ul>{unmatched_items}</ul></li>
 <li><strong>Missing weekdays</strong> in the mark series: {html.escape(missing_items)}.</li>
 <li><strong>Nightly reconciliation</strong> (real P&amp;L against a replay of the model on the day's prices): {rec_line}</li>
 </ul>
@@ -937,6 +957,7 @@ th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--bord
 thead th { color: var(--text-2); font-weight: 500; font-size: 12.5px; }
 tbody th { font-weight: 500; }
 .wide tbody th { white-space: nowrap; }
+.wide thead th { white-space: nowrap; }
 td.num { font: 13.5px ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
 td.note { color: var(--text-3); font-size: 12.5px; }
 .kv th { width: 30%; }
@@ -949,6 +970,7 @@ code { font: 12.5px ui-monospace, Menlo, Consolas, monospace; }
 code.hash { word-break: break-all; color: var(--text-3); }
 .hashes { list-style: none; padding: 0; }
 @media (max-width: 560px) { h1 { font-size: 22px; } .kv th { width: 36%; } .tile .value { font-size: 19px; } }
+@media (max-width: 480px) { .chart .tick { font-size: 18px; } }
 """
 
 

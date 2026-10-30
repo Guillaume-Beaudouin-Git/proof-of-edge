@@ -72,6 +72,7 @@ th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--bord
 thead th { color: var(--text-2); font-weight: 500; font-size: 12.5px; }
 tbody th { font-weight: 500; }
 .wide tbody th { white-space: nowrap; }
+.wide thead th { white-space: nowrap; }
 td.num { font: 13.5px ui-monospace, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
 td.note { color: var(--text-3); font-size: 12.5px; }
 .kv th { width: 30%; }
@@ -84,6 +85,7 @@ code { font: 12.5px ui-monospace, Menlo, Consolas, monospace; }
 code.hash { word-break: break-all; color: var(--text-3); }
 .hashes { list-style: none; padding: 0; }
 @media (max-width: 560px) { h1 { font-size: 22px; } .kv th { width: 36%; } .tile .value { font-size: 19px; } }
+@media (max-width: 480px) { .chart .tick { font-size: 18px; } }
 </style>
 </head>
 <body>
@@ -91,7 +93,7 @@ code.hash { word-break: break-all; color: var(--text-3); }
 <header>
 <p class="kicker"><a href="../../">proof-of-edge</a> / live record</p>
 <h1>FTMO funded account, live record</h1>
-<p class="lede">A $10,000.00 FTMO funded account (Swing, two-step evaluation, funded), traded by a fully
+<p class="lede">A $10,000.00 FTMO funded account (Swing, two-step evaluation, funded; two consecutive funded logins, chained, see notes), traded by a fully
 automated book: overnight index exposure on US100 and GER40, and an opening-range breakout on US100.
 Marks are the broker's balance and equity as read by the Expert Advisor at 00:00 and 22:58 Paris;
 the curve below is trading only, with external balance adjustments removed and listed.
@@ -108,7 +110,7 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 
 <section>
 <h2>Equity</h2>
-<p class="caption">Trading-only equity on the 00:00 Paris marks, USD. Dotted line: initial balance. Hover a point for the value.</p>
+<p class="caption">Trading-only equity on the 00:00 Paris marks, USD. Dotted line: initial balance. Hover or tap a point for the value.</p>
 <svg class="chart equity" viewBox="0 0 760 260" role="img" aria-label="Equity, trading only, 00:00 Paris marks">
 <title>Equity, trading only, 00:00 Paris marks</title>
 <line class="grid" x1="64" x2="744" y1="230.0" y2="230.0"/>
@@ -379,8 +381,8 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 <h2>FTMO barriers</h2>
 <div class="scroll"><table class="kv"><tbody>
 <tr><th scope="row">Daily loss floor</th><td class="num">5.0 %</td><td class="note">balance at 00:00 CE(S)T minus 5 % of the initial balance</td></tr>
-<tr><th scope="row">Closest approach, daily floor</th><td class="num">$414.36 (4.14 % of initial)</td><td class="note">2026-09-01</td></tr>
-<tr><th scope="row">Worst day vs daily limit</th><td class="num">15.2 % of the limit used</td><td class="note">limit $500.00</td></tr>
+<tr><th scope="row">Closest approach, daily floor</th><td class="num">$414.36 (4.14 % of initial)</td><td class="note">2026-09-01; lowest mark of the day against the floor anchored on the 00:00 balance, as FTMO measures it</td></tr>
+<tr><th scope="row">Worst day vs daily limit</th><td class="num">15.2 % of the limit used</td><td class="note">limit $500.00; equity-to-equity, 00:00 to 00:00, a different measure from the row above</td></tr>
 <tr><th scope="row">Max loss floor</th><td class="num">10.0 %, $9,000.00</td><td class="note">static: initial balance minus 10 %</td></tr>
 <tr><th scope="row">Closest approach, max loss floor</th><td class="num">$810.38</td><td class="note">2026-09-11</td></tr>
 <tr><th scope="row">Current distances</th><td class="num">daily $500.00, max loss $915.29</td><td></td></tr>
@@ -391,11 +393,11 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 <section>
 <h2>By instrument</h2>
 <div class="scroll"><table class="wide">
-<thead><tr><th>Instrument</th><th>Round trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Swaps</th><th>Marks with position</th><th>Avg notional when held</th><th>Max notional</th><th>Avg exposure, % of initial</th></tr></thead>
+<thead><tr><th>Instrument</th><th>Trips</th><th>Win rate</th><th>Avg trade</th><th>Gross P&amp;L</th><th>Unpaired</th><th>Swaps</th><th>Marks held</th><th>Avg notional</th><th>Max notional</th><th>Exposure</th></tr></thead>
 <tbody>
-<tr><th scope="row">GER40</th><td class="num">21</td><td class="num">57.1 %</td><td class="num">−$0.71</td><td class="num">−$15.01</td><td class="num">−$12.87</td><td class="num">33.6 %</td><td class="num">$3,440.00</td><td class="num">$3,630.00</td><td class="num">11.56 %</td></tr><tr><th scope="row">US100</th><td class="num">55</td><td class="num">45.5 %</td><td class="num">−$2.13</td><td class="num">−$117.20</td><td class="num">−$15.08</td><td class="num">33.6 %</td><td class="num">$4,141.00</td><td class="num">$17,744.00</td><td class="num">13.91 %</td></tr><tr><th scope="row">XAUUSD</th><td class="num">0</td><td class="num">n/a</td><td class="num">n/a</td><td class="num">+$0.00</td><td class="num">−$0.17</td><td class="num">1.6 %</td><td class="num">$16,697.00</td><td class="num">$16,697.00</td><td class="num">2.67 %</td></tr>
+<tr><th scope="row">GER40</th><td class="num">21</td><td class="num">57.1 %</td><td class="num">−$0.71</td><td class="num">−$15.01</td><td class="num">0</td><td class="num">−$12.87</td><td class="num">33.6 %</td><td class="num">$3,440.00</td><td class="num">$3,630.00</td><td class="num">11.56 %</td></tr><tr><th scope="row">US100</th><td class="num">55</td><td class="num">45.5 %</td><td class="num">−$2.13</td><td class="num">−$117.20</td><td class="num">1 ($17,744.00)</td><td class="num">−$15.08</td><td class="num">33.6 %</td><td class="num">$4,141.00</td><td class="num">$17,744.00</td><td class="num">13.91 %</td></tr><tr><th scope="row">XAUUSD</th><td class="num">0</td><td class="num">n/a</td><td class="num">n/a</td><td class="num">+$0.00</td><td class="num">1 ($16,697.00)</td><td class="num">−$0.17</td><td class="num">1.6 %</td><td class="num">$16,697.00</td><td class="num">$16,697.00</td><td class="num">2.67 %</td></tr>
 </tbody></table></div>
-<p class="caption">Trade P&amp;L is gross of swaps and converted at the broker's point value of the exit day. Exposure is the notional reported by the terminal at each mark.</p>
+<p class="caption">Trade P&amp;L is gross of swaps and converted at the broker's point value of the exit day. Unpaired: entries whose exit the EA did not log, with their notional; the maximum notional column includes them. Marks held: share of the 00:00 and 22:58 marks with a position; avg notional: when held; exposure: average notional over all marks, as a share of the initial balance, from the notional the terminal reports at each mark.</p>
 </section>
 
 <section>
@@ -410,17 +412,17 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 <section>
 <h2>Notes on the data</h2>
 <ul>
-<li><strong>External balance adjustments</strong> (removed from the curve, counted outside P&amp;L): <ul><li>2026-10-01: −$10.78. Balance reset from $10,010.78 (flat close of 2026-09-30, pre-swap) to $10,000.00 at the 2026-10-01 00:00 mark, with no fill and no swap in between. Consistent with the FTMO payout mechanism (a withdrawal brings the balance back to the initial capital); not documented by a statement in this repository. The $10.78 is counted as realised, outside the curve.</li></ul></li>
-<li><strong>Fills that could not be paired</strong> (2): <ul><li>2026-09-07 16:20:16 US100 short 0.6 lots, funded_orb_entry: entry without exit</li><li>2026-09-29 22:05:00 XAUUSD short 0.04 lots, rebalance: entry without exit</li></ul></li>
+<li><strong>External balance adjustments</strong> (removed from the curve, counted outside P&amp;L): <ul><li>2026-10-01: −$10.78. The first funded login was closed by a payout request after the flat close of 2026-09-30 (balance $10,010.78). A second funded login opened at $10,000.00 on 2026-10-01, same programme and limits. The series chains the two logins; the high-water mark of the first is carried into the second. The $10.78 left on the first login is counted as realised, outside the curve. The payout statement is not in this repository.</li></ul></li>
+<li><strong>Fills that could not be paired</strong> (2). The EA logs the orders it sends and did not log these exits; their P&amp;L is in the equity curve, not in the trade tables. They are also the two largest positions of the record: <ul><li>2026-09-07 16:20:16 US100 short 0.6 lots, notional $17,744.00, funded_orb_entry: entry without exit. Sized on the opening range of a US holiday session (Labor Day): $17.7k notional, about 1.7 times the account, the largest position of the record. The EA did not log the exit; the position is gone from the 2026-09-08 22:58 snapshot.</li><li>2026-09-29 22:05:00 XAUUSD short 0.04 lots, notional $16,697.00, rebalance: entry without exit. Last trade of the gold sleeve, switched off on 2026-09-30: $16.7k notional, about 1.7 times the account. The EA did not log the exit (the book was flattened on 2026-09-30); this position accounts for most of the +$96.43 of 2026-09-30, the best day of the record.</li></ul></li>
 <li><strong>Missing weekdays</strong> in the mark series: none.</li>
-<li><strong>Nightly reconciliation</strong> (real P&amp;L against a replay of the model on the day's prices): 53 nights logged, 53 with a full model replay, 0 degraded (close-freeze fallback); 16 flagged above tolerance; largest residual $24.41; real −$97.82 vs model +$79.77 on the replayed days.</li>
+<li><strong>Nightly reconciliation</strong> (real P&amp;L against a replay of the model on the day's prices): 53 nights logged, 53 with a full model replay, 0 degraded (close-freeze fallback); 16 flagged above tolerance; largest residual $24.41; real −$97.82 vs model +$79.77 on the replayed days. Real and model differ by $177.59; −$156.43 of it sits in the ORB term (d_micro), on days where the live ORB fired and the daily replay saw no trade (2026-09-25, 2026-10-02 among others) or the reverse (2026-09-04); 2026-08-21 is an unexplained residual of the same size. Why the live ORB and the replay disagree on firing is open. Window: pnl_real is the terminal&#x27;s equity at the day&#x27;s close mark minus the 00:00 balance of the same day: pre-swap, and without the close-to-midnight interval, so it does not sum to the 00:00-to-00:00 P&amp;L.</li>
 </ul>
 </section>
 
 <footer>
-<p>Built 2026-10-30T14:04:08Z UTC, working tree at repository commit <code>b153a02</code> (the data files land in the commit that follows it).
+<p>Built 2026-10-30T14:16:44Z UTC, working tree at repository commit <code>f52c2e8</code> (the data files land in the commit that follows it).
 Source extracts and their SHA-256:</p>
-<ul class="hashes"><li><code>adjustments.csv</code> <code class="hash">3a58f79b5b5d707f6a036daac0675d3fc8a3df99def6a4e87e0d4ad41e5f5162</code></li><li><code>fills.csv</code> <code class="hash">4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b</code></li><li><code>point_values.csv</code> <code class="hash">3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08</code></li><li><code>positions.csv</code> <code class="hash">e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7</code></li><li><code>reconcile.csv</code> <code class="hash">e73e412abcd418956b06c2214c5787ba0e640d91d424c251e430d007d7d30f58</code></li><li><code>snapshots.csv</code> <code class="hash">739c727539bd00292b8f94d2a889bd901c2f97a24e4cb09b098b9b63fb95c604</code></li><li><code>swaps.csv</code> <code class="hash">273aea7d9b437a6bc01a69ee40ced8a86918e48268b5679bd5d0fbd4268ce436</code></li></ul>
+<ul class="hashes"><li><code>adjustments.csv</code> <code class="hash">7584bd8dad67fb508e3f483d8c7ef1a4d052902375673bbcd7c1551e4c50a488</code></li><li><code>fill_notes.csv</code> <code class="hash">a7b1db66bfb038eaf0b277480b5c27f01fde542674d423b21d410421cfd32410</code></li><li><code>fills.csv</code> <code class="hash">4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b</code></li><li><code>point_values.csv</code> <code class="hash">3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08</code></li><li><code>positions.csv</code> <code class="hash">e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7</code></li><li><code>reconcile.csv</code> <code class="hash">e73e412abcd418956b06c2214c5787ba0e640d91d424c251e430d007d7d30f58</code></li><li><code>snapshots.csv</code> <code class="hash">739c727539bd00292b8f94d2a889bd901c2f97a24e4cb09b098b9b63fb95c604</code></li><li><code>swaps.csv</code> <code class="hash">273aea7d9b437a6bc01a69ee40ced8a86918e48268b5679bd5d0fbd4268ce436</code></li></ul>
 <p>Data: <a href="../../studies/live_record/data/equity_daily.csv">equity_daily.csv</a>,
 <a href="../../studies/live_record/data/trades.csv">trades.csv</a>,
 <a href="../../studies/live_record/summary.json">summary.json</a>.

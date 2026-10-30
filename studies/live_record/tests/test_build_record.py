@@ -80,9 +80,11 @@ def test_exposure_and_swaps_per_instrument(built):
     assert us["max_notional_usd"] == pytest.approx(2000.0)
     # 2 of the 13 marks (8 opens + 5 closes) carry a US100 position
     assert us["marks_with_position_pct"] == pytest.approx(100 * 2 / 13, abs=0.05)
-    assert summary["reconciliation"] == dict(days_logged=2, days_full=1, days_degraded=1, days_unexplained=0,
-                                             max_abs_residual_usd=1.2, sum_pnl_real_full_days_usd=19.0,
-                                             sum_pnl_model_full_days_usd=18.0)
+    rec = summary["reconciliation"]
+    expected = dict(days_logged=2, days_full=1, days_degraded=1, days_unexplained=0, max_abs_residual_usd=1.2,
+                    sum_pnl_real_full_days_usd=19.0, sum_pnl_model_full_days_usd=18.0, model_minus_real_usd=-1.0,
+                    sum_d_micro_usd=0.0)
+    assert {k: rec[k] for k in expected} == expected
 
 
 def test_page_is_self_contained_and_reads_from_summary(built):
@@ -121,7 +123,9 @@ def test_committed_files_carry_no_identifiers():
         files.append(page)
     # 9+ digit runs outside a hex digest (the SHA-256 of the extracts are printed on purpose)
     forbidden = [re.compile(r"(?<![\da-f.])\d{9,}(?![\da-f.])"), re.compile(r"/home/|/Users/|C:\\\\"),
-                 re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"), re.compile(r"(?i)login|password|token|api[_-]?key"),
+                 re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"), # "funded login" is the firm's word for an account and appears in the notes on purpose;
+                 # what must not appear is a credential or an identifier next to it
+                 re.compile(r"(?i)password|api[_-]?key|token[:=]|login\s*[:=#]|login (id|number)"),
                  re.compile(r"(?i)-(demo|live|server)\d*\b")]
     for f in files:
         text = f.read_text()

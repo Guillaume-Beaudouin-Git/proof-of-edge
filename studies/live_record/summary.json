@@ -1,9 +1,10 @@
 {
  "schema": "proof-of-edge.live_record.v1",
- "built_at_utc": "2026-10-30T14:04:08Z",
- "source_commit": "b153a02",
+ "built_at_utc": "2026-10-30T14:16:44Z",
+ "source_commit": "f52c2e8",
  "source_sha256": {
-  "adjustments.csv": "3a58f79b5b5d707f6a036daac0675d3fc8a3df99def6a4e87e0d4ad41e5f5162",
+  "adjustments.csv": "7584bd8dad67fb508e3f483d8c7ef1a4d052902375673bbcd7c1551e4c50a488",
+  "fill_notes.csv": "a7b1db66bfb038eaf0b277480b5c27f01fde542674d423b21d410421cfd32410",
   "fills.csv": "4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b",
   "point_values.csv": "3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08",
   "positions.csv": "e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7",
@@ -48,7 +49,7 @@
    {
     "date": "2026-10-01",
     "amount_usd": -10.78,
-    "note": "Balance reset from $10,010.78 (flat close of 2026-09-30, pre-swap) to $10,000.00 at the 2026-10-01 00:00 mark, with no fill and no swap in between. Consistent with the FTMO payout mechanism (a withdrawal brings the balance back to the initial capital); not documented by a statement in this repository. The $10.78 is counted as realised, outside the curve."
+    "note": "The first funded login was closed by a payout request after the flat close of 2026-09-30 (balance $10,010.78). A second funded login opened at $10,000.00 on 2026-10-01, same programme and limits. The series chains the two logins; the high-water mark of the first is carried into the second. The $10.78 left on the first login is counted as realised, outside the curve. The payout statement is not in this repository."
    }
   ],
   "swaps_total_usd": -28.12
@@ -129,7 +130,9 @@
     "side": "short",
     "lots": 0.6,
     "price": 29572.93,
-    "reason": "funded_orb_entry"
+    "notional_usd": 17744.0,
+    "reason": "funded_orb_entry",
+    "note": "Sized on the opening range of a US holiday session (Labor Day): $17.7k notional, about 1.7 times the account, the largest position of the record. The EA did not log the exit; the position is gone from the 2026-09-08 22:58 snapshot."
    },
    {
     "ts": "2026-09-29 22:05:00",
@@ -139,7 +142,9 @@
     "side": "short",
     "lots": 0.04,
     "price": 4174.22,
-    "reason": "rebalance"
+    "notional_usd": 16697.0,
+    "reason": "rebalance",
+    "note": "Last trade of the gold sleeve, switched off on 2026-09-30: $16.7k notional, about 1.7 times the account. The EA did not log the exit (the book was flattened on 2026-09-30); this position accounts for most of the +$96.43 of 2026-09-30, the best day of the record."
    }
   ],
   "n_fills": 154,
@@ -158,6 +163,8 @@
     "best_usd": 21.97,
     "worst_usd": -29.01
    },
+   "unpaired_fills": 0,
+   "unpaired_notional_usd": 0,
    "marks_with_position_pct": 33.6,
    "avg_notional_when_held_usd": 3440.0,
    "max_notional_usd": 3630.0,
@@ -176,6 +183,8 @@
     "best_usd": 41.89,
     "worst_usd": -48.11
    },
+   "unpaired_fills": 1,
+   "unpaired_notional_usd": 17744.0,
    "marks_with_position_pct": 33.6,
    "avg_notional_when_held_usd": 4141.0,
    "max_notional_usd": 17744.0,
@@ -194,6 +203,8 @@
     "best_usd": null,
     "worst_usd": null
    },
+   "unpaired_fills": 1,
+   "unpaired_notional_usd": 16697.0,
    "marks_with_position_pct": 1.6,
    "avg_notional_when_held_usd": 16697.0,
    "max_notional_usd": 16697.0,
@@ -203,6 +214,9 @@
   }
  },
  "reconciliation": {
+  "window": "pnl_real is the terminal's equity at the day's close mark minus the 00:00 balance of the same day: pre-swap, and without the close-to-midnight interval, so it does not sum to the 00:00-to-00:00 P&L",
+  "model_minus_real_usd": 177.59,
+  "sum_d_micro_usd": -156.43,
   "days_logged": 53,
   "days_full": 53,
   "days_degraded": 0,
