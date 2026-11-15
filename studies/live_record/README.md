@@ -20,7 +20,7 @@ The account was funded on 2026-08-17; the first snapshot of the funded account i
 ## Provenance
 
 No broker statement is used. The source is the runtime ledger of the live system itself, read
-from the server it runs on, copied read-only on 2026-10-30 and reduced by `build_record.py extract`
+from the server it runs on, copied read-only on 2026-10-30, then again on 2026-11-15, and reduced by `build_record.py extract`
 to the extracts in `source/`:
 
 | extract | origin | what it holds |
@@ -107,18 +107,19 @@ points of turnover and book. The page reports how many nights were logged, how m
 flagged above tolerance, and the largest residual. A flag is a question, not a verdict.
 Two things to know when reading it. First, the window: `pnl_real` is the terminal's equity at
 the day's close mark minus the 00:00 balance of the same day, so it is pre-swap and leaves out
-the close-to-midnight interval; its sum (−$97.82) is not the 00:00-to-00:00 P&L (−$73.93).
-Second, real and model differ by $178 over the replayed days (real −$97.82, model +$79.77);
+the close-to-midnight interval; its sum (+$72.35) is not the 00:00-to-00:00 P&L (+$35.48).
+Second, real and model differ by $185 over the replayed days (real +$72.35, model +$257.73);
 $156 of it sits in the ORB term (`d_micro`), on days where the live ORB fired and the daily
 replay saw no trade (2026-09-25, 2026-10-02 among others) or the reverse (2026-09-04), and
 2026-08-21 is an unexplained residual of the same size. Why the live ORB and the replay
-disagree on firing is open.
+disagree on firing is open. The nights added between 2026-10-31 and 2026-11-13, with the ORB
+paused, add $8 to the gap over ten active days.
 
 ## Limitations
 
 - **Self-reported.** The source is the system's own log of what the terminal showed it. The FTMO
   profile is the only external anchor; a broker statement is the missing second one.
-- **Small account, short history.** Ten weeks, 54 trading days, 76 round trips, on $10 000. The
+- **Small account, short history.** Thirteen weeks, 64 trading days, 84 round trips, on $10 000. The
   daily P&L has a t-statistic near zero. Nothing here distinguishes the book from noise, and
   the page does not try to; it records what happened.
 - **Two marks a day.** Barrier distances and drawdowns are on the 00:00 and 22:58 marks. The
@@ -127,9 +128,14 @@ disagree on firing is open.
   table for that reason (listed on the page). The equity series does not depend on the fill log.
 - **Sleeve changes during the record.** The gold and USDJPY sleeves of the deployed book were
   switched off on 2026-09-30 / 2026-10-01 (the gold short of 2026-09-29 is the only gold trade
-  in the window); the ORB has been long-only and gated since 2026-10-01 and was paused by its
-  own gate at the end of October. The record covers the account as traded, not one fixed
-  specification.
+  in the window); the ORB has been long-only and gated since 2026-10-01 and paused outright
+  (risk multiplier 0) since 2026-10-19, with a review not before April 2027. Since early
+  November 2026 the deployed EA (v2.14) also carries two event-driven sleeves that have not
+  traded: a USDJPY leg around Tokyo settlement days (the 25th and the last day of the month;
+  2.5× the balance in notional, 25 bps stop, $250 budget) and a Hong Kong index leg on mainland
+  holidays ($3,000 notional, 2 % stop, $80 budget). Both are deployed disarmed, their calendars
+  empty; arming either is a manual decision and will appear in this record as fills, with the
+  sleeve named. The record covers the account as traded, not one fixed specification.
 
 ## Rebuilding
 

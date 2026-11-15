@@ -1,16 +1,16 @@
 {
  "schema": "proof-of-edge.live_record.v1",
- "built_at_utc": "2026-10-30T14:16:44Z",
- "source_commit": "f52c2e8",
+ "built_at_utc": "2026-11-15T22:10:22Z",
+ "source_commit": "fd4ef5e",
  "source_sha256": {
   "adjustments.csv": "7584bd8dad67fb508e3f483d8c7ef1a4d052902375673bbcd7c1551e4c50a488",
   "fill_notes.csv": "a7b1db66bfb038eaf0b277480b5c27f01fde542674d423b21d410421cfd32410",
-  "fills.csv": "4d74d5c58a711e12df200a2a79b9bbcce66e15e0473e7a28c2375a3c1fc2365b",
-  "point_values.csv": "3a3e905372a323eba77ca82dec5f9c51a45ff9372829a57daa5cba0ebaf98d08",
-  "positions.csv": "e7313832861fe9d4e357950fe4e1d0d7da751d03dc6301e38f829401ba7501a7",
-  "reconcile.csv": "e73e412abcd418956b06c2214c5787ba0e640d91d424c251e430d007d7d30f58",
-  "snapshots.csv": "739c727539bd00292b8f94d2a889bd901c2f97a24e4cb09b098b9b63fb95c604",
-  "swaps.csv": "273aea7d9b437a6bc01a69ee40ced8a86918e48268b5679bd5d0fbd4268ce436"
+  "fills.csv": "64dcce064ab930b84db5e0ae509d498db1d029e97219e5742797bff67eee3b3f",
+  "point_values.csv": "f89567fb01b5efede51e0259be11d218148510ebb36631cd9388a49eb3b2b1ac",
+  "positions.csv": "c229ff345a5755a3a84805d93f500491e688f0a3ebc08af006c97be87a35a6bd",
+  "reconcile.csv": "d0e8cc9fe86ce3564526a1000704d49793ecdb75b74f4ebb1e4f6d1fa775c5e4",
+  "snapshots.csv": "72ee9f0035b7041f68821f40bcaf077f7064ee9176457d341d09895cdcef1337",
+  "swaps.csv": "ff66cb37a9e20e4a73866ad2572bfe6e6a02aeba8b07473a0381125b49e839fc"
  },
  "external_anchor": "https://profile.ftmo.com/user/E6X6MTH381",
  "account": {
@@ -30,20 +30,20 @@
  },
  "period": {
   "first_mark": "2026-08-18 00:00",
-  "last_mark": "2026-10-30 00:00",
+  "last_mark": "2026-11-15 23:05",
   "first_trade": "2026-08-18 16:10:14",
-  "last_fill": "2026-10-28 14:30",
-  "calendar_days": 73,
-  "trading_days": 54,
-  "complete_trading_days": 53,
+  "last_fill": "2026-11-11 14:25",
+  "calendar_days": 89,
+  "trading_days": 64,
+  "complete_trading_days": 63,
   "missing_weekdays": [],
-  "n_marks": 125
+  "n_marks": 149
  },
  "pnl": {
-  "total_usd": -73.93,
-  "return_pct_of_initial": -0.739,
-  "current_equity_usd": 9915.29,
-  "current_balance_usd": 9915.29,
+  "total_usd": 35.48,
+  "return_pct_of_initial": 0.355,
+  "current_equity_usd": 10024.7,
+  "current_balance_usd": 10024.7,
   "external_adjustments_usd": -10.78,
   "adjustments": [
    {
@@ -52,19 +52,19 @@
     "note": "The first funded login was closed by a payout request after the flat close of 2026-09-30 (balance $10,010.78). A second funded login opened at $10,000.00 on 2026-10-01, same programme and limits. The series chains the two logins; the high-water mark of the first is carried into the second. The $10.78 left on the first login is counted as realised, outside the curve. The payout statement is not in this repository."
    }
   ],
-  "swaps_total_usd": -28.12
+  "swaps_total_usd": -34.07
  },
  "daily": {
-  "n": 53,
-  "mean_usd": -1.39,
-  "std_usd": 25.18,
-  "t_stat": -0.4,
+  "n": 63,
+  "mean_usd": 0.56,
+  "std_usd": 25.29,
+  "t_stat": 0.18,
   "best_usd": 96.43,
   "best_date": "2026-09-30",
   "worst_usd": -75.86,
   "worst_date": "2026-09-01",
-  "active_days": 47,
-  "positive_active_days_pct": 44.7,
+  "active_days": 53,
+  "positive_active_days_pct": 47.2,
   "worst_day_pct_of_daily_limit": 15.2
  },
  "drawdown": {
@@ -72,7 +72,7 @@
   "max_pct_of_initial": -2.123,
   "peak_date": "2026-08-25",
   "trough_date": "2026-09-11",
-  "current_usd": -96.58,
+  "current_usd": 0.0,
   "basis": "trading-only equity curve (external adjustments removed), on the 00:00 Paris marks"
  },
  "barriers": {
@@ -84,30 +84,30 @@
   "min_distance_static_floor_usd": 810.38,
   "min_distance_static_floor_date": "2026-09-11",
   "current_distance_daily_floor_usd": 500.0,
-  "current_distance_static_floor_usd": 915.29,
+  "current_distance_static_floor_usd": 1024.7,
   "basis": "minimum over the 00:00 and 22:58 Paris marks; intraday lows are not in the export"
  },
  "trades": {
-  "n_round_trips": 76,
+  "n_round_trips": 84,
   "all": {
-   "n": 76,
-   "win_rate_pct": 48.7,
-   "avg_pnl_usd": -1.74,
-   "gross_pnl_usd": -132.21,
+   "n": 84,
+   "win_rate_pct": 51.2,
+   "avg_pnl_usd": -0.19,
+   "gross_pnl_usd": -16.12,
    "median_holding_hours": 15.4,
-   "avg_notional_usd": 4154.0,
-   "best_usd": 41.89,
+   "avg_notional_usd": 4088.0,
+   "best_usd": 70.94,
    "worst_usd": -48.11
   },
   "by_sleeve": {
    "overnight": {
-    "n": 41,
-    "win_rate_pct": 53.7,
-    "avg_pnl_usd": -1.34,
-    "gross_pnl_usd": -54.83,
+    "n": 49,
+    "win_rate_pct": 57.1,
+    "avg_pnl_usd": 1.25,
+    "gross_pnl_usd": 61.26,
     "median_holding_hours": 15.4,
-    "avg_notional_usd": 3450.0,
-    "best_usd": 22.22,
+    "avg_notional_usd": 3453.0,
+    "best_usd": 70.94,
     "worst_usd": -48.11
    },
    "orb": {
@@ -147,50 +147,50 @@
     "note": "Last trade of the gold sleeve, switched off on 2026-09-30: $16.7k notional, about 1.7 times the account. The EA did not log the exit (the book was flattened on 2026-09-30); this position accounts for most of the +$96.43 of 2026-09-30, the best day of the record."
    }
   ],
-  "n_fills": 154,
-  "mean_abs_slippage_bps": 1.44,
+  "n_fills": 170,
+  "mean_abs_slippage_bps": 1.45,
   "basis": "FIFO pairing of the EA fill log per instrument and sleeve; gross of swaps; FTMO indices carry no commission"
  },
  "per_instrument": {
   "GER40": {
    "trades": {
-    "n": 21,
-    "win_rate_pct": 57.1,
-    "avg_pnl_usd": -0.71,
-    "gross_pnl_usd": -15.01,
+    "n": 25,
+    "win_rate_pct": 60.0,
+    "avg_pnl_usd": 0.85,
+    "gross_pnl_usd": 21.21,
     "median_holding_hours": 15.4,
-    "avg_notional_usd": 3440.0,
-    "best_usd": 21.97,
-    "worst_usd": -29.01
+    "avg_notional_usd": 3450.0,
+    "best_usd": 37.47,
+    "worst_usd": -36.21
    },
    "unpaired_fills": 0,
    "unpaired_notional_usd": 0,
    "marks_with_position_pct": 33.6,
-   "avg_notional_when_held_usd": 3440.0,
+   "avg_notional_when_held_usd": 3451.0,
    "max_notional_usd": 3630.0,
-   "avg_notional_pct_of_initial": 11.56,
-   "swaps_usd": -12.87,
-   "swap_nights": 21
+   "avg_notional_pct_of_initial": 11.58,
+   "swaps_usd": -15.61,
+   "swap_nights": 25
   },
   "US100": {
    "trades": {
-    "n": 55,
-    "win_rate_pct": 45.5,
-    "avg_pnl_usd": -2.13,
-    "gross_pnl_usd": -117.2,
-    "median_holding_hours": 5.8,
-    "avg_notional_usd": 4426.0,
-    "best_usd": 41.89,
+    "n": 59,
+    "win_rate_pct": 47.5,
+    "avg_pnl_usd": -0.63,
+    "gross_pnl_usd": -37.33,
+    "median_holding_hours": 5.9,
+    "avg_notional_usd": 4359.0,
+    "best_usd": 70.94,
     "worst_usd": -48.11
    },
    "unpaired_fills": 1,
    "unpaired_notional_usd": 17744.0,
    "marks_with_position_pct": 33.6,
-   "avg_notional_when_held_usd": 4141.0,
+   "avg_notional_when_held_usd": 4027.0,
    "max_notional_usd": 17744.0,
-   "avg_notional_pct_of_initial": 13.91,
-   "swaps_usd": -15.08,
-   "swap_nights": 21
+   "avg_notional_pct_of_initial": 13.51,
+   "swaps_usd": -18.29,
+   "swap_nights": 25
   },
   "XAUUSD": {
    "trades": {
@@ -205,24 +205,24 @@
    },
    "unpaired_fills": 1,
    "unpaired_notional_usd": 16697.0,
-   "marks_with_position_pct": 1.6,
+   "marks_with_position_pct": 1.3,
    "avg_notional_when_held_usd": 16697.0,
    "max_notional_usd": 16697.0,
-   "avg_notional_pct_of_initial": 2.67,
+   "avg_notional_pct_of_initial": 2.24,
    "swaps_usd": -0.17,
    "swap_nights": 1
   }
  },
  "reconciliation": {
   "window": "pnl_real is the terminal's equity at the day's close mark minus the 00:00 balance of the same day: pre-swap, and without the close-to-midnight interval, so it does not sum to the 00:00-to-00:00 P&L",
-  "model_minus_real_usd": 177.59,
+  "model_minus_real_usd": 185.38,
   "sum_d_micro_usd": -156.43,
-  "days_logged": 53,
-  "days_full": 53,
+  "days_logged": 64,
+  "days_full": 64,
   "days_degraded": 0,
-  "days_unexplained": 16,
+  "days_unexplained": 17,
   "max_abs_residual_usd": 24.41,
-  "sum_pnl_real_full_days_usd": -97.82,
-  "sum_pnl_model_full_days_usd": 79.77
+  "sum_pnl_real_full_days_usd": 72.35,
+  "sum_pnl_model_full_days_usd": 257.73
  }
 }
