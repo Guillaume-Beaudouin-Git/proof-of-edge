@@ -1,0 +1,33 @@
+{
+  "dossier": "c9_local_verification_2026-10",
+  "date": "2026-10-30",
+  "convention": "une statistique de performance (Sharpe/t) calculée sur une série distincte = 1 ; compteur LOCAL, à réconcilier avec le registre global (321 figé) et le compteur du module cloud (42 + 371).",
+  "hypothese_testee": "C9 h24 — spec gelée du cloud, AUCUNE nouvelle configuration de signal",
+  "familles": {
+    "R1_S1_reproduction_horizons_delai_periodes": 24,
+    "C1_concentration_topk": 15,
+    "C1_par_annee": 10,
+    "C2_fenetres_de_stress": 3,
+    "C2_filtre_depeg": 3,
+    "C3_jambes": 7,
+    "S1_selection_horizon": 4,
+    "V1_vehicules_x_periodes": 56,
+    "V1_perp_vs_spot": 1,
+    "V1_base_CME": 1,
+    "V1_points_morts": 4,
+    "L38": 1,
+    "A1_correlation_strategie_A": 3
+  },
+  "total_statistiques": 132,
+  "configurations_de_signal_nouvelles": 0,
+  "sidak": {
+    "famille": "S1 : trois horizons (1 h, 4 h, 24 h) lus sur le holdout, h24 retenu sur cette lecture",
+    "k": 3,
+    "p_unilateral_holdout_h24_HAC": 0.00178,
+    "p_sidak": 0.00534
+  },
+  "notes": [
+    "Les 56 lignes véhicules sont des reformulations de coût et de taille d'UNE série de signaux, pas des essais indépendants.",
+    "DSR et règle des 3 modifications : comptés, pas utilisés comme porte (décision de Guillaume du 2026-10-01)."
+  ]
+}

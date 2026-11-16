@@ -1,0 +1,4 @@
+config,observed_sharpe_is,placebo_max,placebo_mean,n_above
+h1,1.89618,1.16948,0.214762,0
+h4,1.9288,1.09575,0.224482,0
+h24,1.57221,2.08313,0.711159,1

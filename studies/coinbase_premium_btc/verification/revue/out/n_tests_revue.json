@@ -1,0 +1,17 @@
+{
+ "familles": {
+  "R_reproduction_h_delay_periode": 24,
+  "R_comparaison_series": 2,
+  "V_variante_prix_x_periode": 15,
+  "D_dose_reponse": 10,
+  "C_concentration": 16,
+  "S_selection_horizon": 6,
+  "L_jambes": 4,
+  "A_annees": 10,
+  "F_funding": 3,
+  "V_vehicule_x_periode": 18,
+  "B_point_mort": 6,
+  "G_granularite": 1
+ },
+ "total": 115
+}

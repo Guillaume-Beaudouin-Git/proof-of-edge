@@ -5,24 +5,42 @@
 Systematic trading research, run solo, with one rule: **a strategy is guilty until proven
 innocent, and most of them stay guilty.**
 
-This is the public part of a private research programme started in 2024. It holds the research
-engine, the method, and six complete studies: three validated, two falsified, one open — each with its pre-registration, its results and
-the verdict, and its code where the code is self-contained. The few strategies that were proven innocent run live, fully automated,
-on a prop-firm (FTMO) account; the record of how they earned that, and of what was
-rejected along the way, is what is published here.
+This is the public part of a private research programme started in 2024: a **research
+pipeline** that takes a trading idea from a written hypothesis to a verdict and, for the few
+that earn it, to a live automated book on a prop-firm (FTMO) account. It holds the research
+engine, the method, and nine complete studies, each with its results and its verdict, its
+pre-registration where one was written, and its code where the code is self-contained. The
+record of how the survivors earned their place, and of what was rejected along the way, is
+what is published here.
 
 ---
 
-## Status — October 2026
+## The pipeline, in numbers (2026-11-16)
+
+| stage | count |
+|---|---|
+| Pre-registration files written in the private programme | 148, across 122 study folders |
+| Of those folders, readable in the public [research-archive](https://github.com/Guillaume-Beaudouin-Git/research-archive) (snapshot of 2026-10-29) | 57 |
+| Studies written up in full in this repository | 9: three validated, two falsified, one open, two approved for launch, one kept on paper |
+| Strategies trading on the funded account today | 1 (overnight index premium) |
+| Approved for launch, deployed in the live system, not yet armed | 2 (USDJPY settlement days, Hong Kong on mainland holidays) |
+
+Most ideas never reach the third row. That is the pipeline working. The first row is read from
+the private repository and cannot be checked from this one.
+
+---
+
+## Status — November 2026
 
 | | |
 |---|---|
 | **Live** | A fully automated book on an FTMO funded account (\$10k, Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
 | **Live record** | 89 days (64 trading days) over two consecutive funded logins, chained; P&L **+$35.48** (+0.35 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](https://guillaume-beaudouin-git.github.io/proof-of-edge/live/) ([source](docs/live/index.html)) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
-| **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly P&L reconciliation against the model |
+| **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly replay of the model against the real P&L (the gap between the two is reported in the live record, and is not closed) |
+| **Book** | Trading: the overnight index premium (US100, GER40). Deployed since early November 2026 and not yet armed, so never traded: `studies/gotobi_usdjpy` and `studies/hong_kong_mainland_holidays`. Paused: the opening-range breakout sleeve (since 2026-10-19). Switched off: gold and the earlier USDJPY sleeve (since 2026-09-30) |
 
-The account is small and so are the returns. That is the point: the system is a **falsification
-engine** first and a money engine second. The live system and the account identifiers stay
+The account is small and so are the returns. That is the point: the pipeline's first job is to
+**falsify**, and making money comes second. The live system and the account identifiers stay
 private; what is published is the method and the studies.
 
 ---
@@ -33,11 +51,12 @@ Five rules, each written after a specific failure.
 
 **1. Pre-registration.** Hypothesis, signal construction, universe, metrics and **kill rules** are
 frozen in a pre-registration file *before the data is touched*. Kill rules are not renegotiated
-after seeing results. When a verdict later needs revisiting, an **amendment** is appended — never
+after seeing results. One study breaks this openly and says how: `studies/gotobi_usdjpy`. When a verdict later needs revisiting, an **amendment** is appended — never
 an edit. `PROVENANCE.md` gives, for each study, the commit that froze the pre-registration and the
 one that added the results, and `PREREGISTRATION_FREEZE.md` the SHA-256 of each pre-registration at
-that commit: the version control proves the order for two of the six studies; for
-the other four the order is documented inside the files only, and the studies say so.
+that commit: the version control of this repository proves the order for two of the nine studies; for
+the other seven the order is documented inside the files only (for the three studies added in
+November 2026, by private commits listed in `PREREGISTRATION_FREEZE.md`), and the studies say so.
 
 **2. Measure the cost on the venue you actually trade.** A strategy was killed for weeks on a
 spread borrowed from a different broker; measured natively on the real account, the true cost was
@@ -91,6 +110,9 @@ PREREGISTRATION_FREEZE.md  SHA-256 of each pre-registration at its freezing comm
 | `studies/crypto_flows_placebo` | Token-unlock drift on crypto: net +337 bps per event, t 2.90, DSR 0.94 — real? | **Falsified.** The effect sits below the median of a *matched placebo calendar* of random volatility-matched days on the same tokens; flat dose–response, no insider gradient. Pre-registration committed before the results (`PROVENANCE.md`). |
 | `studies/trend_futures_funnel` | Does classical trend-following on a non-crypto futures universe earn a slot in the book, once the CFD swap that killed it elsewhere is removed? | **Falsified.** Swap-immune (Sharpe 0.50 → 0.47 at 3× frictions) but thin: the configurations that survive the two-sided test fail the DSR, and the one that survives the DSR fails the two-sided test. Four-phase funnel with its trial log (50 trials logged, 29 counted for the DSR). |
 | `studies/swap_killed_futures` | Nine pre-registered hypotheses on retail-accessible futures and ETF premia (month-end bond flow, commodity seasonality, cointegrated spreads, vol carry, trend), each re-costed, then a roll audit | **Open.** Two sleeves survive (month-end Treasury flow, crack-spread grid; correlation 0.17) after the roll audit removes a third as a roll artifact (`ROLL_AUDIT.md`); one hypothesis is deferred for lack of curve data; the other five are closed with their cause named. H4–H9 each have a `PREREG_H*` addendum before their `RESULTS_H*`; H1 and H3 are covered by the main pre-registration. Results and the audit script are published; the per-hypothesis engines are not. |
+| `studies/gotobi_usdjpy` | Does USDJPY rise into the Tokyo fixing and fall back after it on Japanese settlement days, enough to pay its cost, when the trade is restricted to the 25th and the month-end? | **Approved for launch, narrowly; deployed, not yet traded.** Holdout 2024-07 → 2026-05: +6.19 bps gross per event (n 44, t_HAC 2.52) against a measured cost of 1.87; shrunk expectation +2.1 bps net, about +$110 a year on $10k, one losing year in three. Two earlier pre-registered readings said archive; the decision overrides them, waives the programme's 3 × cost gate on the long sample, and says so |
+| `studies/hong_kong_mainland_holidays` | Is Hong Kong weak when mainland China is on holiday and its buyers are away? | **First hypothesis falsified with the opposite sign; the reverse, pre-registered in turn, replicated on an untouched earlier period.** 1997–2014: +21.9 bps on mainland-holiday days (t 2.95), −32.3 bps on the first common reopening (t −2.32). Approved for launch conditional on the broker's real cost; deployed, not yet traded |
+| `studies/coinbase_premium_btc` | Does a Coinbase-over-Binance premium on Bitcoin predict continuation? | **Real and reproduced, smaller than it looks; paper only.** Only the 24-hour horizon holds out of sample (1.88); reproduced by an independent code (0.982 daily correlation with the original run); expected net ≈ 0.75 on the one vehicle that fits a small account, with 5 episodes of 45 making 73 % of the holdout P&L. No capital committed |
 
 Each folder reads the same way: the pre-registration first, then the results, then the code (see each folder's README for what is and is not published).
 Figures and result tables are committed; raw market data is not (see below).
@@ -121,7 +143,8 @@ exercised by the test suite.
 - **Market data.** Studies reference a data lake (`RESEARCH_DATA_ROOT`) that is not distributed:
   minute bars from the broker, Databento tick data, vendor files. The result tables and figures
   are committed so that every number in a report can be checked against its source file.
-- **The research that is still open**, including the strategy currently deployed.
+- **Research in progress.** A study is added here once it has reached a verdict. The three
+  studies added in November 2026 are published as the French originals with an English README.
 
 ---
 
@@ -132,4 +155,6 @@ study's pre-registration to see what a study looks like before it knows its answ
 results file to see how a verdict is written.
 
 Code drafted with a coding assistant (Claude Code) and reviewed line by line by the author; every
-question, protocol, kill rule and verdict is the author's.
+question, protocol, kill rule and verdict is the author's. The three studies added in November
+2026 were drafted in French by AI agents under the author's direction, reviews included; the
+launch, archive and capital decisions are his.

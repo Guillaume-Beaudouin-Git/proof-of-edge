@@ -1,0 +1,5 @@
+Mêmes événements gotobi, deux flux (bps, brut avec stop) : MT5/FTMO-Demo (série assemblée) contre Dukascopy
+Fenêtres : 2018-01-02 → 2018-12-31 et 2024-01-01 → 2025-05-30 ; 172 événements
+  D       n  57 : MT5  +4.90 (achat +0.35, vente +4.55) ; Dukascopy  +4.81 (achat +0.30, vente +4.50) ; écart +0.09 (t HAC +2.64) ; corrélation 1.000
+  AUTRES  n 115 : MT5  +2.29 (achat +1.00, vente +1.28) ; Dukascopy  +2.33 (achat +1.01, vente +1.32) ; écart -0.04 (t HAC -0.68) ; corrélation 1.000
+  tous    n 172 : MT5  +3.15 (achat +0.79, vente +2.37) ; Dukascopy  +3.15 (achat +0.77, vente +2.38) ; écart +0.00 (t HAC +0.06) ; corrélation 1.000

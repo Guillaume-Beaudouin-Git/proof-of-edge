@@ -1,0 +1,9 @@
+{
+ "S1_horizons_x_delay_x_period": 24,
+ "C1_concentration": 15,
+ "C1_by_year": 10,
+ "C2_stress": 3,
+ "C2_depeg_filter": 3,
+ "C3_legs": 7,
+ "S1_selection": 4
+}

@@ -1,0 +1,37 @@
+{
+  "dossier": "c9_local_verification_2026-10/revue",
+  "date": "2026-10-30",
+  "role": "relecture independante et adversariale ; code propre (revue_c9.py), aucune fonction de code/ importee",
+  "convention": "une statistique de performance (Sharpe ou t) calculee sur une serie distincte = 1 ; compteur LOCAL ; aucune nouvelle configuration de signal",
+  "familles_script": {
+    "R_reproduction_h_delay_periode": 24,
+    "R_comparaison_series_cloud_chercheur": 2,
+    "V_variante_prix_x_periode (Binance close, open suivant, Coinbase USD, mi-prix, delai +1 h)": 15,
+    "D_dose_reponse_par_bande_de_z": 10,
+    "C_concentration_trades_et_episodes": 16,
+    "S_selection_horizon (bootstrap joint, Sidak k=3 et k=42, walk-forward)": 6,
+    "L_jambes": 4,
+    "A_annees": 10,
+    "F_funding": 3,
+    "V_vehicule_x_periode (brut, HL taker/maker, signe rf du short, prix Coinbase, mi-prix)": 18,
+    "B_point_mort": 6,
+    "G_granularite_MBT_1_lot": 1
+  },
+  "hors_script": {
+    "S_correction_SE_du_holdout_et_retrecissement_refait": 1,
+    "S_inflation_max_de_3_sous_H0": 1
+  },
+  "total_revue": 117,
+  "total_dossier_chercheur": 132,
+  "total_dossier_cumule": 249,
+  "a_reconcilier_avec": "module 1 cloud (42 configurations) et registre global (321 fige)",
+  "sidak": {
+    "famille_declaree_k3": {"p_HO_h24": 0.00178, "p_sidak": 0.00534},
+    "famille_module1_k42": {"p_HO_h24_sidak": 0.0723, "p_IS_h24": 8.5e-05, "p_IS_h24_sidak": 0.00356},
+    "lecture": "la confirmation holdout seule est marginale si l'on compte les 42 configurations du module 1 lues sur le holdout ; l'IS de h24 survit a la meme famille"
+  },
+  "notes": [
+    "Les 18 lignes vehicules et les 15 variantes de prix sont des reformulations d'UNE serie de signaux, pas des essais independants.",
+    "DSR et regle des 3 modifications : comptes, pas utilises comme porte."
+  ]
+}

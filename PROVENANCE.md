@@ -11,6 +11,11 @@ links below point to the same commits there. The history is not scrubbed of acco
 of the names of the private repository's files; only secrets, the server address, account
 identifiers and local paths were replaced.
 
+**Exception, added 2026-11-16.** `studies/gotobi_usdjpy`, `studies/hong_kong_mainland_holidays` and
+`studies/coinbase_premium_btc` were copied from the private repository in a single commit, without
+their history. Their private commit identifiers and times are listed in
+`PREREGISTRATION_FREEZE.md`; they will become checkable when the public archive is refreshed.
+
 | study | pre-registration frozen | results added |
 |---|---|---|
 | `studies/crypto_flows_placebo` | `293bc5d` — 2026-06-10 12:23 (+0200), "Phase 0 audit + pre-registration FROZEN before data contact" ([archive](https://github.com/Guillaume-Beaudouin-Git/research-archive/commit/b0d7853)) | `4134939` — 2026-06-10 12:55 (+0200), "0 survivors, 2 clean kills" ([archive](https://github.com/Guillaume-Beaudouin-Git/research-archive/commit/8313276)) |

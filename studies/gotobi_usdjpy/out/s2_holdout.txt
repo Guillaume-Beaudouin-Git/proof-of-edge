@@ -1,0 +1,25 @@
+Contrôle découverte (G1 agrégé) : n 1257, brut 4.050 bps, t HAC 6.867 — publié 4,05 / 6,87 → OK
+
+Holdout : 2024-07-01 → 2026-05-29, 138 jours gotobi, 136 événements complets
+
+S2 — décision (porte 3 × 1,87 = 5,61 bps)
+  D = D25 ∪ DME            n  44  brut  +6.19 bps  σ  19.4  t HAC +2.52  MDE80  8.18  pire  -41.4
+    D25                    n  21  brut  +9.69 bps  σ  17.3  t HAC +1.99  MDE80 10.54  pire  -19.6
+    DME                    n  23  brut  +3.00 bps  σ  21.0  t HAC +1.20  MDE80 12.26  pire  -41.4
+  AUTRES (5, 10, 15, 20)   n  92  brut  +0.55 bps  σ  20.7  t HAC +0.22  MDE80  6.05  pire  -37.7
+  jambes sur D : achat +0.77, vente +5.43
+  K1 (D < 5,61) False ; K2 (D ≤ AUTRES) False ; K3 (une jambe < 0) False
+  → S2 NON TUÉE
+  D par année : 2024 +7.84 (n 11) ; 2025 +8.51 (n 23) ; 2026 -0.93 (n 10)
+  placebos D décalés : k-4 -4.23 (n 27) ; k-3 +0.18 (n 35) ; k-2 -7.77 (n 42) ; k-1 +4.02 (n 40) ; k+1 -0.23 (n 40) ; k+2 +5.82 (n 42) ; k+3 +3.91 (n 31) ; k+4 +5.09 (n 32)
+  vrai D au rang 1/9 ; pool +0.85 contre inconditionnel +1.08 (n 496, contrôle L58)
+  pire événement D -41.4 bps → à 2.5× l'équité : -1.04 % (-103 $)
+  L60, part de barres à fourchette nulle 23:00-02:00 UTC : 2024 0.001 2025 0.003 2026 0.007
+
+PR-C (G1, tous les gotobi du holdout) — rapporté, hors verdict S2
+  n 136  brut +2.38 bps  t HAC +1.29  MDE80 4.90  pire -41.4 ; jambes achat +0.15, vente +2.23
+  placebos décalés : k-4 -0.37 (n 81) ; k-3 -0.66 (n 98) ; k-2 -2.68 (n 98) ; k-1 +1.43 (n 83) ; k+1 -1.13 (n 83) ; k+2 +0.22 (n 97) ; k+3 -2.81 (n 98) ; k+4 +0.83 (n 83)
+  vrai calendrier au rang 1/9 ; pool -0.65 contre inconditionnel +1.08
+  K1 False ; K2 False ; K3 False ; SURVIE True ; CONFIRMATION (t ≥ 2) False
+  fériés japonais : -4.02 (n 9) ; autres +2.83 (n 127)
+  sans stop : G1 +2.59, avec la minute du fixing +4.30 (part de la minute 40%)

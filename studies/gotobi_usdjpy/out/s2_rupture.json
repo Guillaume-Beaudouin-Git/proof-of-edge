@@ -1,0 +1,25 @@
+{
+ "D": {
+  "n": 462,
+  "break_date": "2016-01-29",
+  "mean_pre": 2.2317395945168905,
+  "mean_post": 6.510687258057542,
+  "sup_t": 2.736174194359251,
+  "p_boot": 0.178,
+  "boot_p95": 3.425120710806918
+ },
+ "significatif": false,
+ "contraste_mensuel": {
+  "n": 233,
+  "break_date": "2015-07-01",
+  "mean_pre": -2.6986563820516265,
+  "mean_post": 3.9326590867047635,
+  "sup_t": 3.5775470037832577,
+  "p_boot": 0.058,
+  "boot_p95": 3.6335140663814567
+ },
+ "decision": "ARCHIVER",
+ "manque": [
+  "rupture non significative"
+ ]
+}

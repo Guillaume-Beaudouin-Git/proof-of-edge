@@ -1,0 +1,28 @@
+{
+ "trades_in_stress": 64,
+ "pnl_share_in_stress": 0.2401944136609016,
+ "sharpe_all": 1.6667590726757602,
+ "sharpe_excl_stress_all": 1.4955700198117423,
+ "sharpe_excl_stress_IS": 1.3360095000041472,
+ "sharpe_excl_stress_HO": 1.8538037390345325,
+ "nofilter_sharpe_all": 1.6297850816931294,
+ "nofilter_sharpe_IS": 1.5585351451654277,
+ "nofilter_sharpe_HO": 1.8538037390345325,
+ "trades_only_without_filter": 91,
+ "pnl_w_only_without_filter": 0.14119786288765182,
+ "trades_only_with_filter": 140,
+ "pnl_w_only_with_filter": 0.1669310715986339,
+ "depeg_hours_by_year": {
+  "2017": 901,
+  "2018": 1612,
+  "2019": 724,
+  "2020": 15,
+  "2021": 5,
+  "2022": 8,
+  "2023": 18,
+  "2024": 0,
+  "2025": 0,
+  "2026": 0
+ },
+ "top10_trades_also_without_filter": 9
+}

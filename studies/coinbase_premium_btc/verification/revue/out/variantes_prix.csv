@@ -1,0 +1,16 @@
+variante,period,sharpe,t_hac,bps_trade
+Binance close (réf.),IS,1.6051,3.7598,71.8458
+Binance close (réf.),HO,1.8538,2.9140,45.1500
+Binance close (réf.),ALL,1.6736,4.7175,64.1936
+Binance open bougie suivante,IS,1.5951,3.7377,71.2098
+Binance open bougie suivante,HO,1.8538,2.9141,45.1513
+Binance open bougie suivante,ALL,1.6665,4.6985,63.7402
+Coinbase USD close,IS,1.3264,3.1636,58.4378
+Coinbase USD close,HO,1.7249,2.7211,41.3406
+Coinbase USD close,ALL,1.4375,4.1099,53.5369
+mi-prix (CB+BN)/2,IS,1.4675,3.4697,65.1616
+mi-prix (CB+BN)/2,HO,1.7893,2.8177,43.2453
+mi-prix (CB+BN)/2,ALL,1.5569,4.4208,58.8794
+"Binance close, délai +1 h",IS,1.2729,3.1265,55.3926
+"Binance close, délai +1 h",HO,2.0461,3.1645,50.9806
+"Binance close, délai +1 h",ALL,1.4919,4.3313,54.1266

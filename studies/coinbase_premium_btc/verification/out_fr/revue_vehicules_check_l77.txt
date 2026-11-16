@@ -1,0 +1,15 @@
+Kraken 1h candles: 40372 2022-03-23 10:00:00 2026-10-30 13:00:00
+n=452  mean bps: KR 43.86 | BN 45.89 | CB 41.77
+KR-BN -2.02 bps (t -4.62) ; KR-CB 2.09 (t 4.93) ; BN-CB 4.11 (t 9.28)
+beta KR vers Binance (0=CB,1=BN): 0.472
+KR: P&L net/trade moyen 8.30 bps-equity, t 2.78, Sharpe par trade*sqrt(100/an) 1.30
+BN: P&L net/trade moyen 8.73 bps-equity, t 2.94, Sharpe par trade*sqrt(100/an) 1.37
+CB: P&L net/trade moyen 7.81 bps-equity, t 2.61, Sharpe par trade*sqrt(100/an) 1.22
+     KR-BN       KR-CB      
+      mean count  mean count
+yr                          
+2022 -2.90    81  1.59    81
+2023 -1.97    97  2.97    97
+2024 -3.32   103  2.45   103
+2025 -1.42    95  1.39    95
+2026 -0.15    76  1.90    76

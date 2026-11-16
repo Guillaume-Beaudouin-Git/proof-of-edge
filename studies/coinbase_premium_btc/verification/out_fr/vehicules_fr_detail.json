@@ -1,0 +1,89 @@
+{
+ "tracking_L77": [
+  {
+   "venue": "Kraken PF_XBTUSD (trade, 1 h)",
+   "n": 452,
+   "debut": "2022-03-25 13:00:00",
+   "ret_moy_venue_bps": 43.86412187174384,
+   "ret_moy_binance_bps": 45.88543582355357,
+   "ret_moy_coinbase_bps": 41.77085975623613,
+   "ecart_abs_moy_vs_binance_bps": 5.399264562962966,
+   "ecart_abs_moy_vs_coinbase_bps": 5.01275606667185,
+   "beta_vers_binance_(0=Coinbase,1=Binance)": 0.47150459863084293,
+   "ecart_type_binance_moins_coinbase_bps": 9.417844442105231
+  },
+  {
+   "venue": "Coinbase CDE BIP perp-style (1 h)",
+   "n": 103,
+   "debut": "2025-07-25 03:00:00",
+   "ret_moy_venue_bps": 43.982607480424114,
+   "ret_moy_binance_bps": 45.329797371535584,
+   "ret_moy_coinbase_bps": 43.39899029321549,
+   "ecart_abs_moy_vs_binance_bps": 5.2240719176197175,
+   "ecart_abs_moy_vs_coinbase_bps": 4.148190359743944,
+   "beta_vers_binance_(0=Coinbase,1=Binance)": -0.23526077053550334,
+   "ecart_type_binance_moins_coinbase_bps": 3.4338542042381874
+  },
+  {
+   "venue": "Hyperliquid BTC perp (1 h)",
+   "n": 56,
+   "debut": "2026-04-09 19:00:00",
+   "ret_moy_venue_bps": 39.49583135360362,
+   "ret_moy_binance_bps": 39.731527615763746,
+   "ret_moy_coinbase_bps": 38.225334148336685,
+   "ecart_abs_moy_vs_binance_bps": 1.9012790499854857,
+   "ecart_abs_moy_vs_coinbase_bps": 3.4770297237776098,
+   "beta_vers_binance_(0=Coinbase,1=Binance)": 0.9980233890039594,
+   "ecart_type_binance_moins_coinbase_bps": 3.6005456499703703
+  }
+ ],
+ "taille": {
+  "w_median": 0.18837741558933188,
+  "w_p10": 0.10615986113552017,
+  "w_p90": 0.29662179533009597,
+  "w_max": 0.448388282397001,
+  "part_w_sup_2_(levier_ESMA_2:1)": 0.0,
+  "part_w_sup_1": 0.0,
+  "notionnel_eur_median": 2260.5289870719826,
+  "notionnel_eur_median_depuis_2024": 2749.8168617564224,
+  "notionnel_eur_p10_p90_depuis_2024": [
+   2125.3443208156323,
+   3829.3143069798584
+  ],
+  "nano_lots_median": 3.0,
+  "nano_lot_fraction_equity": 0.05742625829687175
+ },
+ "horaires_turbo_8-22_paris": {
+  "part_trades_perdus": 0.4747583243823845,
+  "part_pnl_brut_perdu": 0.4590020903148182,
+  "sharpe_brut_restreint_ALL": 1.2127403375194086,
+  "sharpe_brut_247_ALL": 1.6667590726757602,
+  "sharpe_brut_restreint_HO": 1.5446397671062881,
+  "part_entrees_weekend": 0.19871106337271752
+ },
+ "horaires_24x5_NY": {
+  "part_trades_perdus": 0.19763694951664879,
+  "part_pnl_brut_perdu": 0.20747296810808802,
+  "sharpe_brut_restreint_ALL": 1.3341950993107714,
+  "sharpe_brut_247_ALL": 1.6667590726757602,
+  "sharpe_brut_restreint_HO": 1.8057982301616067,
+  "part_entrees_weekend": 0.19871106337271752
+ },
+ "funding": {
+  "kraken_funding_bps_trade_mean_(trades depuis 2025-10-30)": -0.8697301072876789,
+  "hl_funding_bps_trade_mean_memes_trades": -0.8548542574257426,
+  "n_trades_funding_kraken": 101
+ },
+ "couts_bps_AR": {
+  "HL_taker": 9.129999999999999,
+  "HL_maker": 2.9999999999999996,
+  "Kraken_taker": 10.13,
+  "Kraken_maker": 4.0,
+  "Coinbase_nano_taker_juge": 16.442247389017027,
+  "Coinbase_nano_002": 9.442247389017027,
+  "IG_fourchette_min": 19.43659781791795,
+  "IG_nuit_long": 6.944444444444445,
+  "IG_nuit_short": -1.3888888888888888
+ },
+ "btc_last": 77174.0
+}

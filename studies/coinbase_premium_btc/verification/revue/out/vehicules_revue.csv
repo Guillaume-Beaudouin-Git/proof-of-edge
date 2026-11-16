@@ -1,0 +1,19 @@
+days,sharpe,t_hac,ann_ret,ann_vol,maxdd,worst_day,skew,vehicule,period,plis_pos_2019_2026
+2288,1.6051,3.7598,0.1166,0.0726,-0.0698,-0.0196,5.9922,brut,IS,8/8
+1004,1.8538,2.9140,0.1209,0.0652,-0.0423,-0.0244,2.1306,brut,HO,8/8
+3292,1.6736,4.7175,0.1179,0.0704,-0.0698,-0.0244,5.0787,brut,ALL,8/8
+2288,1.3486,3.1778,0.0975,0.0723,-0.0874,-0.0199,5.9518,"perp HL taker + funding (short encaisse rf, comme le chercheur)",IS,8/8
+1004,1.5303,2.4319,0.0989,0.0646,-0.0464,-0.0244,2.0795,"perp HL taker + funding (short encaisse rf, comme le chercheur)",HO,8/8
+3292,1.3982,3.9695,0.0979,0.0701,-0.0874,-0.0244,5.0456,"perp HL taker + funding (short encaisse rf, comme le chercheur)",ALL,8/8
+2288,1.3321,3.1378,0.0963,0.0723,-0.0906,-0.0199,5.9468,"perp HL taker + funding, short paie rf (collatéral USDC non rémunéré)",IS,8/8
+1004,1.4845,2.3599,0.0959,0.0646,-0.0470,-0.0244,2.0679,"perp HL taker + funding, short paie rf (collatéral USDC non rémunéré)",HO,8/8
+3292,1.3734,3.8985,0.0962,0.0700,-0.0906,-0.0244,5.0405,"perp HL taker + funding, short paie rf (collatéral USDC non rémunéré)",ALL,8/8
+2288,1.4878,3.4954,0.1078,0.0725,-0.0783,-0.0198,5.9722,"perp HL maker + funding, short paie rf",IS,8/8
+1004,1.6930,2.6752,0.1098,0.0649,-0.0440,-0.0244,2.1003,"perp HL maker + funding, short paie rf",HO,8/8
+3292,1.5440,4.3673,0.1084,0.0702,-0.0783,-0.0244,5.0622,"perp HL maker + funding, short paie rf",ALL,8/8
+2288,1.0533,2.5270,0.0766,0.0727,-0.1029,-0.0199,5.9518,"perp HL taker + funding, short paie rf, prix Coinbase USD (borne basse)",IS,7/8
+1004,1.3560,2.1631,0.0881,0.0649,-0.0529,-0.0247,2.0034,"perp HL taker + funding, short paie rf, prix Coinbase USD (borne basse)",HO,7/8
+3292,1.1372,3.2752,0.0801,0.0704,-0.1029,-0.0247,5.0272,"perp HL taker + funding, short paie rf, prix Coinbase USD (borne basse)",ALL,7/8
+2288,1.1941,2.8396,0.0865,0.0724,-0.0967,-0.0199,5.9584,"perp HL taker + funding, short paie rf, mi-prix",IS,8/8
+1004,1.4202,2.2616,0.0920,0.0648,-0.0499,-0.0246,2.0360,"perp HL taker + funding, short paie rf, mi-prix",HO,8/8
+3292,1.2564,3.5932,0.0882,0.0702,-0.0967,-0.0246,5.0381,"perp HL taker + funding, short paie rf, mi-prix",ALL,8/8

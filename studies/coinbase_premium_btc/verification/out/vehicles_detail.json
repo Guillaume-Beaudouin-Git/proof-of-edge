@@ -1,0 +1,108 @@
+{
+ "breakeven_and_costs": {
+  "perp_HL_funding_inclus": {
+   "ALL_cost_rt_bps_at_sr1": 22.828110493719585,
+   "ALL_cost_rt_bps_at_sr0": 57.46465176343918,
+   "HO_cost_rt_bps_at_sr1": 24.456714838743217,
+   "HO_cost_rt_bps_at_sr0": 52.70488951355219
+  },
+  "MBT_cost_rt_bps_median": 5.8828102728898335,
+  "MBT_cost_rt_bps_last_price": 5.8828102728898335,
+  "nano_cost_rt_bps_last_price": 11.273226734392413,
+  "basis_cost_bps_per_trade_mean_abs": 1.4668929471030068,
+  "basis_cost_bps_per_trade_mean_signed": 0.033019318155851844,
+  "funding_by_source": [
+   {
+    "funding_src": "Binance",
+    "count": 400,
+    "mean": 0.000104872825,
+    "sum": 0.04194913,
+    "mean_bps": 1.0487282500000001
+   },
+   {
+    "funding_src": "HL",
+    "count": 341,
+    "mean": 6.373817917888563e-05,
+    "sum": 0.021734719099999997,
+    "mean_bps": 0.6373817917888562
+   },
+   {
+    "funding_src": "aucun",
+    "count": 190,
+    "mean": 0.0,
+    "sum": 0.0,
+    "mean_bps": 0.0
+   }
+  ],
+  "funding_bps_per_trade_mean_signed": 0.6840370472610097,
+  "funding_bps_per_trade_p95_abs": 19.446288000000003,
+  "perp_vs_spot_last_200d": {
+   "n": 56,
+   "mean_ret_spot_bps": 39.731527615763746,
+   "mean_ret_hlperp_bps": 39.49583135360362,
+   "corr": 0.9999113899268448,
+   "mean_abs_diff_bps": 1.9012790499854857
+  },
+  "cme_schedule": {
+   "share_entry_closed_pre_247": 0.21937639198218262,
+   "share_exit_closed_pre_247": 0.3129175946547884,
+   "share_either_closed_pre_247": 0.39643652561247217,
+   "n_trades_pre_247": 898,
+   "n_trades_post_247": 33,
+   "gross_sr_all_247": 1.6667590726757602,
+   "gross_sr_all_sauter": 1.3593573118963123,
+   "gross_sr_all_decaler": 1.4431039655411526,
+   "gross_pnl_lost_sauter_share": 0.19518760565913762,
+   "gross_pnl_lost_decaler_share": 0.1272348284013307
+  },
+  "lots": {
+   "MBT 1 lot": {
+    "lot_fraction_of_equity": 0.5742625829687176,
+    "share_trades_with_ge1_lot": 1.0,
+    "median_lots": 1.0,
+    "max_lots": 1
+   },
+   "MBT arrondi au lot": {
+    "lot_fraction_of_equity": 0.5742625829687176,
+    "share_trades_with_ge1_lot": 0.13319011815252416,
+    "median_lots": 0.0,
+    "max_lots": 1
+   },
+   "MBT 1 lot horaires decaler": {
+    "lot_fraction_of_equity": 0.5742625829687176,
+    "share_trades_with_ge1_lot": 1.0,
+    "median_lots": 1.0,
+    "max_lots": 1
+   },
+   "Nano BIT 1 lot": {
+    "lot_fraction_of_equity": 0.05742625829687175,
+    "share_trades_with_ge1_lot": 1.0,
+    "median_lots": 1.0,
+    "max_lots": 1
+   },
+   "Nano BIT arrondi au lot": {
+    "lot_fraction_of_equity": 0.05742625829687175,
+    "share_trades_with_ge1_lot": 1.0,
+    "median_lots": 3.0,
+    "max_lots": 8
+   }
+  },
+  "btc_last_price": 77174.0,
+  "eurusd_last": 1.1199,
+  "equity_usd": 13438.8
+ },
+ "L38": {
+  "beta": -0.028583858536134977,
+  "alpha_ann": 0.1195371676955804,
+  "alpha_t_hac": 4.75854778909405,
+  "r2": 0.00220921301640431,
+  "corr": -0.04700226607732827
+ },
+ "strategy_A": {
+  "corr_daily_all": 0.1331411170525936,
+  "corr_daily_HO": 0.07790791692508695,
+  "corr_weekly": 0.17842147268956082,
+  "A_sharpe_same_window_gross_of_rf": 1.5669011448166785,
+  "corr_on_days_c9_active": 0.16391168031657555
+ }
+}

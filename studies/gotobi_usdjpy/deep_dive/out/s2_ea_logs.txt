@@ -1,0 +1,26 @@
+Journaux EA USDJPY : 2026-08-17 13:45:00 → 2026-10-18 21:54:00 UTC (62218 minutes) ; horloge serveur = UTC + 3 h vérifiée
+Événements gotobi dans la fenêtre : 12 (D : 4) ; avec une des 4 minutes absente : 1
+
+Par événement (bps) — exécutable = achat à l'ask / vente au bid, stop 25 bps sur instantanés de minute
+  jour       cat     A exéc  B exéc   total     net |     mid     bid  coût | fourchettes 23:00/00:54/00:56/02:00   USDJPY
+  2026-08-20 AUTRES  +13.34  -10.36   +2.98   +1.98 |   +3.99   +3.68  2.01 | 0.51/0.63/0.69/0.19  158.19
+  2026-08-25 D25    minute(s) absente(s) : 1
+  2026-08-31 DME      -7.87   +9.75   +1.88   +0.88 |   +2.32   +2.38  1.44 | 0.25/0.19/0.19/0.25  160.12
+  2026-09-04 AUTRES  -26.00  -11.24  -37.25  -38.25 |  -37.15  -37.18  1.80 | 0.58/0.19/0.64/0.19  156.12  [stop A]
+  2026-09-10 AUTRES  +17.67  +14.06  +31.73  +30.73 |  +32.61  +32.32  1.88 | 0.39/0.72/0.46/0.20  153.35
+  2026-09-15 AUTRES  +23.14   -6.53  +16.61  +15.61 |  +17.39  +17.06  1.78 | 0.26/0.71/0.39/0.19  154.26
+  2026-09-18 AUTRES  +17.70   -2.37  +15.33  +14.33 |  +16.23  +16.23  1.90 | 0.19/0.19/0.70/0.70  155.95
+  2026-09-25 D25      -2.71   +5.36   +2.65   +1.65 |   +3.69   +3.34  2.04 | 0.19/0.69/0.69/0.50  158.77
+  2026-09-30 DME      -2.67  +26.53  +23.86  +22.86 |  +24.75  +24.31  1.89 | 0.25/0.64/0.70/0.19  157.37
+  2026-10-05 AUTRES   +2.66   +9.76  +12.42  +11.42 |  +12.99  +12.80  1.57 | 0.19/0.19/0.57/0.19  157.76
+  2026-10-09 AUTRES  +11.53  +13.22  +24.75  +23.75 |  +25.54  +25.32  1.79 | 0.38/0.70/0.32/0.19  157.88
+  2026-10-15 AUTRES  -13.35  +12.03   -1.31   -2.31 |   -0.33   -0.56  1.98 | 0.57/0.70/0.51/0.19  158.08
+
+  D (25 + fin de mois)   n  3 : exécutable  +9.46 (A  -4.42, B +13.88) ; net  +8.46 ; brut mid +10.25, brut bid +10.01 ; coût moyen 1.79
+  AUTRES                 n  8 : exécutable  +8.16 (A  +5.84, B  +2.32) ; net  +7.16 ; brut mid  +8.91, brut bid  +8.71 ; coût moyen 1.84
+  tous                   n 11 : exécutable  +8.51 (A  +3.04, B  +5.47) ; net  +7.51 ; brut mid  +9.28, brut bid  +9.06 ; coût moyen 1.82
+
+Convention : brut au bid − brut au mid = -0.21 bp par événement (la série historique est en bid)
+Coût réalisé par événement (fourchette aux 4 minutes + 1,0 bp de commission) : médiane 1.88, moyenne 1.82, max 2.04
+USDJPY au dernier relevé : 157.981 ; moyenne de la fenêtre 157.52
+Alarme L5 (coût médian > 2.5 ou > 2 événements incomplets) : NON

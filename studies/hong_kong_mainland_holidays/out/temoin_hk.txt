@@ -1,0 +1,2 @@
+1997-2014 : jours ordinaires -3.42 (n 3988) ; lendemain d'une fermeture de HK seul +6.45 (n 103, t +0.49) ; veille -7.88 (n 100, t -0.69)
+2014-2026 : jours ordinaires -4.80 (n 2752) ; lendemain d'une fermeture de HK seul +3.29 (n 59, t +0.35) ; veille +10.36 (n 60, t +0.96)

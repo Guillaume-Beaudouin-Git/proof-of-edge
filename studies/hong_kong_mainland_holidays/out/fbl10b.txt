@@ -1,0 +1,18 @@
+Avant Stock Connect (1997-07 → 2014-11) : {'ordinaire': 3988, 'fermé': 221, 'réouverture': 78} ; moyenne ordinaire -3.42
+  R1 jours fermés +21.90 bps (n 221, t +2.95) → True (seuil ≥ +10)
+  R2 réouvertures -32.28 bps (n 78, t -2.32) → True (seuil ≤ −15)
+  E3 : 2014-2026 corrigé +18.38 (e.-t. 9.39) ; 1997-2014 +20.53 (e.-t. 6.97) → combiné net +19.77 (e.-t. 5.60), P(net > 0) 1.00 → L1 True, L2 True
+  E1 plis : 1997-07→2002-10 +40.2 ; 2002-10→2008-02 +7.4 ; 2008-05→2014-02 +13.0 ; 2014-02→2020-10 +5.2 ; 2020-10→2026-10 +43.0 → True
+  E4 :
+    [3 000 $] ADMIS — 3295 jours ; Sharpe sleeve seule 0.68
+      Sharpe base 0.872 → combiné 0.951 : ΔSR +0.079 (p(≤0) 0.011, erreur-type 0.038, MDE80 0.108)
+      P(perte du compte, 2 ans, sans gouverneur) 53.64% → 51.46% (Δ -2.18 pt) ; trader 66.2 → 71.3 $/mois
+      pire séance sleeve -61 $ (plafond -149) ; pire jour combiné -497 $
+→ FBL-10b : LANCER (sous réserve de la fourchette HK50.cash)
+Rapporté :
+  1997-2007 : fermés +27.60 (n 147), réouvertures -44.15 (n 40)
+  2008-2014 : fermés +9.88 (n 74), réouvertures -19.09 (n 38)
+  fermé par fête : Nouvel An lunaire +24.5 (n 93) ; autres (Qingming, Bateaux-dragons, mi-automne) +13.3 (n 25) ; fête du Travail +19.9 (n 39) ; fête nationale +22.7 (n 64)
+  réouverture par fête : Nouvel An lunaire -36.9 (n 27) ; autres (Qingming, Bateaux-dragons, mi-automne) +31.1 (n 19) ; fête du Travail -65.4 (n 15) ; fête nationale -66.6 (n 17)
+  fermé par année : 1997:+34 1998:+86 1999:+47 2000:+61 2001:+20 2002:+17 2003:+34 2004:+11 2005:-11 2006:+13 2007:+27 2008:-2 2009:+83 2010:-18 2011:-29 2012:+15 2013:-5 2014:+22
+  réouverture par année : 1997:-175 1998:-58 1999:+83 2000:-207 2001:-110 2002:-9 2003:+34 2004:-44 2005:-23 2006:+25 2007:-104 2008:-85 2009:+17 2010:+8 2011:-37 2012:-56 2013:-11 2014:-3

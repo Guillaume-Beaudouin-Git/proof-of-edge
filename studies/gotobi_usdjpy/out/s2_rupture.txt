@@ -1,0 +1,4 @@
+D (le 25 + fin de mois), 462 événements, 2007-01-25 → 2026-05-29
+  rupture estimée 2016-01-29 : avant +2.23 bps, après +6.51 ; sup|t| 2.74 (seuil 95 % du bootstrap 3.43) ; p 0.178 → non significative
+  rapporté : contraste mensuel D − AUTRES (233 mois) — rupture 2015-07-01, avant -2.70, après +3.93, sup|t| 3.58, p 0.058
+→ S2 : l'archive reste (rupture non significative)
