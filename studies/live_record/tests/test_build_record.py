@@ -123,7 +123,7 @@ def test_committed_files_carry_no_identifiers():
         files.append(page)
     # 9+ digit runs outside a hex digest (the SHA-256 of the extracts are printed on purpose)
     forbidden = [re.compile(r"(?<![\da-f.])\d{9,}(?![\da-f.])"), re.compile(r"/home/|/Users/|C:\\\\"),
-                 re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"), # "funded login" is the firm's word for an account and appears in the notes on purpose;
+                 re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"), # "funded login" is the industry's word for an FTMO Account login and appears in the notes on purpose;
                  # what must not appear is a credential or an identifier next to it
                  re.compile(r"(?i)password|api[_-]?key|token[:=]|login\s*[:=#]|login (id|number)"),
                  re.compile(r"(?i)-(demo|live|server)\d*\b")]

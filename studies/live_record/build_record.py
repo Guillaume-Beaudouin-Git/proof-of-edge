@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Live record of the FTMO funded account: source extracts -> CSVs, summary.json, static page.
+"""Live record of the FTMO account: source extracts -> CSVs, summary.json, static page.
 
 Two stages, so that anyone can rerun the second from what is committed:
 
@@ -469,7 +469,7 @@ def summarise(src: Source, marks: pd.DataFrame, daily: pd.DataFrame, trades: pd.
         "source_sha256": src.hashes,
         "external_anchor": FTMO_PROFILE,
         "account": {
-            "firm": "FTMO", "programme": "Swing, two-step evaluation, funded",
+            "firm": "FTMO", "programme": "Swing, two-step evaluation passed; simulated capital, real payouts",
             "currency": "USD", "initial_balance_usd": INITIAL_BALANCE,
             "daily_loss_limit_pct": DAILY_LOSS_LIMIT * 100, "max_loss_limit_pct": MAX_LOSS_LIMIT * 100,
             "static_floor_usd": INITIAL_BALANCE * (1 - MAX_LOSS_LIMIT),
@@ -703,8 +703,8 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
         return f"<tr><th scope=\"row\">{label}</th><td class=\"num\">{value}</td>{n}</tr>"
 
     key_rows = "\n".join([
-        row("Account", f"{acc['firm']}, {acc['programme']}, {_fmt_usd(acc['initial_balance_usd'])}"),
-        row("First mark", pe["first_mark"] + " Paris", "account funded, book flat"),
+        row("Account", f"{acc['firm']}, {_fmt_usd(acc['initial_balance_usd'])}, {acc['programme']}"),
+        row("First mark", pe["first_mark"] + " Paris", "account opened, book flat"),
         row("First trade", (pe["first_trade"] or "n/a")),
         row("Last mark", pe["last_mark"] + " Paris"),
         row("Days live", f"{pe['calendar_days']} calendar, {pe['trading_days']} trading",
@@ -791,23 +791,25 @@ def render_page(s: dict, daily: pd.DataFrame, trades: pd.DataFrame) -> str:
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex">
 <title>Live record</title>
-<meta name="description" content="Live record of the FTMO funded account behind proof-of-edge: equity, drawdown, daily P&amp;L, barriers.">
+<meta name="description" content="Live record of the FTMO account behind proof-of-edge: equity, drawdown, daily P&amp;L, barriers.">
 <style>{css}</style>
 </head>
 <body>
 <main>
 <header>
 <p class="kicker"><a href="../../">proof-of-edge</a> / live record</p>
-<h1>FTMO funded account, live record</h1>
-<p class="lede">A {_fmt_usd(acc['initial_balance_usd'])} {acc['firm']} funded account ({acc['programme']}; two consecutive funded logins, chained, see notes), traded by a fully
+<h1>FTMO account, live record</h1>
+<p class="lede">A {_fmt_usd(acc['initial_balance_usd'])} {acc['firm']} account ({acc['programme']}; two consecutive logins, chained, see notes), traded by a fully
 automated book: overnight index exposure on US100 and GER40, and an opening-range breakout on US100.
 Marks are the broker's balance and equity as read by the Expert Advisor at 00:00 and 22:58 Paris;
 the curve below is trading only, with external balance adjustments removed and listed.
-External anchor: <a href="{FTMO_PROFILE}" rel="noopener">FTMO verified trader profile</a>.</p>
+External anchor: <a href="{FTMO_PROFILE}" rel="noopener">FTMO verified trader profile</a>.
+FTMO's accounts are demo accounts with fictitious funds and real monetary rewards; "funded login" in the
+notes is the industry's word for an FTMO Account login, not real capital allocated.</p>
 </header>
 
 <section class="tiles" aria-label="Headline figures">
-<div class="tile"><span class="label">P&amp;L since funding</span><span class="value">{_fmt_usd(p['total_usd'], signed=True)}</span><span class="sub">{_fmt_pct(p['return_pct_of_initial'], signed=True)} of initial</span></div>
+<div class="tile"><span class="label">P&amp;L since the account opened</span><span class="value">{_fmt_usd(p['total_usd'], signed=True)}</span><span class="sub">{_fmt_pct(p['return_pct_of_initial'], signed=True)} of initial</span></div>
 <div class="tile"><span class="label">Max drawdown</span><span class="value">{_fmt_pct(dr['max_pct_of_initial'])}</span><span class="sub">{_fmt_usd(dr['max_usd'])}</span></div>
 <div class="tile"><span class="label">Days live</span><span class="value">{pe['calendar_days']}</span><span class="sub">{pe['trading_days']} trading days</span></div>
 <div class="tile"><span class="label">Closest to daily floor</span><span class="value">{_fmt_usd(b['min_distance_daily_floor_usd'])}</span><span class="sub">of a {_fmt_usd(acc['initial_balance_usd'] * acc['daily_loss_limit_pct'] / 100)} allowance</span></div>

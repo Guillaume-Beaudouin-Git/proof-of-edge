@@ -22,7 +22,7 @@ what is published here.
 | Pre-registration files written in the private programme | 148, across 122 study folders |
 | Of those folders, readable in the public [research-archive](https://github.com/Guillaume-Beaudouin-Git/research-archive) (snapshot of 2026-10-29) | 57 |
 | Studies written up in full in this repository | 9: three validated, two falsified, one open, two approved for launch, one kept on paper |
-| Strategies trading on the funded account today | 1 (overnight index premium) |
+| Strategies trading on the FTMO account today | 1 (overnight index premium) |
 | Approved for launch, deployed in the live system, not yet armed | 2 (USDJPY settlement days, Hong Kong on mainland holidays) |
 
 Most ideas never reach the third row. That is the pipeline working. The first row is read from
@@ -34,8 +34,8 @@ the private repository and cannot be checked from this one.
 
 | | |
 |---|---|
-| **Live** | A fully automated book on an FTMO funded account (\$10k, Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
-| **Live record** | 89 days (64 trading days) over two consecutive funded logins, chained; P&L **+$35.48** (+0.35 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](https://guillaume-beaudouin-git.github.io/proof-of-edge/live/) ([source](docs/live/index.html)) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
+| **Live** | A fully automated book on an FTMO account (\$10k of simulated capital, real payouts; Swing two-step): both phases passed in 23 days with zero manual trades, live since August 2026 |
+| **Live record** | 89 days (64 trading days) over two consecutive FTMO logins, chained; P&L **+$35.48** (+0.35 %), max drawdown **−2.12 %**, closest approach to the daily-loss floor $414 of a $500 allowance — [page](https://guillaume-beaudouin-git.github.io/proof-of-edge/live/) ([source](docs/live/index.html)) · [equity_daily.csv](studies/live_record/data/equity_daily.csv) · [trades.csv](studies/live_record/data/trades.csv) · [summary.json](studies/live_record/summary.json) · [method and provenance](studies/live_record/README.md) · [FTMO verified profile](https://profile.ftmo.com/user/E6X6MTH381). Self-reported from the system's own ledger; a broker statement is the next addition |
 | **Execution** | MetaTrader 5 Expert Advisor on a Linux VPS, fed by a Python signal engine, under a watchdog, with a nightly replay of the model against the real P&L (the gap between the two is reported in the live record, and is not closed) |
 | **Book** | Trading: the overnight index premium (US100, GER40). Deployed since early November 2026 and not yet armed, so never traded: `studies/gotobi_usdjpy` and `studies/hong_kong_mainland_holidays`. Paused: the opening-range breakout sleeve (since 2026-10-19). Switched off: gold and the earlier USDJPY sleeve (since 2026-09-30) |
 
@@ -59,7 +59,7 @@ the other seven the order is documented inside the files only (for the three stu
 November 2026, by private commits listed in `PREREGISTRATION_FREEZE.md`), and the studies say so.
 
 **2. Measure the cost on the venue you actually trade.** A strategy was killed for weeks on a
-spread borrowed from a different broker; measured natively on the real account, the true cost was
+spread borrowed from a different broker; measured natively on the account actually traded, the true cost was
 about half (`LESSONS.md`, L63). A passive sampler now runs inside the live EA and records the real
 bid/ask every minute.
 
@@ -93,7 +93,7 @@ core/risk/           volatility-targeted sizing, correlation monitoring, prop-fi
 core/admission/      the test a new sleeve must pass to enter the book (ΔSharpe at ERC weight,
                      block bootstrap, minimum detectable effect)
 studies/             complete studies: pre-registration, results, verdict, and code where self-contained
-studies/live_record/ the funded account's record: source extracts, builder, daily equity and trades, summary
+studies/live_record/ the FTMO account's record: source extracts, builder, daily equity and trades, summary
 docs/live/           the static page built from it (GitHub Pages)
 LESSONS.md           the numbered lesson registry: one verdict per lesson, with the number that earned it
 PROVENANCE.md        where and when each study's pre-registration and results were committed

@@ -102,7 +102,7 @@ Anti-box-ticking safeguard: the enumeration is re-read at reopening. An axis lis
 - **ERC** — equal risk contribution weights.
 - **Sleeve** — one strategy as a component of the book.
 - **Book** — the set of sleeves run on one account.
-- **Prop firm / challenge** — a proprietary-trading firm that funds a trader after a two-phase evaluation with profit targets and drawdown barriers (FTMO here).
+- **Prop firm / challenge** — a proprietary-trading firm that pays a trader a share of the profits after a two-phase evaluation with profit targets and drawdown barriers (FTMO here: simulated capital, real payouts).
 - **Swap** — the overnight financing charged by a CFD broker per leg held past the rollover.
 - **Dédale** — an internal name for a family of FX studies; appears in commit messages.
 - **Walk-forward** — sequential out-of-sample re-estimation; the programme requires at least five folds.

@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex">
 <title>Live record</title>
-<meta name="description" content="Live record of the FTMO funded account behind proof-of-edge: equity, drawdown, daily P&amp;L, barriers.">
+<meta name="description" content="Live record of the FTMO account behind proof-of-edge: equity, drawdown, daily P&amp;L, barriers.">
 <style>
 :root {
   color-scheme: light;
@@ -92,16 +92,18 @@ code.hash { word-break: break-all; color: var(--text-3); }
 <main>
 <header>
 <p class="kicker"><a href="../../">proof-of-edge</a> / live record</p>
-<h1>FTMO funded account, live record</h1>
-<p class="lede">A $10,000.00 FTMO funded account (Swing, two-step evaluation, funded; two consecutive funded logins, chained, see notes), traded by a fully
+<h1>FTMO account, live record</h1>
+<p class="lede">A $10,000.00 FTMO account (Swing, two-step evaluation passed; simulated capital, real payouts; two consecutive logins, chained, see notes), traded by a fully
 automated book: overnight index exposure on US100 and GER40, and an opening-range breakout on US100.
 Marks are the broker's balance and equity as read by the Expert Advisor at 00:00 and 22:58 Paris;
 the curve below is trading only, with external balance adjustments removed and listed.
-External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopener">FTMO verified trader profile</a>.</p>
+External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopener">FTMO verified trader profile</a>.
+FTMO's accounts are demo accounts with fictitious funds and real monetary rewards; "funded login" in the
+notes is the industry's word for an FTMO Account login, not real capital allocated.</p>
 </header>
 
 <section class="tiles" aria-label="Headline figures">
-<div class="tile"><span class="label">P&amp;L since funding</span><span class="value">+$35.48</span><span class="sub">+0.35 % of initial</span></div>
+<div class="tile"><span class="label">P&amp;L since the account opened</span><span class="value">+$35.48</span><span class="sub">+0.35 % of initial</span></div>
 <div class="tile"><span class="label">Max drawdown</span><span class="value">−2.12 %</span><span class="sub">−$212.27</span></div>
 <div class="tile"><span class="label">Days live</span><span class="value">89</span><span class="sub">64 trading days</span></div>
 <div class="tile"><span class="label">Closest to daily floor</span><span class="value">$414.36</span><span class="sub">of a $500.00 allowance</span></div>
@@ -389,8 +391,8 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 <section>
 <h2>Key figures</h2>
 <div class="scroll"><table class="kv"><tbody>
-<tr><th scope="row">Account</th><td class="num">FTMO, Swing, two-step evaluation, funded, $10,000.00</td><td></td></tr>
-<tr><th scope="row">First mark</th><td class="num">2026-08-18 00:00 Paris</td><td class="note">account funded, book flat</td></tr>
+<tr><th scope="row">Account</th><td class="num">FTMO, $10,000.00, Swing, two-step evaluation passed; simulated capital, real payouts</td><td></td></tr>
+<tr><th scope="row">First mark</th><td class="num">2026-08-18 00:00 Paris</td><td class="note">account opened, book flat</td></tr>
 <tr><th scope="row">First trade</th><td class="num">2026-08-18 16:10:14</td><td></td></tr>
 <tr><th scope="row">Last mark</th><td class="num">2026-11-15 23:05 Paris</td><td></td></tr>
 <tr><th scope="row">Days live</th><td class="num">89 calendar, 64 trading</td><td class="note">63 complete 00:00-to-00:00 days</td></tr>
@@ -452,7 +454,7 @@ External anchor: <a href="https://profile.ftmo.com/user/E6X6MTH381" rel="noopene
 </section>
 
 <footer>
-<p>Built 2026-11-15T22:10:22Z UTC, working tree at repository commit <code>fd4ef5e</code> (the data files land in the commit that follows it).
+<p>Built 2026-11-20T23:41:45Z UTC, working tree at repository commit <code>27a2fa0</code> (the data files land in the commit that follows it).
 Source extracts and their SHA-256:</p>
 <ul class="hashes"><li><code>adjustments.csv</code> <code class="hash">7584bd8dad67fb508e3f483d8c7ef1a4d052902375673bbcd7c1551e4c50a488</code></li><li><code>fill_notes.csv</code> <code class="hash">a7b1db66bfb038eaf0b277480b5c27f01fde542674d423b21d410421cfd32410</code></li><li><code>fills.csv</code> <code class="hash">64dcce064ab930b84db5e0ae509d498db1d029e97219e5742797bff67eee3b3f</code></li><li><code>point_values.csv</code> <code class="hash">f89567fb01b5efede51e0259be11d218148510ebb36631cd9388a49eb3b2b1ac</code></li><li><code>positions.csv</code> <code class="hash">c229ff345a5755a3a84805d93f500491e688f0a3ebc08af006c97be87a35a6bd</code></li><li><code>reconcile.csv</code> <code class="hash">d0e8cc9fe86ce3564526a1000704d49793ecdb75b74f4ebb1e4f6d1fa775c5e4</code></li><li><code>snapshots.csv</code> <code class="hash">72ee9f0035b7041f68821f40bcaf077f7064ee9176457d341d09895cdcef1337</code></li><li><code>swaps.csv</code> <code class="hash">ff66cb37a9e20e4a73866ad2572bfe6e6a02aeba8b07473a0381125b49e839fc</code></li></ul>
 <p>Data: <a href="../../studies/live_record/data/equity_daily.csv">equity_daily.csv</a>,

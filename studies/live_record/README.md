@@ -1,4 +1,4 @@
-# Live record — the FTMO funded account
+# Live record — the FTMO account
 
 The page: [`docs/live/index.html`](../../docs/live/index.html) (served from `/docs` by GitHub
 Pages). The numbers: [`summary.json`](summary.json), [`data/equity_daily.csv`](data/equity_daily.csv),
@@ -11,11 +11,17 @@ what that means. Nothing in it is a claim of edge.
 
 ## What is recorded
 
-A $10 000 FTMO funded account (Swing programme, two-step evaluation passed on the challenge
-accounts before it; two consecutive funded logins, chained, see *External adjustments*), traded by the automated book described in the root README: overnight index
+A $10 000 FTMO account (Swing programme, two-step evaluation passed on the challenge
+accounts before it; two consecutive logins, chained, see *External adjustments*), traded by the automated book described in the root README: overnight index
 exposure on US100 and GER40 (Monday and Tuesday nights), and an opening-range breakout on US100.
-The account was funded on 2026-08-17; the first snapshot of the funded account is the
+The account was opened on 2026-08-17, after the evaluation; its first snapshot is the
 2026-08-18 00:00 Paris mark, the first trade is on 2026-08-18.
+
+**What the account is.** FTMO's terms describe the accounts it provides as demo accounts with
+fictitious funds: trading is simulated on real market quotes, and FTMO pays real monetary rewards
+on the simulated profits. "Funded" in the page's notes (and in `funded_orb_entry`) is the industry's and the EA's word for
+the account opened after the evaluation, which FTMO calls the FTMO Account; it does not mean that
+real capital was allocated.
 
 ## Provenance
 
@@ -28,7 +34,7 @@ to the extracts in `source/`:
 | `snapshots.csv` | the Expert Advisor's `state.json` as archived by the supervisor at 00:00 Paris (start-of-day) and at 22:58 Paris (end-of-day block), one row per calendar day | the broker's **balance and equity** as the terminal reports them, the EA's daily floor and static floor, which snapshot served as the close |
 | `positions.csv` | the open positions listed in the same snapshots | instrument, lots, direction, notional in USD, per mark |
 | `point_values.csv` | the contract specifications the EA exports at each start-of-day (`tick_value / tick_size`) | USD per index point per lot, per day: how GER40 (quoted in EUR) is converted |
-| `fills.csv` | the EA's own fill log (one line per order it sent: requested price, fill price, slippage, latency) | every fill of the funded account |
+| `fills.csv` | the EA's own fill log (one line per order it sent: requested price, fill price, slippage, latency) | every fill of the FTMO account |
 | `swaps.csv` | the EA's log of the swap the broker billed per instrument and night | overnight financing actually paid |
 | `reconcile.csv` | the nightly reconciliation log (real P&L of the day against a replay of the model on the day's prices, with a tolerance) | a diagnostic that the live system did what the model said |
 | `adjustments.csv` | written by hand | balance changes that are not trading (see below) |
@@ -66,9 +72,9 @@ barrier distances, not as trading days.
 A Friday therefore runs to Monday 00:00. The last row is the open day and carries no P&L.
 
 **External adjustments.** A balance change with no fill and no swap behind it is not trading.
-One is declared in `adjustments.csv`. The record spans two consecutive funded logins: the first
+One is declared in `adjustments.csv`. The record spans two consecutive FTMO logins: the first
 was closed by a payout request after the flat close of 2026-09-30 (balance $10 010.78); a second
-funded login opened at $10 000.00 on 2026-10-01, same programme and limits. The series chains the
+login opened at $10 000.00 on 2026-10-01, same programme and limits. The series chains the
 two logins and the high-water mark of the first is carried into the second. The $10.78 left on
 the first login is counted as realised, outside the curve; the payout statement is not in this
 repository. The equity curve, the drawdown and the P&L exclude the reset; the page lists it.

@@ -1,7 +1,7 @@
 {
  "schema": "proof-of-edge.live_record.v1",
- "built_at_utc": "2026-11-15T22:10:22Z",
- "source_commit": "fd4ef5e",
+ "built_at_utc": "2026-11-20T23:41:45Z",
+ "source_commit": "27a2fa0",
  "source_sha256": {
   "adjustments.csv": "7584bd8dad67fb508e3f483d8c7ef1a4d052902375673bbcd7c1551e4c50a488",
   "fill_notes.csv": "a7b1db66bfb038eaf0b277480b5c27f01fde542674d423b21d410421cfd32410",
@@ -15,7 +15,7 @@
  "external_anchor": "https://profile.ftmo.com/user/E6X6MTH381",
  "account": {
   "firm": "FTMO",
-  "programme": "Swing, two-step evaluation, funded",
+  "programme": "Swing, two-step evaluation passed; simulated capital, real payouts",
   "currency": "USD",
   "initial_balance_usd": 10000.0,
   "daily_loss_limit_pct": 5.0,
